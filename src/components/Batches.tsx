@@ -40,7 +40,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
         'Personal Mentoring'
       ],
       timing: 'Morning & Evening Batches Available',
-      color: 'from-accent to-success'
+      color: 'from-accent to-primary'
     }
   ];
 

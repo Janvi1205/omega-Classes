@@ -69,7 +69,7 @@ const Navbar = () => {
                 className="text-primary hover:text-accent transition-colors relative"
               >
                 <Bell size={20} />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-accent to-success rounded-full animate-pulse"></span>
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-accent to-primary rounded-full animate-pulse"></span>
               </motion.button>
             </div>
           </div>
