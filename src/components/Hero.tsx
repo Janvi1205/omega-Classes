@@ -16,10 +16,10 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6"
+              className="text-4xl md:text-6xl font-black text-primary-foreground mb-6 glow-text"
             >
               Excellence in
-              <span className="block text-accent">Education</span>
+              <span className="block bg-gradient-to-r from-accent to-warning bg-clip-text text-transparent font-black">Education</span>
             </motion.h1>
             
             <motion.p
@@ -84,11 +84,11 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <div className="aspect-square bg-white/20 rounded-xl flex items-center justify-center">
+            <div className="relative cyber-border backdrop-blur-sm p-8 neon-glow">
+              <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center">
                 <div className="text-center text-primary-foreground">
-                  <BookOpen size={80} className="mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold">Quality Education</h3>
+                  <BookOpen size={80} className="mx-auto mb-4 text-accent" />
+                  <h3 className="text-2xl font-bold glow-text">Quality Education</h3>
                   <p className="text-primary-foreground/80">Expert Faculty & Modern Teaching</p>
                 </div>
               </div>
@@ -97,17 +97,17 @@ const Hero = () => {
               <motion.div
                 animate={{ y: [-10, 10, -10] }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -top-4 -right-4 bg-white rounded-lg p-4 shadow-lg"
+                className="absolute -top-4 -right-4 bg-gradient-to-r from-accent to-success rounded-xl p-4 shadow-lg neon-glow"
               >
-                <div className="text-primary text-sm font-semibold">Live Classes</div>
+                <div className="text-white text-sm font-bold">🔥 Live Classes</div>
               </motion.div>
               
               <motion.div
                 animate={{ y: [10, -10, 10] }}
                 transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-                className="absolute -bottom-4 -left-4 bg-white rounded-lg p-4 shadow-lg"
+                className="absolute -bottom-4 -left-4 bg-gradient-to-r from-primary to-warning rounded-xl p-4 shadow-lg neon-glow"
               >
-                <div className="text-primary text-sm font-semibold">Expert Doubt Solving</div>
+                <div className="text-white text-sm font-bold">⚡ Expert Doubt Solving</div>
               </motion.div>
             </div>
           </motion.div>

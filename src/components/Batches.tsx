@@ -25,7 +25,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
         'Study Material Provided'
       ],
       timing: 'Morning & Evening Batches Available',
-      color: 'from-blue-500 to-purple-600'
+      color: 'from-primary to-accent'
     },
     {
       id: 'foundation',
@@ -40,7 +40,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
         'Personal Mentoring'
       ],
       timing: 'Morning & Evening Batches Available',
-      color: 'from-green-500 to-teal-600'
+      color: 'from-accent to-success'
     }
   ];
 
@@ -72,7 +72,8 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
               className="card-gradient rounded-2xl p-8 relative overflow-hidden group"
             >
               {/* Background decoration */}
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${batch.color} opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity`} />
+              <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-3xl group-hover:opacity-40 transition-all duration-500`} />
+              <div className={`absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-2xl group-hover:opacity-25 transition-all duration-500`} />
               
               <div className="relative z-10">
                 <div className="flex items-start justify-between mb-6">
@@ -98,9 +99,9 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {batch.subjects.map((subject) => (
-                      <span
+                  <span
                         key={subject}
-                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium"
+                        className="bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 rounded-full text-sm font-bold border border-primary/30 hover:scale-105 transition-transform cursor-default"
                       >
                         {subject}
                       </span>

@@ -38,9 +38,9 @@ const Navbar = () => {
           <Link to="/" className="flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold text-primary"
+              className="text-2xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
             >
-              Omega Pro Classes
+              🚀 Omega Pro Classes
             </motion.div>
           </Link>
 
@@ -63,12 +63,13 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <motion.button
+               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-primary hover:text-primary/80 transition-colors"
+                className="text-primary hover:text-accent transition-colors relative"
               >
                 <Bell size={20} />
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-accent to-success rounded-full animate-pulse"></span>
               </motion.button>
             </div>
           </div>
