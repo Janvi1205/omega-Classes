@@ -1,12 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Users, Trophy } from 'lucide-react';
 const Hero = () => {
-  const scrollToCourses = () => {
-    const coursesSection = document.getElementById('batches');
-    if (coursesSection) {
-      coursesSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
   return <section className="min-h-screen hero-gradient flex items-center pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -58,10 +52,7 @@ const Hero = () => {
             duration: 0.8,
             delay: 0.6
           }} className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button 
-                onClick={scrollToCourses}
-                className="btn-primary flex items-center justify-center gap-2"
-              >
+              <button className="btn-primary flex items-center justify-center gap-2">
                 Get Started <ArrowRight size={20} />
               </button>
               
@@ -87,14 +78,14 @@ const Hero = () => {
               </div>
               <div className="text-center">
                 <div className="flex justify-center mb-2">
-                  <BookOpen className="text-primary-foreground" size={24} />
+                  
                 </div>
                 <div className="text-2xl font-bold text-primary-foreground">6</div>
                 <div className="text-primary-foreground/80 text-sm">Subjects</div>
               </div>
               <div className="text-center">
                 <div className="flex justify-center mb-2">
-                  <Trophy className="text-primary-foreground" size={24} />
+                  
                 </div>
                 <div className="text-2xl font-bold text-primary-foreground">95%</div>
                 <div className="text-primary-foreground/80 text-sm">Success Rate</div>
