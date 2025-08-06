@@ -141,9 +141,21 @@ const Footer = () => {
         }} viewport={{
           once: true
         }}>
-            
+            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {footerLinks.quickLinks.map(link => {})}
+              {footerLinks.quickLinks.map(link => (
+                <li key={link.name}>
+                  {link.href.startsWith('/') ? (
+                    <Link to={link.href} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm">
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a href={link.href} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm">
+                      {link.name}
+                    </a>
+                  )}
+                </li>
+              ))}
             </ul>
           </motion.div>
 
@@ -160,13 +172,42 @@ const Footer = () => {
         }} viewport={{
           once: true
         }}>
-            
-            
+            <h4 className="text-lg font-semibold mb-4">Support</h4>
+            <ul className="space-y-2 mb-6">
+              {footerLinks.support.map(link => (
+                <li key={link.name}>
+                  {link.href.startsWith('/') ? (
+                    <Link to={link.href} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm">
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a href={link.href} className="text-primary-foreground/80 hover:text-primary-foreground transition-colors text-sm">
+                      {link.name}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
 
             {/* Social Links */}
             <div>
-              
-              
+              <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+              <div className="flex gap-4">
+                {socialLinks.map(social => {
+                  const Icon = social.icon;
+                  return (
+                    <motion.a
+                      key={social.name}
+                      href={social.href}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-primary-foreground/10 hover:bg-primary-foreground/20 p-2 rounded-lg transition-colors"
+                    >
+                      <Icon size={20} />
+                    </motion.a>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         </div>
