@@ -116,15 +116,7 @@ const Hero = () => {
               {/* Floating cards */}
               
               
-              <motion.div animate={{
-              y: [10, -10, 10]
-            }} transition={{
-              duration: 3,
-              repeat: Infinity,
-              delay: 1.5
-            }} className="absolute -bottom-4 -left-4 bg-white rounded-lg p-4 shadow-lg">
-                
-              </motion.div>
+              
             </div>
           </motion.div>
         </div>
