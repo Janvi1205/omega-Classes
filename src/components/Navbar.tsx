@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import NotificationPanel from './NotificationPanel';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const location = useLocation();
 
   const navItems = [
@@ -66,6 +68,7 @@ const Navbar = () => {
                <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setIsNotificationOpen(true)}
                 className="text-primary hover:text-accent transition-colors relative"
               >
                 <Bell size={20} />
@@ -117,13 +120,24 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <button className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors">
+              <button 
+                onClick={() => {
+                  setIsNotificationOpen(true);
+                  setIsOpen(false);
+                }}
+                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
+              >
                 <Bell size={20} />
               </button>
             </div>
           </motion.div>
         )}
       </div>
+      
+      <NotificationPanel 
+        isOpen={isNotificationOpen} 
+        onClose={() => setIsNotificationOpen(false)} 
+      />
     </motion.nav>
   );
 };
