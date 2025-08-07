@@ -100,7 +100,7 @@ const Footer = () => {
               </div>
               <div className="flex items-start gap-3">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
-                <span className="text-sm">123 Education Street, Academic City</span>
+                <span className="text-sm">Flat No. 102, Lalti Apartment, Kali Mandir Road, Hanuman Nagar, Kankarbagh, Patna - 800020</span>
               </div>
             </div>
           </motion.div>

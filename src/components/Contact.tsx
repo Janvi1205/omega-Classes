@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
+import MapboxMap from './MapboxMap';
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, {
@@ -21,7 +22,7 @@ const Contact = () => {
   }, {
     icon: MapPin,
     title: 'Address',
-    details: '123 Education Street, Academic City',
+    details: 'Flat No. 102, Lalti Apartment, Kali Mandir Road, Hanuman Nagar, Kankarbagh, Patna - 800020',
     subtitle: 'Visit our campus'
   }, {
     icon: Clock,
@@ -143,17 +144,7 @@ const Contact = () => {
             </h3>
             
             <div className="relative rounded-2xl overflow-hidden shadow-lg">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1635959893845!5m2!1sen!2sus" 
-                width="100%" 
-                height="300" 
-                style={{
-                  border: 0
-                }} 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade" 
-                className="w-full h-60 sm:h-80 rounded-2xl" 
-              />
+              <MapboxMap className="w-full h-60 sm:h-80" />
               
               {/* Map overlay with contact button */}
               <div className="absolute bottom-4 left-4 right-4">
@@ -166,7 +157,7 @@ const Contact = () => {
                         Omega Pro Classes
                       </h4>
                       <p className="text-muted-foreground text-sm">
-                        123 Education Street, Academic City
+                        Flat No. 102, Lalti Apartment, Kali Mandir Road, Hanuman Nagar, Kankarbagh, Patna - 800020
                       </p>
                     </div>
                     <motion.button whileHover={{
