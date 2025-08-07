@@ -80,7 +80,11 @@ const Navbar = () => {
                       {item.name}
                     </button>
                   ) : (
-                    <Link to={item.path} className="nav-link">
+                    <Link 
+                      to={item.path} 
+                      className="nav-link"
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
                       {item.name}
                     </Link>
                   )}
@@ -142,7 +146,10 @@ const Navbar = () => {
                   ) : (
                     <Link
                       to={item.path}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        window.scrollTo(0, 0);
+                      }}
                       className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors"
                     >
                       {item.name}
