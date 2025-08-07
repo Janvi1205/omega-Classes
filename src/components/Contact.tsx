@@ -24,11 +24,6 @@ const Contact = () => {
     title: 'Address',
     details: 'Flat No. 102, Lalti Apartment, Kali Mandir Road, Hanuman Nagar, Kankarbagh, Patna - 800020',
     subtitle: 'Visit our campus'
-  }, {
-    icon: Clock,
-    title: 'Office Hours',
-    details: 'Mon - Sat: 9:00 AM - 8:00 PM',
-    subtitle: 'Sunday: 10:00 AM - 6:00 PM'
   }];
   return <section id="contact" className="py-20 bg-secondary/30" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
