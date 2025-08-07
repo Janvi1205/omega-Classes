@@ -61,7 +61,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
           {batches.map((batch, index) => (
             <motion.div
               key={batch.id}
@@ -69,16 +69,16 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               whileHover={{ scale: 1.02, y: -5 }}
-              className="card-gradient rounded-2xl p-8 relative overflow-hidden group"
+              className="card-gradient rounded-2xl p-6 sm:p-8 relative overflow-hidden group"
             >
               {/* Background decoration */}
               <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-3xl group-hover:opacity-40 transition-all duration-500`} />
               <div className={`absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-2xl group-hover:opacity-25 transition-all duration-500`} />
               
               <div className="relative z-10">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6">
+                  <div className="mb-4 sm:mb-0">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
                       {batch.title}
                     </h3>
                     <p className="text-primary font-semibold text-lg">
@@ -88,7 +88,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                       {batch.description}
                     </p>
                   </div>
-                  <BookOpen className="text-primary" size={32} />
+                  <BookOpen className="text-primary flex-shrink-0" size={28} />
                 </div>
 
                 {/* Subjects */}

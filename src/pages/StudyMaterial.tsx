@@ -59,10 +59,10 @@ const StudyMaterial = () => {
               <ArrowLeft size={20} />
               Back to Home
             </Link>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Study Materials
             </h1>
-            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
               Access comprehensive study materials for all classes. Download PDFs, 
               practice papers, and additional resources to enhance your learning.
             </p>
@@ -103,7 +103,7 @@ const StudyMaterial = () => {
                   <h3 className="text-2xl font-bold text-foreground">{className}</h3>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                   {subjects.map((subject, index) => {
                     const IconComponent = subject.icon;
                     return (
@@ -113,20 +113,20 @@ const StudyMaterial = () => {
                         animate={isInView ? { opacity: 1, scale: 1 } : {}}
                         transition={{ duration: 0.4, delay: classIndex * 0.1 + index * 0.05 }}
                         whileHover={{ scale: 1.02, y: -2 }}
-                        className="bg-background rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 cursor-pointer"
+                        className="bg-background rounded-xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-300 cursor-pointer"
                       >
                         <Link 
                           to={`/subject/${className.toLowerCase().replace(' ', '-')}/${subject.name.toLowerCase()}`}
                           className="block"
                         >
                           <div className="flex flex-col items-center text-center">
-                            <div className={`${subject.color} text-white p-4 rounded-full mb-4`}>
-                              <IconComponent size={32} />
+                            <div className={`${subject.color} text-white p-3 sm:p-4 rounded-full mb-3 sm:mb-4`}>
+                              <IconComponent size={24} className="sm:w-8 sm:h-8" />
                             </div>
-                            <h4 className="font-semibold text-foreground mb-2 text-lg">
+                            <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg">
                               {subject.name}
                             </h4>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
                               {subject.description}
                             </p>
                           </div>
