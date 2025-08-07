@@ -10,31 +10,31 @@ const YouTube = () => {
   const videos = [
     {
       id: '1',
-      title: 'Mathematics Problem Solving Techniques',
-      thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-      embedId: 'dQw4w9WgXcQ',
-      description: 'Learn effective problem-solving strategies for mathematics'
+      title: 'Educational Content - Physics',
+      thumbnail: 'https://img.youtube.com/vi/i6zTmrUeRas/maxresdefault.jpg',
+      embedId: 'i6zTmrUeRas',
+      description: 'Learn physics concepts with expert guidance'
     },
     {
       id: '2',
-      title: 'Physics Concepts Made Easy',
-      thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-      embedId: 'dQw4w9WgXcQ',
-      description: 'Understanding complex physics concepts with simple explanations'
+      title: 'Mathematics Problem Solving',
+      thumbnail: 'https://img.youtube.com/vi/mzKkWSn2UpU/maxresdefault.jpg',
+      embedId: 'mzKkWSn2UpU',
+      description: 'Master mathematics with step-by-step solutions'
     },
     {
       id: '3',
-      title: 'Chemistry Laboratory Techniques',
-      thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-      embedId: 'dQw4w9WgXcQ',
-      description: 'Essential chemistry lab techniques for students'
+      title: 'Chemistry Fundamentals',
+      thumbnail: 'https://img.youtube.com/vi/BNLr7shM9Dg/maxresdefault.jpg',
+      embedId: 'BNLr7shM9Dg',
+      description: 'Understand chemistry concepts easily'
     },
     {
       id: '4',
-      title: 'Biology Study Strategies',
-      thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
-      embedId: 'dQw4w9WgXcQ',
-      description: 'Effective methods to study and remember biology concepts'
+      title: 'Science Concepts Explained',
+      thumbnail: 'https://img.youtube.com/vi/ZNcyyDYPX3s/maxresdefault.jpg',
+      embedId: 'ZNcyyDYPX3s',
+      description: 'Comprehensive science learning made simple'
     }
   ];
 
@@ -118,13 +118,17 @@ const YouTube = () => {
           <p className="text-muted-foreground mb-6">
             Want to access more educational content and live classes?
           </p>
-          <motion.button
+          <motion.a
+            href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="btn-primary"
+            className="btn-primary inline-flex items-center gap-2"
           >
             Subscribe to Our Channel
-          </motion.button>
+            <ExternalLink size={16} />
+          </motion.a>
         </motion.div>
       </div>
     </section>
