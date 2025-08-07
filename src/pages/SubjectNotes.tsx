@@ -181,16 +181,55 @@ const SubjectNotes = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-black text-white rounded-2xl p-6 cursor-pointer hover:bg-black/90 transition-all duration-300"
-                onClick={() => {
-                  console.log(`Opening chapter: ${chapter.title}`);
-                }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300"
               >
-                <h3 className="font-medium text-center text-lg">
-                  {chapter.title}
-                </h3>
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
+                      {chapter.title}
+                    </h3>
+                    <div className="space-y-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2">
+                        <FileText size={14} />
+                        <span>{chapter.notes} Notes</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <BookOpen size={14} />
+                        <span>{chapter.exercises} Exercises</span>
+                      </div>
+                      <div className="text-xs">
+                        Size: {chapter.size}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-primary text-primary-foreground py-2.5 px-4 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
+                    onClick={() => {
+                      console.log(`Downloading notes: ${chapter.title}`);
+                    }}
+                  >
+                    <Download size={16} />
+                    Download Notes
+                  </motion.button>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-secondary text-secondary-foreground py-2.5 px-4 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-secondary/80 transition-colors"
+                    onClick={() => {
+                      console.log(`Downloading exercises: ${chapter.title}`);
+                    }}
+                  >
+                    <Download size={16} />
+                    Download Exercises
+                  </motion.button>
+                </div>
               </motion.div>
             ))}
           </div>
