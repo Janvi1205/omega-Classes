@@ -84,8 +84,17 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button and notification */}
+          <div className="md:hidden flex items-center space-x-4">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsNotificationOpen(true)}
+              className="text-primary hover:text-accent transition-colors relative"
+            >
+              <Bell size={20} />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-accent to-primary rounded-full animate-pulse"></span>
+            </motion.button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-primary hover:text-primary/80 transition-colors"
@@ -127,15 +136,6 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <button 
-                onClick={() => {
-                  setIsNotificationOpen(true);
-                  setIsOpen(false);
-                }}
-                className="block px-3 py-2 text-primary hover:text-primary/80 transition-colors"
-              >
-                <Bell size={20} />
-              </button>
             </div>
           </motion.div>
         )}
