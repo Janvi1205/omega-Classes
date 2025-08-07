@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Bell, X, Clock, BookOpen, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,7 +18,7 @@ interface NotificationPanelProps {
 
 const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
   // Sample notification data - in real app this would come from Supabase
-  const notifications: Notification[] = [
+  const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: 1,
       title: "New Assignment Posted",
@@ -50,7 +51,13 @@ const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
       type: "important",
       read: true
     }
-  ];
+  ]);
+
+  const markAllAsRead = () => {
+    setNotifications(prev => 
+      prev.map(notification => ({ ...notification, read: true }))
+    );
+  };
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -147,7 +154,10 @@ const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
 
             {/* Footer */}
             <div className="p-4 border-t">
-              <button className="w-full text-center text-sm text-primary hover:text-primary/80 transition-colors">
+              <button 
+                onClick={markAllAsRead}
+                className="w-full text-center text-sm text-primary hover:text-primary/80 transition-colors"
+              >
                 Mark all as read
               </button>
             </div>
