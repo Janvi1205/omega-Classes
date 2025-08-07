@@ -97,10 +97,15 @@ const YouTube = () => {
                   </p>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-primary font-medium">
+                    <a 
+                      href={`https://www.youtube.com/watch?v=${video.embedId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary font-medium hover:text-primary/80 transition-colors flex items-center gap-1"
+                    >
                       Watch Now
-                    </span>
-                    <ExternalLink className="text-primary group-hover:translate-x-1 transition-transform" size={16} />
+                      <ExternalLink size={16} />
+                    </a>
                   </div>
                 </div>
               </div>

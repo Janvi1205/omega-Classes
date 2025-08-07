@@ -40,9 +40,16 @@ const Navbar = () => {
           <Link to="/" className="flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              className="flex items-center gap-3"
             >
-              🚀 Omega Pro Classes
+              <img 
+                src="/lovable-uploads/015a5adc-4651-42f3-b1d0-de3d52e59fe2.png" 
+                alt="Omega Pro Classes" 
+                className="w-10 h-10"
+              />
+              <span className="text-xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Omega Pro Classes
+              </span>
             </motion.div>
           </Link>
 
