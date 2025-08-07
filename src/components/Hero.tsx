@@ -66,40 +66,6 @@ const Hero = () => {
               </button>
               
             </motion.div>
-
-            {/* Stats */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.8,
-            delay: 0.8
-          }} className="grid grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="flex justify-center mb-2">
-                  <Users className="text-primary-foreground" size={24} />
-                </div>
-                <div className="text-2xl font-bold text-primary-foreground">500+</div>
-                <div className="text-primary-foreground/80 text-sm">Students</div>
-              </div>
-              <div className="text-center">
-                <div className="flex justify-center mb-2">
-                  
-                </div>
-                <div className="text-2xl font-bold text-primary-foreground">6</div>
-                <div className="text-primary-foreground/80 text-sm">Subjects</div>
-              </div>
-              <div className="text-center">
-                <div className="flex justify-center mb-2">
-                  
-                </div>
-                <div className="text-2xl font-bold text-primary-foreground">95%</div>
-                <div className="text-primary-foreground/80 text-sm">Success Rate</div>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Right Image */}
