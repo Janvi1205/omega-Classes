@@ -2,13 +2,31 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const StudyMaterial = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const navigate = useNavigate();
+
+  const handleBackToHome = () => {
+    navigate('/');
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleContactRedirect = () => {
+    navigate('/');
+    setTimeout(() => {
+      const contactElement = document.getElementById('contact');
+      if (contactElement) {
+        contactElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   const subjects = [
     { 
@@ -52,13 +70,13 @@ const StudyMaterial = () => {
             transition={{ duration: 0.8 }}
             className="text-center text-primary-foreground"
           >
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors"
+            <button
+              onClick={handleBackToHome}
+              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors bg-transparent border-none cursor-pointer"
             >
               <ArrowLeft size={20} />
               Back to Home
-            </Link>
+            </button>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Study Materials
             </h1>
@@ -155,12 +173,12 @@ const StudyMaterial = () => {
                 or specific topic resources.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/#contact" className="btn-primary">
+                <button onClick={handleContactRedirect} className="btn-primary">
                   Contact Us
-                </Link>
-                <Link to="/" className="btn-secondary">
+                </button>
+                <button onClick={handleBackToHome} className="btn-secondary">
                   Back to Home
-                </Link>
+                </button>
               </div>
             </div>
           </motion.div>
