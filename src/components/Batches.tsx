@@ -16,13 +16,13 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
       id: 'nurture',
       title: 'Nurture Batch',
       subtitle: 'Classes 7-10',
-      description: 'Building strong foundations for future success',
-      subjects: ['Mathematics', 'Science', 'Physics', 'Chemistry', 'Biology'],
+      description: 'Mastering the basics for advanced learning',
+      subjects: ['Mathematics', 'Science'],
       features: [
         'Interactive Learning Sessions',
         'Regular Assessments',
         'Doubt Clearing Sessions',
-        'Study Material Provided'
+        
       ],
       timing: 'Morning & Evening Batches Available',
       color: 'from-primary to-accent'
@@ -31,13 +31,28 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
       id: 'foundation',
       title: 'Foundation Batch',
       subtitle: 'Classes 11-12',
-      description: 'Advanced preparation for competitive exams',
-      subjects: ['Advanced Mathematics', 'Physics', 'Chemistry', 'Biology'],
+      description: 'Foundation Building for competitive exams',
+      subjects: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
       features: [
-        'JEE/NEET Preparation',
+        'JEE/NEET Foundation Building',
         'Board Exam Excellence',
         'Mock Tests & Analysis',
-        'Personal Mentoring'
+        
+      ],
+      timing: 'Morning & Evening Batches Available',
+      color: 'from-accent to-primary'
+    },
+    {
+      id: 'Ranker',
+      title: 'Rankers Batch',
+      subtitle: 'JEE/NEET',
+      description: 'Strong Concept & Problem-Solving Mastery for JEE/NEET',
+      subjects: ['Mathematics/Biology', 'Physics', 'Chemistry'],
+      features: [
+        'JEE/NEET Preparation',
+        'Doubt-Solving & Revision Sessions',
+        'Mock Tests & Analysis',
+        
       ],
       timing: 'Morning & Evening Batches Available',
       color: 'from-accent to-primary'
@@ -46,7 +61,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
 
   return (
     <section id="batches" className="py-20 bg-secondary/50" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -56,7 +71,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
           <h2 className="text-4xl font-bold text-foreground mb-4">
             Our Course Batches
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-gray-900 dark:text-blue-200 max-w-3xl mx-auto">
             Choose the perfect batch for your academic journey with expert guidance and comprehensive curriculum
           </p>
         </motion.div>

@@ -9,33 +9,40 @@ const YouTube = () => {
 
   const videos = [
     {
-      id: '1',
-      title: 'Educational Content - Physics',
-      thumbnail: 'https://img.youtube.com/vi/i6zTmrUeRas/maxresdefault.jpg',
-      embedId: 'i6zTmrUeRas',
-      description: 'Learn physics concepts with expert guidance'
-    },
-    {
-      id: '2',
-      title: 'Mathematics Problem Solving',
-      thumbnail: 'https://img.youtube.com/vi/mzKkWSn2UpU/maxresdefault.jpg',
-      embedId: 'mzKkWSn2UpU',
-      description: 'Master mathematics with step-by-step solutions'
-    },
-    {
-      id: '3',
-      title: 'Chemistry Fundamentals',
-      thumbnail: 'https://img.youtube.com/vi/BNLr7shM9Dg/maxresdefault.jpg',
-      embedId: 'BNLr7shM9Dg',
-      description: 'Understand chemistry concepts easily'
-    },
-    {
       id: '4',
-      title: 'Science Concepts Explained',
+      title: 'Some Natural Phenomena',
       thumbnail: 'https://img.youtube.com/vi/ZNcyyDYPX3s/maxresdefault.jpg',
       embedId: 'ZNcyyDYPX3s',
-      description: 'Comprehensive science learning made simple'
-    }
+      description: 'By Rohan Sir'
+    },
+
+    {
+      id: '1',
+      title: 'Life Process- Class 10th',
+      thumbnail: 'https://img.youtube.com/vi/i6zTmrUeRas/maxresdefault.jpg',
+      embedId: 'i6zTmrUeRas',
+      description: 'By A.M. Jha Sir'
+    },
+
+
+    {
+      id: '2',
+      title: 'Tissues- Class 9th',
+      thumbnail: 'https://img.youtube.com/vi/mzKkWSn2UpU/maxresdefault.jpg',
+      embedId: 'mzKkWSn2UpU',
+      description: 'By Chandan Sir'
+    },
+
+
+
+    {
+      id: '3',
+      title: 'Light- Class 8th',
+      thumbnail: 'https://img.youtube.com/vi/BNLr7shM9Dg/maxresdefault.jpg',
+      embedId: 'BNLr7shM9Dg',
+      description: 'By Rohan Sir'
+    },
+
   ];
 
   return (
@@ -50,7 +57,7 @@ const YouTube = () => {
           <h2 className="text-4xl font-bold text-foreground mb-4">
             Educational Videos
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-gray-900 dark:text-blue-200 max-w-3xl mx-auto">
             Watch our expert teachers explain complex concepts in simple, easy-to-understand ways
           </p>
         </motion.div>
@@ -75,7 +82,7 @@ const YouTube = () => {
                     allowFullScreen
                     className="w-full h-full"
                   />
-                  
+
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <motion.div
@@ -95,9 +102,9 @@ const YouTube = () => {
                   <p className="text-muted-foreground mb-4">
                     {video.description}
                   </p>
-                  
+
                   <div className="flex items-center justify-between">
-                    <a 
+                    <a
                       href={`https://www.youtube.com/watch?v=${video.embedId}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -120,7 +127,7 @@ const YouTube = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-12"
         >
-          <p className="text-muted-foreground mb-6">
+          <p className="text-gray-900 dark:text-blue-200 mb-6">
             Want to access more educational content and live classes?
           </p>
           <motion.a

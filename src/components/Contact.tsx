@@ -12,7 +12,7 @@ const Contact = () => {
   const contactInfo = [{
     icon: Phone,
     title: 'Phone',
-    details: '+91 98765 43210',
+    details: '+91 7070960095 ,+91 6206609241',
     subtitle: 'Call us anytime'
   }, {
     icon: Mail,
