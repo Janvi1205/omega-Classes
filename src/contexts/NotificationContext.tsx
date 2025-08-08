@@ -38,98 +38,12 @@ interface NotificationProviderProps {
 
 export const NotificationProvider = ({ children }: NotificationProviderProps) => {
   const { toast } = useToast();
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '1',
-      title: "New Assignment Posted",
-      message: "Physics Chapter 12 - Electromagnetic Induction homework has been uploaded. Due date: Next Monday",
-      time: "2 hours ago",
-      type: "assignment",
-      read: false,
-      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-      priority: 'high'
-    },
-    {
-      id: '2',
-      title: "Class Schedule Update",
-      message: "Tomorrow's Chemistry class has been moved to 3:00 PM due to teacher unavailability",
-      time: "5 hours ago",
-      type: "important",
-      read: false,
-      createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
-      priority: 'high'
-    },
-    {
-      id: '3',
-      title: "New Study Material Available",
-      message: "Mathematics Chapter 8 notes and practice problems are now available in the study materials section",
-      time: "1 day ago",
-      type: "info",
-      read: false,
-      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
-      priority: 'medium'
-    },
-    {
-      id: '4',
-      title: "Upcoming Exam Alert",
-      message: "Biology Unit Test scheduled for next week. Check the exam timetable for detailed schedule",
-      time: "2 days ago",
-      type: "exam",
-      read: true,
-      createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-      priority: 'high'
-    },
-    {
-      id: '5',
-      title: "Holiday Notice",
-      message: "Classes will remain closed on Gandhi Jayanti (2nd October). Regular classes will resume from 3rd October",
-      time: "3 days ago",
-      type: "update",
-      read: true,
-      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-      priority: 'medium'
-    }
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  // Simulate receiving new notifications from teacher
-  useEffect(() => {
-    const simulateNewNotifications = () => {
-      const teacherNotifications = [
-        {
-          title: "Math Quiz Tomorrow",
-          message: "Don't forget about the mathematics quiz scheduled for tomorrow at 10 AM. Topics: Algebra and Trigonometry",
-          type: "exam" as const,
-          priority: "high" as const
-        },
-        {
-          title: "Chemistry Lab Cancelled",
-          message: "Today's chemistry lab has been cancelled due to equipment maintenance. Make-up lab will be scheduled next week",
-          type: "important" as const,
-          priority: "high" as const
-        },
-        {
-          title: "New Chapter Notes",
-          message: "Physics Chapter 13 - Current Electricity notes have been uploaded. Please download and review before next class",
-          type: "info" as const,
-          priority: "medium" as const
-        }
-      ];
-
-      // Randomly add a notification every 30-60 seconds
-      const randomNotification = teacherNotifications[Math.floor(Math.random() * teacherNotifications.length)];
-      addNotification({
-        ...randomNotification,
-        read: false
-      });
-    };
-
-    // Simulate teacher uploading notifications
-    const interval = setInterval(simulateNewNotifications, 45000); // Every 45 seconds
-
-    return () => clearInterval(interval);
-  }, []);
+  // Real notifications will be received from backend/Supabase
+  // The addNotification function is available for backend integration
 
   const addNotification = (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
     const now = new Date();
