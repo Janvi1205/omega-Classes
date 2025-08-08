@@ -3,12 +3,14 @@ import { motion } from 'framer-motion';
 import { Bell, Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NotificationPanel from './NotificationPanel';
+import { useNotifications } from '@/contexts/NotificationContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { unreadCount } = useNotifications();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -97,7 +99,15 @@ const Navbar = () => {
                 className="text-primary hover:text-accent transition-colors relative"
               >
                 <Bell size={20} />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-accent to-primary rounded-full animate-pulse"></span>
+                {unreadCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse"
+                  >
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </motion.span>
+                )}
               </motion.button>
             </div>
           </div>
@@ -111,7 +121,15 @@ const Navbar = () => {
               className="text-primary hover:text-accent transition-colors relative"
             >
               <Bell size={20} />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-accent to-primary rounded-full animate-pulse"></span>
+              {unreadCount > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse"
+                >
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </motion.span>
+              )}
             </motion.button>
             <button
               onClick={() => setIsOpen(!isOpen)}
