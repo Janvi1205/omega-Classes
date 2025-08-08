@@ -77,48 +77,48 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
           </p>
         </motion.div>
 
-        <Carousel className="w-full max-w-6xl mx-auto">
-          <CarouselContent className="-ml-2 md:-ml-4">
+        <Carousel className="w-full max-w-7xl mx-auto">
+          <CarouselContent className="-ml-1 sm:-ml-2 md:-ml-4">
             {batches.map((batch, index) => (
-              <CarouselItem key={batch.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/2">
+              <CarouselItem key={batch.id} className="pl-1 sm:pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/2">
                 <motion.div
                   initial={{ opacity: 0, y: 100 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   whileHover={{ scale: 1.02, y: -5 }}
-                  className="card-gradient rounded-2xl p-6 sm:p-8 relative overflow-hidden group h-full"
+                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full"
                 >
                   {/* Background decoration */}
-                  <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-3xl group-hover:opacity-40 transition-all duration-500`} />
-                  <div className={`absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-2xl group-hover:opacity-25 transition-all duration-500`} />
+                  <div className={`absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-2xl sm:blur-3xl group-hover:opacity-40 transition-all duration-500`} />
+                  <div className={`absolute bottom-0 left-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-xl sm:blur-2xl group-hover:opacity-25 transition-all duration-500`} />
                   
                   <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6">
-                      <div className="mb-4 sm:mb-0">
-                        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6">
+                      <div className="mb-3 sm:mb-0">
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-1 sm:mb-2">
                           {batch.title}
                         </h3>
-                        <p className="text-primary font-semibold text-lg">
+                        <p className="text-primary font-semibold text-base sm:text-lg">
                           {batch.subtitle}
                         </p>
-                        <p className="text-muted-foreground mt-2">
+                        <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">
                           {batch.description}
                         </p>
                       </div>
-                      <BookOpen className="text-primary flex-shrink-0" size={28} />
+                      <BookOpen className="text-primary flex-shrink-0" size={24} />
                     </div>
 
                     {/* Subjects */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                        <BookOpen size={18} />
-                        Subjects Covered
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="mb-4 sm:mb-6">
+                       <h4 className="font-semibold text-foreground mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
+                         <BookOpen size={16} className="sm:w-[18px] sm:h-[18px]" />
+                         Subjects Covered
+                       </h4>
+                      <div className="flex flex-wrap gap-1 sm:gap-2">
                         {batch.subjects.map((subject) => (
                       <span
                             key={subject}
-                            className="bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-4 py-2 rounded-full text-sm font-bold border border-primary/30 hover:scale-105 transition-transform cursor-default"
+                            className="bg-gradient-to-r from-primary/20 to-accent/20 text-primary px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold border border-primary/30 hover:scale-105 transition-transform cursor-default"
                           >
                             {subject}
                           </span>
@@ -127,15 +127,15 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                     </div>
 
                     {/* Features */}
-                    <div className="mb-6 flex-grow">
-                      <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                        <CheckCircle size={18} />
-                        Key Features
-                      </h4>
-                      <ul className="space-y-2">
+                    <div className="mb-4 sm:mb-6 flex-grow">
+                       <h4 className="font-semibold text-foreground mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
+                         <CheckCircle size={16} className="sm:w-[18px] sm:h-[18px]" />
+                         Key Features
+                       </h4>
+                      <ul className="space-y-1 sm:space-y-2">
                         {batch.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2 text-muted-foreground">
-                            <CheckCircle size={16} className="text-green-500 flex-shrink-0" />
+                          <li key={feature} className="flex items-center gap-2 text-muted-foreground text-sm sm:text-base">
+                            <CheckCircle size={14} className="sm:w-4 sm:h-4 text-green-500 flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
@@ -143,9 +143,9 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                     </div>
 
                     {/* Timing */}
-                    <div className="mb-8">
-                      <p className="flex items-center gap-2 text-muted-foreground">
-                        <Clock size={18} className="text-primary" />
+                    <div className="mb-6 sm:mb-8">
+                      <p className="flex items-center gap-2 text-muted-foreground text-sm sm:text-base">
+                        <Clock size={16} className="sm:w-[18px] sm:h-[18px] text-primary" />
                         {batch.timing}
                       </p>
                     </div>
@@ -155,7 +155,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => onRegisterClick(batch.title)}
-                      className="btn-primary w-full mt-auto"
+                      className="btn-primary w-full mt-auto text-sm sm:text-base py-2 sm:py-3"
                     >
                       Register Now
                     </motion.button>
@@ -164,8 +164,8 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="-left-12 lg:-left-16" />
-          <CarouselNext className="-right-12 lg:-right-16" />
+          <CarouselPrevious className="-left-8 sm:-left-10 lg:-left-12 xl:-left-16 h-8 w-8 sm:h-10 sm:w-10" />
+          <CarouselNext className="-right-8 sm:-right-10 lg:-right-12 xl:-right-16 h-8 w-8 sm:h-10 sm:w-10" />
         </Carousel>
       </div>
     </section>
