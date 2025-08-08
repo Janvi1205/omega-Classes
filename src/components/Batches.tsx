@@ -77,10 +77,10 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
           </p>
         </motion.div>
 
-        <Carousel className="w-full max-w-7xl mx-auto">
-          <CarouselContent className="-ml-1 sm:-ml-2 md:-ml-4">
+        <Carousel className="w-full mx-auto px-4 sm:px-0">
+          <CarouselContent className="ml-0 sm:-ml-2 md:-ml-4">
             {batches.map((batch, index) => (
-              <CarouselItem key={batch.id} className="pl-1 sm:pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/2">
+              <CarouselItem key={batch.id} className="pl-0 sm:pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/2">
                 <motion.div
                   initial={{ opacity: 0, y: 100 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -164,8 +164,8 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="-left-8 sm:-left-10 lg:-left-12 xl:-left-16 h-8 w-8 sm:h-10 sm:w-10" />
-          <CarouselNext className="-right-8 sm:-right-10 lg:-right-12 xl:-right-16 h-8 w-8 sm:h-10 sm:w-10" />
+          <CarouselPrevious className="hidden sm:flex -left-8 sm:-left-10 lg:-left-12 xl:-left-16 h-8 w-8 sm:h-10 sm:w-10" />
+          <CarouselNext className="hidden sm:flex -right-8 sm:-right-10 lg:-left-12 xl:-right-16 h-8 w-8 sm:h-10 sm:w-10" />
         </Carousel>
       </div>
     </section>
