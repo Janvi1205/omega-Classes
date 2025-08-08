@@ -167,6 +167,14 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
           <CarouselPrevious className="hidden sm:flex -left-8 sm:-left-10 lg:-left-12 xl:-left-16 h-8 w-8 sm:h-10 sm:w-10" />
           <CarouselNext className="hidden sm:flex -right-8 sm:-right-10 lg:-right-12 xl:-right-16 h-8 w-8 sm:h-10 sm:w-10" />
         </Carousel>
+        
+        {/* Mobile swipe instruction */}
+        <div className="sm:hidden text-center mt-4">
+          <p className="text-muted-foreground text-sm flex items-center justify-center gap-2">
+            <span>Swipe left for more batches</span>
+            <span className="text-primary">→</span>
+          </p>
+        </div>
       </div>
     </section>
   );
