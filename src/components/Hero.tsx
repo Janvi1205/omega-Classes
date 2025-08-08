@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Users, Trophy } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import studentHero from '@/assets/student-hero.jpg';
 const Hero = () => {
   const scrollToCourses = () => {
     const element = document.querySelector('#batches');
@@ -79,19 +80,12 @@ const Hero = () => {
           duration: 0.8,
           delay: 0.3
         }} className="relative">
-            <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-white/20">
-              <div className="aspect-square bg-white/20 rounded-xl flex items-center justify-center">
-                <div className="text-center text-primary-foreground">
-                  <BookOpen size={60} className="mx-auto mb-4 sm:w-20 sm:h-20" />
-                  <h3 className="text-xl sm:text-2xl font-bold">Quality Education</h3>
-                  <p className="text-primary-foreground/80 text-sm sm:text-base">Expert Faculty & Modern Teaching</p>
-                </div>
-              </div>
-              
-              {/* Floating cards */}
-              
-              
-              
+            <div className="relative">
+              <img 
+                src={studentHero} 
+                alt="Student holding books - Quality education at Omega Pro Classes" 
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
             </div>
           </motion.div>
         </div>
