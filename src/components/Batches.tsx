@@ -165,7 +165,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
             ))}
           </CarouselContent>
           <CarouselPrevious className="hidden sm:flex -left-8 sm:-left-10 lg:-left-12 xl:-left-16 h-8 w-8 sm:h-10 sm:w-10" />
-          <CarouselNext className="hidden sm:flex -right-8 sm:-right-10 lg:-left-12 xl:-right-16 h-8 w-8 sm:h-10 sm:w-10" />
+          <CarouselNext className="hidden sm:flex -right-8 sm:-right-10 lg:-right-12 xl:-right-16 h-8 w-8 sm:h-10 sm:w-10" />
         </Carousel>
       </div>
     </section>
