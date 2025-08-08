@@ -38,7 +38,38 @@ interface NotificationProviderProps {
 
 export const NotificationProvider = ({ children }: NotificationProviderProps) => {
   const { toast } = useToast();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([
+    {
+      id: '1',
+      title: "New Assignment Posted",
+      message: "Physics Chapter 12 - Electromagnetic Induction homework has been uploaded. Due date: Next Monday",
+      time: "2 hours ago",
+      type: "assignment",
+      read: false,
+      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      priority: 'high'
+    },
+    {
+      id: '2',
+      title: "Class Schedule Update", 
+      message: "Tomorrow's Chemistry class has been moved to 3:00 PM due to teacher unavailability",
+      time: "5 hours ago",
+      type: "important",
+      read: false,
+      createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
+      priority: 'high'
+    },
+    {
+      id: '3',
+      title: "New Study Material Available",
+      message: "Mathematics Chapter 8 notes and practice problems are now available in the study materials section",
+      time: "1 day ago", 
+      type: "info",
+      read: true,
+      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+      priority: 'medium'
+    }
+  ]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
