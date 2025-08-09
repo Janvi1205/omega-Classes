@@ -27,20 +27,20 @@ const YouTube = () => {
 
     {
       id: '2',
-      title: 'Tissues- Class 9th',
+      title: 'Electronic Configuratoin- Class 11th',
       thumbnail: 'https://img.youtube.com/vi/mzKkWSn2UpU/maxresdefault.jpg',
-      embedId: 'mzKkWSn2UpU',
-      description: 'By Chandan Sir'
+      embedId: 'Z4Nl97ibTvs',
+      description: 'By A.M Jha Sir'
     },
 
 
 
     {
       id: '3',
-      title: 'Light- Class 8th',
+      title: 'Scaler Vector Tensor- Class 11th',
       thumbnail: 'https://img.youtube.com/vi/BNLr7shM9Dg/maxresdefault.jpg',
-      embedId: 'BNLr7shM9Dg',
-      description: 'By Rohan Sir'
+      embedId: 'J8z_euwH_Lw',
+      description: 'By Chandra Shekhar Sir'
     },
 
   ];
@@ -137,22 +137,24 @@ const YouTube = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary inline-flex items-center gap-2 flex-col"
+              className="btn-primary inline-flex items-center gap-2 flex-col p-5 "
             >
               <span className="text-center">
                 Subscribe our channel
                 <br />
-                for class 7-10
+                for class 7th to 10th
+               
               </span>
-              <ExternalLink size={16} />
+               <ExternalLink size={16} />
+              
             </motion.a>
             <motion.a
-              href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
+              href="https://youtube.com/@omegaproclasses1112?si=G-tY5W8cZkLNCC7f"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary inline-flex items-center gap-2 flex-col"
+              className="btn-primary inline-flex items-center gap-2 flex-col p-5"
             >
               <span className="text-center">
                 Subscribe our channel
