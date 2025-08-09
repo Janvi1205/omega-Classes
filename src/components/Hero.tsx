@@ -63,7 +63,7 @@ const Hero = () => {
                 onClick={scrollToCourses}
                 className="btn-primary flex items-center justify-center gap-2"
               >
-                Get Started <ArrowRight size={20} />
+                Our Courses <ArrowRight size={20} />
               </button>
               
             </motion.div>

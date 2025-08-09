@@ -81,8 +81,7 @@ const StudyMaterial = () => {
               Study Materials
             </h1>
             <p className="text-lg sm:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
-              Access comprehensive study materials for all classes. Download PDFs, 
-              practice papers, and additional resources to enhance your learning.
+              Access comprehensive study materials for all classes to enhance your learning.
             </p>
           </motion.div>
         </div>

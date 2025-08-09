@@ -139,6 +139,19 @@ const YouTube = () => {
             className="btn-primary inline-flex items-center gap-2"
           >
             Subscribe to Our Channel
+            
+            <ExternalLink size={16} />
+          </motion.a>
+          <motion.a
+            href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            Subscribe to Our Channel
+            
             <ExternalLink size={16} />
           </motion.a>
         </motion.div>

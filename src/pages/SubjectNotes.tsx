@@ -17,13 +17,13 @@ const SubjectNotes = () => {
   });
   const getSubjectIcon = (subjectName: string) => {
     switch (subjectName?.toLowerCase()) {
-      case 'mathematics':
+      case 'Mathematics':
         return Calculator;
-      case 'physics':
+      case 'Physics':
         return Zap;
-      case 'chemistry':
+      case 'Chemistry':
         return Atom;
-      case 'biology':
+      case 'Biology':
         return Microscope;
       default:
         return BookOpen;
@@ -31,13 +31,13 @@ const SubjectNotes = () => {
   };
   const getSubjectColor = (subjectName: string) => {
     switch (subjectName?.toLowerCase()) {
-      case 'mathematics':
+      case 'Mathematics':
         return 'bg-blue-500';
-      case 'physics':
+      case 'Physics':
         return 'bg-purple-500';
-      case 'chemistry':
+      case 'Chemistry':
         return 'bg-green-500';
-      case 'biology':
+      case 'Biology':
         return 'bg-red-500';
       default:
         return 'bg-primary';
@@ -46,7 +46,7 @@ const SubjectNotes = () => {
 
   // Sample chapter data - in real app this would come from API/database
   const chapters = {
-    mathematics: {
+    Mathematics: {
       'class-7': [{
         title: 'Algebra Basics',
         notes: 15,
@@ -132,7 +132,7 @@ const SubjectNotes = () => {
         size: '3.3 MB'
       }]
     },
-    physics: {
+    Physics: {
       'class-9': [{
         title: 'Motion and Laws',
         notes: 16,
@@ -176,7 +176,7 @@ const SubjectNotes = () => {
         size: '3.2 MB'
       }]
     },
-    chemistry: {
+    Chemistry: {
       'class-9': [{
         title: 'Matter in Our Surroundings',
         notes: 14,
@@ -220,7 +220,7 @@ const SubjectNotes = () => {
         size: '3.9 MB'
       }]
     },
-    biology: {
+    Biology: {
       'class-9': [{
         title: 'The Fundamental Unit of Life',
         notes: 16,
@@ -295,12 +295,12 @@ const SubjectNotes = () => {
                 <h1 className="text-4xl md:text-5xl font-bold">
                   {subject}
                 </h1>
-                <p className="text-xl text-primary-foreground/90 capitalize">
+                <p className="text-xl mt-3 text-primary-foreground/90 capitalize">
                   {className?.replace('-', ' ')} Notes
                 </p>
               </div>
             </div>
-            <p className="text-lg text-primary-foreground/90 max-w-3xl mx-auto">
+            <p className="text-lg text-primary-foreground/90 max-w-3xl mx-auto ">
               Chapter-wise notes, exercises, and study materials for comprehensive learning.
             </p>
           </motion.div>

@@ -17,7 +17,7 @@ const Contact = () => {
   }, {
     icon: Mail,
     title: 'Email',
-    details: 'info@omegaproclasses.com',
+    details: 'omegaproclasses@gmail.com',
     subtitle: 'We reply within 24 hours'
   }, {
     icon: MapPin,
@@ -80,6 +80,7 @@ const Contact = () => {
                     </h4>
                     <p className="text-foreground font-medium mb-1">
                       {item.details}
+                      
                     </p>
                     <p className="text-muted-foreground text-sm">
                       {item.subtitle}
