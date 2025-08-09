@@ -137,9 +137,13 @@ const YouTube = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary inline-flex items-center gap-2"
+              className="btn-primary inline-flex items-center gap-2 flex-col"
             >
-              Subscribe for 7-10
+              <span className="text-center">
+                Subscribe our channel
+                <br />
+                for class 7-10
+              </span>
               <ExternalLink size={16} />
             </motion.a>
             <motion.a
@@ -148,9 +152,13 @@ const YouTube = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary inline-flex items-center gap-2"
+              className="btn-primary inline-flex items-center gap-2 flex-col"
             >
-              Subscribe for Class 11 and 12
+              <span className="text-center">
+                Subscribe our channel
+                <br />
+                for class 11 and 12
+              </span>
               <ExternalLink size={16} />
             </motion.a>
           </div>
