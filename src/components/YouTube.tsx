@@ -130,30 +130,30 @@ const YouTube = () => {
           <p className="text-gray-900 dark:text-blue-200 mb-6">
             Want to access more educational content and live classes?
           </p>
-          <motion.a
-            href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            Subscribe to Our Channel
-            
-            <ExternalLink size={16} />
-          </motion.a>
-          <motion.a
-            href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            Subscribe to Our Channel
-            
-            <ExternalLink size={16} />
-          </motion.a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.a
+              href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              Subscribe for 7-10
+              <ExternalLink size={16} />
+            </motion.a>
+            <motion.a
+              href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              Subscribe for Class 11 and 12
+              <ExternalLink size={16} />
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </section>
