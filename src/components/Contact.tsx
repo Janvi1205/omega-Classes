@@ -146,7 +146,7 @@ const Contact = () => {
           <div className="relative rounded-2xl overflow-hidden shadow-lg">
             {/* Google Map iframe */}
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3598.4413787789736!2d85.16647069999999!3d25.5902456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed590061601ec5%3A0x33732da89cfbb956!2sLalti%20apartment!5e0!3m2!1sen!2sin!4v1754737347635!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3598.4413787789736!2d85.16647069999999!3d25.5902456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed590061601ec5%3A0x33732da89cfbb956!2sLalti%20apartment!5e0!3m2!1sen!2sin!4v1754737347635!5m2!1sen!2sin"
               className="w-full h-60 sm:h-80"
               style={{ border: 0 }}
               allowFullScreen
