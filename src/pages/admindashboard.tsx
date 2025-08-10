@@ -66,7 +66,9 @@ const AdminDashboard: React.FC = () => {
 
   // Group filtered materials by subject
   const groupedMaterials = filteredMaterials.reduce((acc, material) => {
-    const key = material.subject;
+    const key = selectedClass === "all" 
+      ? `${material.className}-${material.subject}`
+      : material.subject;
     if (!acc[key]) {
       acc[key] = {
         className: material.className,
@@ -109,15 +111,14 @@ const AdminDashboard: React.FC = () => {
   };
 
   const getTotalStats = () => {
-    const totalNotes = materials.filter(m => m.type === 'Notes').length;
-    const totalHomework = materials.filter(m => m.type === 'Homework').length;
-    const totalClasses = new Set(materials.map(m => m.className)).size;
-    const totalSubjects = new Set(materials.map(m => m.subject)).size;
+    const statsToUse = selectedClass && selectedClass !== "all" ? filteredMaterials : materials;
+    const totalNotes = statsToUse.filter(m => m.type === 'Notes').length;
+    const totalHomework = statsToUse.filter(m => m.type === 'Homework').length;
+    const totalClasses = new Set(statsToUse.map(m => m.className)).size;
+    const totalSubjects = new Set(statsToUse.map(m => m.subject)).size;
     
     return { totalNotes, totalHomework, totalClasses, totalSubjects };
   };
-
-  const stats = getTotalStats();
 
   if (loading) {
     return (
@@ -162,88 +163,6 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto p-6">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="bg-blue-500 text-white p-3 rounded-lg">
-                    <FileText size={20} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-foreground">{stats.totalNotes}</p>
-                    <p className="text-sm text-muted-foreground">Notes Uploaded</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="bg-green-500 text-white p-3 rounded-lg">
-                    <BookOpen size={20} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-foreground">{stats.totalHomework}</p>
-                    <p className="text-sm text-muted-foreground">Homework Assigned</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="bg-purple-500 text-white p-3 rounded-lg">
-                    <Users size={20} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-foreground">{stats.totalClasses}</p>
-                    <p className="text-sm text-muted-foreground">Classes</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="bg-orange-500 text-white p-3 rounded-lg">
-                    <GraduationCap size={20} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-foreground">{stats.totalSubjects}</p>
-                    <p className="text-sm text-muted-foreground">Subjects</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
 
         {/* Class Filter */}
         {availableClasses.length > 0 && (
