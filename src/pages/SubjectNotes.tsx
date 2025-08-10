@@ -170,69 +170,68 @@ const SubjectNotes: React.FC = () => {
       // Show loading toast
       toast({
         title: "Starting Download",
-        description: `Preparing ${material.fileName} for download...`,
+        description: `Downloading ${material.fileName}...`,
         duration: 2000,
       });
 
-      // Try to fetch and force download as blob
-      try {
-        const response = await fetch(material.downloadURL, {
-          mode: 'no-cors',
-          method: 'GET',
-        });
-        
-        // If fetch succeeds, create blob and download
-        if (response.ok || response.type === 'opaque') {
-          const blob = await response.blob();
-          const blobUrl = URL.createObjectURL(blob);
-          
-          const link = document.createElement('a');
-          link.href = blobUrl;
-          link.download = material.fileName;
-          link.style.display = 'none';
-          
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          
-          URL.revokeObjectURL(blobUrl);
-          
-          toast({
-            title: "Download Completed",
-            description: `${material.fileName} has been downloaded to your system.`,
-            duration: 3000,
-          });
-          return;
-        }
-      } catch (fetchError) {
-        console.log('Fetch failed, trying alternative method:', fetchError);
+      // Create download URL with proper Firebase parameters
+      let downloadUrl = material.downloadURL;
+      
+      // Add download parameter to Firebase URL
+      if (downloadUrl.includes('?')) {
+        downloadUrl += '&response-content-disposition=attachment';
+      } else {
+        downloadUrl += '?response-content-disposition=attachment';
       }
       
-      // Fallback: Try iframe download method
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = material.downloadURL;
-      document.body.appendChild(iframe);
+      // Method 1: Try window.open with download
+      const downloadWindow = window.open(downloadUrl, '_blank');
       
-      // Remove iframe after download attempt
+      // Close the window after a short delay
       setTimeout(() => {
-        document.body.removeChild(iframe);
-      }, 3000);
+        if (downloadWindow) {
+          downloadWindow.close();
+        }
+      }, 1000);
       
-      toast({
-        title: "Download Initiated",
-        description: `${material.fileName} download started. Check your downloads folder.`,
-        duration: 3000,
-      });
+      // Show success toast
+      setTimeout(() => {
+        toast({
+          title: "Download Started",
+          description: `${material.fileName} should be downloading. Check your Downloads folder.`,
+          duration: 4000,
+        });
+      }, 500);
       
     } catch (error) {
       console.error('Download error:', error);
-      toast({
-        title: "Manual Download Required", 
-        description: `Please right-click the download button and select "Save Link As" to download ${material.fileName}.`,
-        variant: "destructive",
-        duration: 5000,
-      });
+      
+      // Fallback: Create a temporary link
+      try {
+        const link = document.createElement('a');
+        link.href = material.downloadURL;
+        link.download = material.fileName;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        // Add to DOM, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        toast({
+          title: "Download Attempted",
+          description: `If download didn't start, right-click and "Save Link As" to download ${material.fileName}.`,
+          duration: 4000,
+        });
+      } catch (fallbackError) {
+        toast({
+          title: "Manual Download Required", 
+          description: `Please right-click the download button and select "Save Link As" to download ${material.fileName}.`,
+          variant: "destructive",
+          duration: 5000,
+        });
+      }
     }
   };
 
