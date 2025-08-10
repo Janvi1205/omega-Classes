@@ -174,37 +174,32 @@ const SubjectNotes: React.FC = () => {
         duration: 2000,
       });
 
-      // Create download URL with proper parameters to force download
-      const downloadUrl = material.downloadURL.includes('?') 
-        ? `${material.downloadURL}&response-content-disposition=attachment`
-        : `${material.downloadURL}?response-content-disposition=attachment`;
-
-      // Create temporary link and trigger download
+      // Simple approach: open in new tab with download intent
       const link = document.createElement('a');
-      link.href = downloadUrl;
+      link.href = material.downloadURL;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
       link.download = material.fileName;
-      link.style.display = 'none';
       
-      // Append to body, click, and cleanup
+      // Trigger click
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       
-      // Show success toast after a brief delay
+      // Show success toast
       setTimeout(() => {
         toast({
           title: "Download Started",
-          description: `${material.fileName} is being downloaded to your system.`,
-          duration: 3000,
+          description: `${material.fileName} should start downloading. If it opens in browser, right-click and select "Save As".`,
+          duration: 4000,
         });
       }, 500);
       
     } catch (error) {
       console.error('Download error:', error);
-      // Show error toast if download fails
       toast({
         title: "Download Failed", 
-        description: "Unable to download the file. Please try again or contact support.",
+        description: "Please try right-clicking the file and selecting 'Save Link As'.",
         variant: "destructive",
         duration: 4000,
       });
