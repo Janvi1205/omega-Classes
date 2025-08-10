@@ -100,11 +100,11 @@ const AdminDashboard: React.FC = () => {
       case 'mathematics':
         return 'from-blue-50/80 to-blue-100/90 border-blue-200/50 dark:from-blue-950/40 dark:to-blue-900/50 dark:border-blue-800/30';
       case 'physics':
-        return 'from-indigo-50/80 to-indigo-100/90 border-indigo-200/50 dark:from-indigo-950/40 dark:to-indigo-900/50 dark:border-indigo-800/30';
+        return 'from-purple-50/80 to-purple-100/90 border-purple-200/50 dark:from-purple-950/40 dark:to-purple-900/50 dark:border-purple-800/30';
       case 'chemistry':
-        return 'from-emerald-50/80 to-emerald-100/90 border-emerald-200/50 dark:from-emerald-950/40 dark:to-emerald-900/50 dark:border-emerald-800/30';
+        return 'from-green-50/80 to-green-100/90 border-green-200/50 dark:from-green-950/40 dark:to-green-900/50 dark:border-green-800/30';
       case 'biology':
-        return 'from-rose-50/80 to-rose-100/90 border-rose-200/50 dark:from-rose-950/40 dark:to-rose-900/50 dark:border-rose-800/30';
+        return 'from-orange-50/80 to-orange-100/90 border-orange-200/50 dark:from-orange-950/40 dark:to-orange-900/50 dark:border-orange-800/30';
       default:
         return 'from-muted/50 to-muted/70 border-border dark:from-muted/20 dark:to-muted/30 dark:border-border';
     }
@@ -246,13 +246,13 @@ const AdminDashboard: React.FC = () => {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: materialIndex * 0.05 }}
-                          className="p-6 hover:bg-muted/50 transition-colors"
+                          className="p-6 hover:bg-muted/30 transition-colors group"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-2">
-                                <div className={`w-2 h-2 rounded-full ${material.type === 'Notes' ? 'bg-blue-500' : 'bg-green-500'}`}></div>
-                                <h4 className="font-semibold text-foreground">{material.fileName}</h4>
+                                <div className={`w-2 h-2 rounded-full ${material.type === 'Notes' ? 'bg-blue-500' : 'bg-orange-500'}`}></div>
+                                <h4 className="font-semibold text-foreground group-hover:text-foreground">{material.fileName}</h4>
                                 <Badge 
                                   variant={material.type === 'Notes' ? 'default' : 'secondary'}
                                   className="text-xs"
@@ -260,11 +260,11 @@ const AdminDashboard: React.FC = () => {
                                   {material.type}
                                 </Badge>
                               </div>
-                              <p className="text-sm text-muted-foreground mb-2">
+                              <p className="text-sm text-muted-foreground group-hover:text-muted-foreground mb-2">
                                 Chapter: {material.chapter}
                               </p>
                               {material.createdAt && (
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs text-muted-foreground group-hover:text-muted-foreground">
                                   Uploaded: {new Date(material.createdAt.toDate()).toLocaleDateString()}
                                 </p>
                               )}
