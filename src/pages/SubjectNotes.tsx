@@ -37,9 +37,16 @@ const SubjectNotes: React.FC = () => {
       const processedClassName = className?.replace("-", " ") || className;
       
       // Convert to proper case for matching
-      const properClassName = processedClassName.split(' ')
+      let properClassName = processedClassName.split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(' ');
+      
+      // Handle special cases for competitive exams
+      if (properClassName.toLowerCase().includes('iit')) {
+        properClassName = "IIT Preparation";
+      } else if (properClassName.toLowerCase().includes('neet')) {
+        properClassName = "NEET Preparation";
+      }
       
       const properSubject = decodedSubject.charAt(0).toUpperCase() + decodedSubject.slice(1).toLowerCase();
       

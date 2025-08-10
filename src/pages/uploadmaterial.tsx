@@ -5,17 +5,42 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 const classes = ["Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12", "IIT Preparation", "NEET Preparation"];
-const subjects = ["Mathematics", "Science", "Physics", "Chemistry", "Biology"];
+
+const getSubjectsForClass = (className: string) => {
+  if (className.includes("Class 7") || className.includes("Class 8") || 
+      className.includes("Class 9") || className.includes("Class 10")) {
+    return ["Mathematics", "Science"];
+  } else if (className.includes("Class 11") || className.includes("Class 12")) {
+    return ["Mathematics", "Physics", "Chemistry", "Biology"];
+  } else if (className.includes("IIT Preparation")) {
+    return ["Mathematics", "Physics", "Chemistry"];
+  } else if (className.includes("NEET Preparation")) {
+    return ["Biology", "Chemistry", "Physics"];
+  }
+  return ["Mathematics", "Physics", "Chemistry", "Biology"];
+};
 
 const UploadMaterial: React.FC = () => {
   const [className, setClassName] = useState(classes[0]);
-  const [subject, setSubject] = useState(subjects[0]);
+  const [subject, setSubject] = useState(getSubjectsForClass(classes[0])[0]);
   const [chapter, setChapter] = useState("");
   const [sectionType, setSectionType] = useState<"Notes" | "Homework">("Notes");
   const [file, setFile] = useState<File | null>(null);
   const [progress, setProgress] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Get available subjects for current class
+  const availableSubjects = getSubjectsForClass(className);
+
+  // Update subject when class changes
+  const handleClassChange = (newClassName: string) => {
+    setClassName(newClassName);
+    const newSubjects = getSubjectsForClass(newClassName);
+    if (!newSubjects.includes(subject)) {
+      setSubject(newSubjects[0]);
+    }
+  };
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,7 +94,7 @@ const UploadMaterial: React.FC = () => {
           <form onSubmit={handleUpload} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">Class</label>
-              <select value={className} onChange={(e)=>setClassName(e.target.value)} className="input">
+              <select value={className} onChange={(e)=>handleClassChange(e.target.value)} className="input">
                 {classes.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
@@ -77,7 +102,7 @@ const UploadMaterial: React.FC = () => {
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">Subject</label>
               <select value={subject} onChange={(e)=>setSubject(e.target.value)} className="input">
-                {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+                {availableSubjects.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
 
