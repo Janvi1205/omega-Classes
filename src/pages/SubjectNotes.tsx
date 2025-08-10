@@ -12,13 +12,35 @@ const SubjectNotes: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
+      
+      // Debug logging
+      const decodedSubject = decodeURIComponent(subject || "");
+      const processedClassName = className?.replace("-", " ") || className;
+      
+      console.log("SubjectNotes Debug:");
+      console.log("- URL className:", className);
+      console.log("- Processed className:", processedClassName);
+      console.log("- URL subject:", subject);
+      console.log("- Decoded subject:", decodedSubject);
+      
       const q = query(
         collection(db, "materials"),
-        where("className", "==", className?.replace("-", " ") || className),
-        where("subject", "==", decodeURIComponent(subject || ""))
+        where("className", "==", processedClassName),
+        where("subject", "==", decodedSubject)
       );
-      const snap = await getDocs(q);
-      setMaterials(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) })));
+      
+      try {
+        const snap = await getDocs(q);
+        const materialsData = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
+        
+        console.log("Query results:", materialsData);
+        console.log("Number of materials found:", materialsData.length);
+        
+        setMaterials(materialsData);
+      } catch (error) {
+        console.error("Error fetching materials:", error);
+      }
+      
       setLoading(false);
     };
     load();
