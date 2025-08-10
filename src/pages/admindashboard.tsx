@@ -90,6 +90,8 @@ const AdminDashboard: React.FC = () => {
         return Atom;
       case 'biology':
         return Microscope;
+      case 'science':
+        return Atom;
       default:
         return BookOpen;
     }
@@ -98,15 +100,17 @@ const AdminDashboard: React.FC = () => {
   const getSubjectColor = (subject: string) => {
     switch (subject?.toLowerCase()) {
       case 'mathematics':
-        return 'from-blue-100 to-blue-200 border-blue-300 dark:from-blue-900 dark:to-blue-800 dark:border-blue-700';
+        return 'from-blue-200 to-blue-300 border-blue-400 dark:from-blue-800 dark:to-blue-700 dark:border-blue-600';
       case 'physics':
-        return 'from-purple-100 to-purple-200 border-purple-300 dark:from-purple-900 dark:to-purple-800 dark:border-purple-700';
+        return 'from-purple-200 to-purple-300 border-purple-400 dark:from-purple-800 dark:to-purple-700 dark:border-purple-600';
       case 'chemistry':
-        return 'from-green-100 to-green-200 border-green-300 dark:from-green-900 dark:to-green-800 dark:border-green-700';
+        return 'from-green-200 to-green-300 border-green-400 dark:from-green-800 dark:to-green-700 dark:border-green-600';
       case 'biology':
-        return 'from-orange-100 to-orange-200 border-orange-300 dark:from-orange-900 dark:to-orange-800 dark:border-orange-700';
+        return 'from-orange-200 to-orange-300 border-orange-400 dark:from-orange-800 dark:to-orange-700 dark:border-orange-600';
+      case 'science':
+        return 'from-green-200 to-green-300 border-green-400 dark:from-green-800 dark:to-green-700 dark:border-green-600';
       default:
-        return 'from-slate-100 to-slate-200 border-slate-300 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700';
+        return 'from-slate-200 to-slate-300 border-slate-400 dark:from-slate-800 dark:to-slate-700 dark:border-slate-600';
     }
   };
 
@@ -221,18 +225,18 @@ const AdminDashboard: React.FC = () => {
                 <Card className={`overflow-hidden ${gradientColor.includes('border-') ? gradientColor.split('border-')[1].split(' ')[0] : 'border-border'}`}>
                   <CardHeader className={`bg-gradient-to-r ${gradientColor.split('border-')[0]} backdrop-blur-sm`}>
                     <CardTitle className="flex items-center gap-3">
-                      <div className="bg-white/90 p-2 rounded-lg backdrop-blur-sm border border-white/50 dark:bg-slate-800/90 dark:border-slate-600/50">
-                        <SubjectIcon size={24} className="text-slate-700 dark:text-slate-300" />
+                      <div className="bg-white p-2 rounded-lg backdrop-blur-sm border border-white shadow-sm dark:bg-slate-800 dark:border-slate-600">
+                        <SubjectIcon size={24} className="text-slate-600 dark:text-slate-200" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-foreground">{group.subject}</h3>
                         <p className="text-muted-foreground text-sm">{group.className}</p>
                       </div>
                       <div className="ml-auto flex gap-2">
-                        <Badge variant="secondary" className="bg-white/70 text-slate-700 border-white/60 dark:bg-slate-800/70 dark:text-slate-300 dark:border-slate-600/60">
+                        <Badge variant="secondary" className="bg-white text-slate-700 border-white shadow-sm dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600">
                           {group.materials.filter(m => m.type === 'Notes').length} Notes
                         </Badge>
-                        <Badge variant="secondary" className="bg-white/70 text-slate-700 border-white/60 dark:bg-slate-800/70 dark:text-slate-300 dark:border-slate-600/60">
+                        <Badge variant="secondary" className="bg-white text-slate-700 border-white shadow-sm dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600">
                           {group.materials.filter(m => m.type === 'Homework').length} Homework
                         </Badge>
                       </div>
@@ -246,7 +250,7 @@ const AdminDashboard: React.FC = () => {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: materialIndex * 0.05 }}
-                          className="p-6 hover:bg-muted/30 transition-colors group"
+                          className="p-6 hover:bg-white/80 transition-colors group dark:hover:bg-slate-800/80"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
