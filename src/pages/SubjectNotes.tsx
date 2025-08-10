@@ -169,43 +169,42 @@ const SubjectNotes: React.FC = () => {
     try {
       // Show loading toast
       toast({
-        title: "Preparing Download",
-        description: `Preparing ${material.fileName} for download...`,
+        title: "Starting Download",
+        description: `Downloading ${material.fileName}...`,
         duration: 2000,
       });
 
-      // Fetch the file as blob to force download
-      const response = await fetch(material.downloadURL);
-      if (!response.ok) throw new Error('Network response was not ok');
-      
-      const blob = await response.blob();
-      
-      // Create blob URL and download
-      const blobUrl = window.URL.createObjectURL(blob);
+      // Create download URL with proper parameters to force download
+      const downloadUrl = material.downloadURL.includes('?') 
+        ? `${material.downloadURL}&response-content-disposition=attachment`
+        : `${material.downloadURL}?response-content-disposition=attachment`;
+
+      // Create temporary link and trigger download
       const link = document.createElement('a');
-      link.href = blobUrl;
+      link.href = downloadUrl;
       link.download = material.fileName;
+      link.style.display = 'none';
       
       // Append to body, click, and cleanup
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       
-      // Clean up blob URL
-      window.URL.revokeObjectURL(blobUrl);
+      // Show success toast after a brief delay
+      setTimeout(() => {
+        toast({
+          title: "Download Started",
+          description: `${material.fileName} is being downloaded to your system.`,
+          duration: 3000,
+        });
+      }, 500);
       
-      // Show success toast
-      toast({
-        title: "Download Completed",
-        description: `${material.fileName} has been downloaded to your system.`,
-        duration: 3000,
-      });
     } catch (error) {
       console.error('Download error:', error);
       // Show error toast if download fails
       toast({
         title: "Download Failed", 
-        description: "Unable to download the file. Please check your connection and try again.",
+        description: "Unable to download the file. Please try again or contact support.",
         variant: "destructive",
         duration: 4000,
       });
