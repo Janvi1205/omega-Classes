@@ -210,20 +210,20 @@
 
   .btn-primary {
     background: var(--gradient-primary);
-    @apply text-primary-foreground hover:opacity-90 px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105;
+    @apply text-primary-foreground hover:opacity-90 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-lg sm:rounded-xl font-bold transition-all duration-300 hover:scale-105 text-sm sm:text-base;
     box-shadow: var(--shadow-primary);
     border: 1px solid hsl(var(--primary));
   }
 
   .btn-secondary {
     background: var(--gradient-secondary);
-    @apply text-secondary-foreground hover:opacity-90 px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105;
+    @apply text-secondary-foreground hover:opacity-90 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-lg sm:rounded-xl font-bold transition-all duration-300 hover:scale-105 text-sm sm:text-base;
     box-shadow: var(--shadow-teal);
   }
 
   .btn-accent {
     background: var(--gradient-accent);
-    @apply text-accent-foreground hover:opacity-90 px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:scale-105;
+    @apply text-accent-foreground hover:opacity-90 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-lg sm:rounded-xl font-bold transition-all duration-300 hover:scale-105 text-sm sm:text-base;
     box-shadow: var(--shadow-accent);
   }
 

@@ -25,7 +25,7 @@ const Contact = () => {
     details: 'Flat No. 102, Lalti Apartment, Kali Mandir Road, Hanuman Nagar, Kankarbagh, Patna - 800020',
     subtitle: 'Visit our campus'
   }];
-  return <section id="contact" className="py-20 bg-secondary/30" ref={ref}>
+  return <section id="contact" className="py-12 sm:py-20 bg-secondary/30" ref={ref}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div initial={{
         opacity: 0,
@@ -35,11 +35,11 @@ const Contact = () => {
         y: 0
       } : {}} transition={{
         duration: 0.8
-      }} className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-foreground mb-4">
+      }} className="text-center mb-8 sm:mb-16">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
           Get In Touch
         </h2>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto">
           Have questions about our courses? We're here to help you choose the right path for your academic success.
         </p>
       </motion.div>
@@ -56,11 +56,11 @@ const Contact = () => {
           duration: 0.8,
           delay: 0.2
         }}>
-          <h3 className="text-2xl font-bold text-foreground mb-8">
+          <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-6 sm:mb-8">
             Contact Information
           </h3>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {contactInfo.map((item, index) => <motion.div key={item.title} initial={{
               opacity: 0,
               y: 20
@@ -70,19 +70,18 @@ const Contact = () => {
             } : {}} transition={{
               duration: 0.6,
               delay: 0.3 + index * 0.1
-            }} className="flex items-start gap-4 p-4 rounded-lg hover:bg-white/50 transition-colors group">
-              <div className="bg-primary text-primary-foreground p-3 rounded-lg group-hover:scale-110 transition-transform">
-                <item.icon size={24} />
+            }} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-white/50 transition-colors group">
+              <div className="bg-primary text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-110 transition-transform flex-shrink-0">
+                <item.icon size={20} className="sm:w-6 sm:h-6" />
               </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-1">
+              <div className="min-w-0">
+                <h4 className="font-semibold text-foreground mb-1 text-sm sm:text-base">
                   {item.title}
                 </h4>
-                <p className="text-foreground font-medium mb-1">
+                <p className="text-foreground font-medium mb-1 text-sm sm:text-base break-words">
                   {item.details}
-
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-xs sm:text-sm">
                   {item.subtitle}
                 </p>
               </div>
@@ -99,28 +98,28 @@ const Contact = () => {
           } : {}} transition={{
             duration: 0.8,
             delay: 0.8
-          }} className="mt-8 space-y-4">
-            <h4 className="font-semibold text-foreground mb-4">
+          }} className="mt-6 sm:mt-8 space-y-4">
+            <h4 className="font-semibold text-foreground mb-4 text-sm sm:text-base">
               Quick Contact
             </h4>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="https://wa.me/917070960095">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a href="https://wa.me/917070960095" className="w-full sm:w-auto">
                 <motion.button whileHover={{
                   scale: 1.05
                 }} whileTap={{
                   scale: 0.95
-                }} className="btn-primary flex items-center justify-center gap-2">
-                  <MessageCircle size={20} />
+                }} className="btn-primary flex items-center justify-center gap-2 w-full text-sm sm:text-base py-3 px-4">
+                  <MessageCircle size={18} className="sm:w-5 sm:h-5" />
                   WhatsApp Us
                 </motion.button>
               </a>
-              <a href='tel:+917070960095' className="flex-1">
+              <a href='tel:+917070960095' className="w-full sm:flex-1">
                 <motion.button whileHover={{
                   scale: 1.05
                 }} whileTap={{
                   scale: 0.95
-                }} className="btn-secondary flex items-center justify-center gap-2">
-                  <Phone size={20} />
+                }} className="btn-secondary flex items-center justify-center gap-2 w-full text-sm sm:text-base py-3 px-4">
+                  <Phone size={18} className="sm:w-5 sm:h-5" />
                   Call Now
                 </motion.button>
               </a>

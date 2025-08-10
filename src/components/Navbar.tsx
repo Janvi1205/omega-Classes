@@ -56,15 +56,16 @@ const Navbar = () => {
           <Link to="/" className="flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-2 sm:gap-3"
             >
               <img 
                 src="/lovable-uploads/015a5adc-4651-42f3-b1d0-de3d52e59fe2.png" 
                 alt="Omega Pro Classes" 
-                className="w-10 h-10"
+                className="w-8 h-8 sm:w-10 sm:h-10"
               />
-              <span className="text-xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Omega Pro Classes
+              <span className="text-lg sm:text-xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                <span className="hidden sm:inline">Omega Pro Classes</span>
+                <span className="sm:hidden">Omega Pro</span>
               </span>
             </motion.div>
           </Link>
