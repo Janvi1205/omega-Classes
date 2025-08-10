@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Material = {
   id: string;
@@ -27,6 +28,7 @@ type Material = {
 const AdminDashboard: React.FC = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedClass, setSelectedClass] = useState<string>("");
   const { logout } = useAuth();
 
   const load = async () => {
@@ -54,9 +56,17 @@ const AdminDashboard: React.FC = () => {
     setMaterials(prev => prev.filter(x => x.id !== m.id));
   };
 
-  // Group materials by class and subject
-  const groupedMaterials = materials.reduce((acc, material) => {
-    const key = `${material.className}-${material.subject}`;
+  // Get available classes
+  const availableClasses = [...new Set(materials.map(m => m.className))].sort();
+  
+  // Filter materials by selected class
+  const filteredMaterials = selectedClass 
+    ? materials.filter(m => m.className === selectedClass)
+    : materials;
+
+  // Group filtered materials by subject
+  const groupedMaterials = filteredMaterials.reduce((acc, material) => {
+    const key = material.subject;
     if (!acc[key]) {
       acc[key] = {
         className: material.className,
@@ -235,7 +245,48 @@ const AdminDashboard: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Materials by Class and Subject */}
+        {/* Class Filter */}
+        {availableClasses.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mb-8"
+          >
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-primary text-primary-foreground p-2 rounded-lg">
+                      <Users size={20} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground">Select Class</h3>
+                      <p className="text-sm text-muted-foreground">Choose a class to view its materials</p>
+                    </div>
+                  </div>
+                  <div className="ml-auto w-64">
+                    <Select value={selectedClass} onValueChange={setSelectedClass}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="All Classes" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">All Classes</SelectItem>
+                        {availableClasses.map((className) => (
+                          <SelectItem key={className} value={className}>
+                            {className}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* Materials by Subject */}
         <div className="space-y-8">
           {Object.entries(groupedMaterials).map(([key, group], groupIndex) => {
             const SubjectIcon = getSubjectIcon(group.subject);
