@@ -224,8 +224,8 @@ const SubjectNotes: React.FC = () => {
               <motion.div 
                 key={chapterName}
                 initial={{ opacity: 0, y: 50 }} 
-                animate={isInView ? { opacity: 1, y: 0 } : {}} 
-                transition={{ duration: 0.6, delay: index * 0.1 }} 
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, y: -2 }} 
                 className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300"
               >
