@@ -15,8 +15,7 @@ const SubjectNotes: React.FC = () => {
       const q = query(
         collection(db, "materials"),
         where("className", "==", className?.replace("-", " ") || className),
-        where("subject", "==", decodeURIComponent(subject || "")),
-        orderBy("createdAt", "desc")
+        where("subject", "==", decodeURIComponent(subject || ""))
       );
       const snap = await getDocs(q);
       setMaterials(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) })));
