@@ -224,7 +224,7 @@ const AdminDashboard: React.FC = () => {
                 transition={{ delay: groupIndex * 0.1 }}
               >
                 <Card className={`overflow-hidden ${gradientColor.includes('border-') ? gradientColor.split('border-')[1].split(' ')[0] : 'border-border'}`}>
-                  <CardHeader className={`bg-gradient-to-r ${gradientColor.split('border-')[0]} backdrop-blur-sm p-4 sm:p-6`}>
+                  <CardHeader className={`bg-gradient-to-r ${gradientColor.split('border-')[0]} backdrop-blur-sm p-4 sm:p-6 bg-opacity-90 sm:bg-opacity-100`}>
                     <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-3">
                       <div className="flex items-center gap-3">
                         <div className="bg-white p-1.5 sm:p-2 rounded-lg backdrop-blur-sm border border-white shadow-sm dark:bg-slate-800 dark:border-slate-600">
@@ -253,7 +253,7 @@ const AdminDashboard: React.FC = () => {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: materialIndex * 0.05 }}
-                          className="p-3 sm:p-6 hover:bg-white/80 transition-colors group dark:hover:bg-slate-800/80"
+                          className="p-3 sm:p-6 hover:bg-white/80 transition-colors group dark:hover:bg-slate-800/80 bg-white/20 sm:bg-transparent dark:bg-slate-800/20 sm:dark:bg-transparent"
                         >
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div className="flex-1 min-w-0">
