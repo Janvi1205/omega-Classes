@@ -164,52 +164,23 @@ const SubjectNotes: React.FC = () => {
   console.log("Should render notes:", Object.keys(groupedNotes).length > 0);
   console.log("Should render homework:", Object.keys(groupedHomework).length > 0);
 
-  // Download handler function - hidden URL approach
-  const handleDownload = async (material: Material) => {
+  // Download handler function - direct browser approach
+  const handleDownload = (material: Material) => {
     try {
       toast({
-        title: "Preparing Download",
-        description: `Preparing ${material.fileName}...`,
+        title: "Download Starting",
+        description: `${material.fileName} will download shortly...`,
         duration: 2000,
       });
 
-      // Create a temporary iframe to download without exposing URL
-      const iframe = document.createElement('iframe');
-      iframe.style.position = 'absolute';
-      iframe.style.top = '-9999px';
-      iframe.style.left = '-9999px';
-      iframe.style.width = '0px';
-      iframe.style.height = '0px';
-      iframe.style.border = 'none';
+      // Method 1: Direct window.location assignment for immediate download
+      window.location.href = material.downloadURL;
       
-      // Set up the iframe for download
-      iframe.onload = () => {
-        // Add download attribute via JavaScript
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-        if (iframeDoc) {
-          const link = iframeDoc.createElement('a');
-          link.href = material.downloadURL;
-          link.download = material.fileName;
-          link.target = '_self';
-          iframeDoc.body.appendChild(link);
-          link.click();
-        }
-        
-        // Remove iframe after download
-        setTimeout(() => {
-          document.body.removeChild(iframe);
-        }, 2000);
-      };
-      
-      // Add iframe to DOM and trigger
-      document.body.appendChild(iframe);
-      iframe.src = 'about:blank';
-      
-      // Show success message
+      // Show success message after a delay
       setTimeout(() => {
         toast({
-          title: "Download Started",
-          description: `${material.fileName} is downloading to your system.`,
+          title: "Download Initiated",
+          description: `${material.fileName} should be in your Downloads folder.`,
           duration: 3000,
         });
       }, 1000);
@@ -217,8 +188,8 @@ const SubjectNotes: React.FC = () => {
     } catch (error) {
       console.error('Download error:', error);
       toast({
-        title: "Download Failed",
-        description: "Please try again or contact support.",
+        title: "Please try again",
+        description: "If download doesn't work, please contact support.",
         variant: "destructive",
         duration: 3000,
       });
