@@ -132,6 +132,13 @@ const SubjectNotes: React.FC = () => {
   console.log("Materials from state:", materials);
   console.log("Grouped materials:", groupedMaterials);
   console.log("Number of chapters:", Object.keys(groupedMaterials).length);
+  
+  // Debug: Show the actual material data
+  if (materials.length > 0) {
+    console.log("First material details:", materials[0]);
+    console.log("Chapter name:", materials[0].chapter);
+    console.log("File name:", materials[0].fileName);
+  }
 
   const IconComponent = getSubjectIcon(subject || '');
   const subjectColor = getSubjectColor(subject || '');
