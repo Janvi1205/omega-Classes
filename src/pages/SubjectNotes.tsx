@@ -5,6 +5,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { motion, useInView } from 'framer-motion';
 import { Download, FileText, BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -26,6 +27,7 @@ const SubjectNotes: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { toast } = useToast();
 
   useEffect(() => {
     const load = async () => {
@@ -162,6 +164,37 @@ const SubjectNotes: React.FC = () => {
   console.log("Should render notes:", Object.keys(groupedNotes).length > 0);
   console.log("Should render homework:", Object.keys(groupedHomework).length > 0);
 
+  // Download handler function
+  const handleDownload = async (material: Material) => {
+    try {
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = material.downloadURL;
+      link.download = material.fileName;
+      link.target = '_blank';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Show success toast
+      toast({
+        title: "Download Started",
+        description: `${material.fileName} is being downloaded to your system.`,
+        duration: 3000,
+      });
+    } catch (error) {
+      // Show error toast if download fails
+      toast({
+        title: "Download Failed", 
+        description: "Unable to download the file. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+  };
+
   const IconComponent = getSubjectIcon(subject || '');
   const subjectColor = getSubjectColor(subject || '');
 
@@ -274,14 +307,12 @@ const SubjectNotes: React.FC = () => {
 
                 <div className="space-y-2">
                   {chapterMaterials.map((material, materialIndex) => (
-                    <motion.a
+                    <motion.button
                       key={material.id}
-                      href={material.downloadURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={() => handleDownload(material)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                      className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
@@ -290,7 +321,7 @@ const SubjectNotes: React.FC = () => {
                       <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
                         Notes
                       </span>
-                    </motion.a>
+                    </motion.button>
                   ))}
                 </div>
               </motion.div>
@@ -375,14 +406,12 @@ const SubjectNotes: React.FC = () => {
 
                 <div className="space-y-2">
                   {chapterMaterials.map((material, materialIndex) => (
-                    <motion.a
+                    <motion.button
                       key={material.id}
-                      href={material.downloadURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={() => handleDownload(material)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                      className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
@@ -391,7 +420,7 @@ const SubjectNotes: React.FC = () => {
                       <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
                         Homework
                       </span>
-                    </motion.a>
+                    </motion.button>
                   ))}
                 </div>
               </motion.div>
