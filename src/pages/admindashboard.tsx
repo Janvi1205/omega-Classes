@@ -98,15 +98,15 @@ const AdminDashboard: React.FC = () => {
   const getSubjectColor = (subject: string) => {
     switch (subject?.toLowerCase()) {
       case 'mathematics':
-        return 'from-blue-50/80 to-blue-100/90 border-blue-200/50 dark:from-blue-950/40 dark:to-blue-900/50 dark:border-blue-800/30';
+        return 'from-blue-100 to-blue-200 border-blue-300 dark:from-blue-900 dark:to-blue-800 dark:border-blue-700';
       case 'physics':
-        return 'from-purple-50/80 to-purple-100/90 border-purple-200/50 dark:from-purple-950/40 dark:to-purple-900/50 dark:border-purple-800/30';
+        return 'from-purple-100 to-purple-200 border-purple-300 dark:from-purple-900 dark:to-purple-800 dark:border-purple-700';
       case 'chemistry':
-        return 'from-green-50/80 to-green-100/90 border-green-200/50 dark:from-green-950/40 dark:to-green-900/50 dark:border-green-800/30';
+        return 'from-green-100 to-green-200 border-green-300 dark:from-green-900 dark:to-green-800 dark:border-green-700';
       case 'biology':
-        return 'from-orange-50/80 to-orange-100/90 border-orange-200/50 dark:from-orange-950/40 dark:to-orange-900/50 dark:border-orange-800/30';
+        return 'from-orange-100 to-orange-200 border-orange-300 dark:from-orange-900 dark:to-orange-800 dark:border-orange-700';
       default:
-        return 'from-muted/50 to-muted/70 border-border dark:from-muted/20 dark:to-muted/30 dark:border-border';
+        return 'from-slate-100 to-slate-200 border-slate-300 dark:from-slate-900 dark:to-slate-800 dark:border-slate-700';
     }
   };
 
@@ -221,18 +221,18 @@ const AdminDashboard: React.FC = () => {
                 <Card className={`overflow-hidden ${gradientColor.includes('border-') ? gradientColor.split('border-')[1].split(' ')[0] : 'border-border'}`}>
                   <CardHeader className={`bg-gradient-to-r ${gradientColor.split('border-')[0]} backdrop-blur-sm`}>
                     <CardTitle className="flex items-center gap-3">
-                      <div className="bg-muted/60 p-2 rounded-lg backdrop-blur-sm border border-border/30">
-                        <SubjectIcon size={24} className="text-muted-foreground" />
+                      <div className="bg-white/90 p-2 rounded-lg backdrop-blur-sm border border-white/50 dark:bg-slate-800/90 dark:border-slate-600/50">
+                        <SubjectIcon size={24} className="text-slate-700 dark:text-slate-300" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-foreground">{group.subject}</h3>
                         <p className="text-muted-foreground text-sm">{group.className}</p>
                       </div>
                       <div className="ml-auto flex gap-2">
-                        <Badge variant="secondary" className="bg-muted/40 text-muted-foreground border-border/50">
+                        <Badge variant="secondary" className="bg-white/70 text-slate-700 border-white/60 dark:bg-slate-800/70 dark:text-slate-300 dark:border-slate-600/60">
                           {group.materials.filter(m => m.type === 'Notes').length} Notes
                         </Badge>
-                        <Badge variant="secondary" className="bg-muted/40 text-muted-foreground border-border/50">
+                        <Badge variant="secondary" className="bg-white/70 text-slate-700 border-white/60 dark:bg-slate-800/70 dark:text-slate-300 dark:border-slate-600/60">
                           {group.materials.filter(m => m.type === 'Homework').length} Homework
                         </Badge>
                       </div>
