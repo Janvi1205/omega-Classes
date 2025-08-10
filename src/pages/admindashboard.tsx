@@ -98,15 +98,15 @@ const AdminDashboard: React.FC = () => {
   const getSubjectColor = (subject: string) => {
     switch (subject?.toLowerCase()) {
       case 'mathematics':
-        return 'from-blue-500 to-blue-600';
+        return 'from-blue-50/80 to-blue-100/90 border-blue-200/50 dark:from-blue-950/40 dark:to-blue-900/50 dark:border-blue-800/30';
       case 'physics':
-        return 'from-purple-500 to-purple-600';
+        return 'from-indigo-50/80 to-indigo-100/90 border-indigo-200/50 dark:from-indigo-950/40 dark:to-indigo-900/50 dark:border-indigo-800/30';
       case 'chemistry':
-        return 'from-green-500 to-green-600';
+        return 'from-emerald-50/80 to-emerald-100/90 border-emerald-200/50 dark:from-emerald-950/40 dark:to-emerald-900/50 dark:border-emerald-800/30';
       case 'biology':
-        return 'from-red-500 to-red-600';
+        return 'from-rose-50/80 to-rose-100/90 border-rose-200/50 dark:from-rose-950/40 dark:to-rose-900/50 dark:border-rose-800/30';
       default:
-        return 'from-primary to-primary/80';
+        return 'from-muted/50 to-muted/70 border-border dark:from-muted/20 dark:to-muted/30 dark:border-border';
     }
   };
 
@@ -218,21 +218,21 @@ const AdminDashboard: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: groupIndex * 0.1 }}
               >
-                <Card className={`overflow-hidden border ${gradientColor.split(' ').slice(-1)[0]}`}>
-                  <CardHeader className={`bg-gradient-to-r ${gradientColor.split(' ').slice(0, -1).join(' ')} backdrop-blur-sm`}>
+                <Card className={`overflow-hidden ${gradientColor.includes('border-') ? gradientColor.split('border-')[1].split(' ')[0] : 'border-border'}`}>
+                  <CardHeader className={`bg-gradient-to-r ${gradientColor.split('border-')[0]} backdrop-blur-sm`}>
                     <CardTitle className="flex items-center gap-3">
-                      <div className="bg-card/80 p-2 rounded-lg backdrop-blur-sm">
-                        <SubjectIcon size={24} className="text-foreground" />
+                      <div className="bg-muted/60 p-2 rounded-lg backdrop-blur-sm border border-border/30">
+                        <SubjectIcon size={24} className="text-muted-foreground" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-foreground">{group.subject}</h3>
                         <p className="text-muted-foreground text-sm">{group.className}</p>
                       </div>
                       <div className="ml-auto flex gap-2">
-                        <Badge variant="secondary" className="bg-card/60 text-foreground border-border/50 backdrop-blur-sm">
+                        <Badge variant="secondary" className="bg-muted/40 text-muted-foreground border-border/50">
                           {group.materials.filter(m => m.type === 'Notes').length} Notes
                         </Badge>
-                        <Badge variant="secondary" className="bg-card/60 text-foreground border-border/50 backdrop-blur-sm">
+                        <Badge variant="secondary" className="bg-muted/40 text-muted-foreground border-border/50">
                           {group.materials.filter(m => m.type === 'Homework').length} Homework
                         </Badge>
                       </div>
