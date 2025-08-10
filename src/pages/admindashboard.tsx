@@ -28,7 +28,7 @@ type Material = {
 const AdminDashboard: React.FC = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedClass, setSelectedClass] = useState<string>("");
+  const [selectedClass, setSelectedClass] = useState<string>("all");
   const { logout } = useAuth();
 
   const load = async () => {
@@ -60,7 +60,7 @@ const AdminDashboard: React.FC = () => {
   const availableClasses = [...new Set(materials.map(m => m.className))].sort();
   
   // Filter materials by selected class
-  const filteredMaterials = selectedClass 
+  const filteredMaterials = selectedClass && selectedClass !== "all"
     ? materials.filter(m => m.className === selectedClass)
     : materials;
 
@@ -271,7 +271,7 @@ const AdminDashboard: React.FC = () => {
                         <SelectValue placeholder="All Classes" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">All Classes</SelectItem>
+                        <SelectItem value="all">All Classes</SelectItem>
                         {availableClasses.map((className) => (
                           <SelectItem key={className} value={className}>
                             {className}
