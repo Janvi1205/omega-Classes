@@ -129,6 +129,10 @@ const SubjectNotes: React.FC = () => {
     return acc;
   }, {} as Record<string, Material[]>);
 
+  console.log("Materials from state:", materials);
+  console.log("Grouped materials:", groupedMaterials);
+  console.log("Number of chapters:", Object.keys(groupedMaterials).length);
+
   const IconComponent = getSubjectIcon(subject || '');
   const subjectColor = getSubjectColor(subject || '');
 
