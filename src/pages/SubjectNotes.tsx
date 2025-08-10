@@ -281,32 +281,42 @@ const SubjectNotes: React.FC = () => {
                 </div>
 
                 {chapterMaterials.length > 1 ? (
-                  <Carousel className="w-full">
-                    <CarouselContent>
-                      {chapterMaterials.map((material, materialIndex) => (
-                        <CarouselItem key={material.id}>
-                          <motion.a
-                            href={material.downloadURL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
-                          >
-                            <div className="flex items-center gap-2">
-                              <Download size={16} />
-                              <span className="truncate">{material.fileName}</span>
-                            </div>
-                            <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
-                              Notes
-                            </span>
-                          </motion.a>
-                        </CarouselItem>
+                  <div className="relative">
+                    <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+                      <CarouselContent className="-ml-2 md:-ml-4">
+                        {chapterMaterials.map((material, materialIndex) => (
+                          <CarouselItem key={material.id} className="pl-2 md:pl-4">
+                            <motion.a
+                              href={material.downloadURL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group"
+                            >
+                              <div className="flex items-center gap-2 min-w-0">
+                                <Download size={16} className="flex-shrink-0" />
+                                <span className="truncate text-sm">{material.fileName}</span>
+                              </div>
+                              <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium flex-shrink-0">
+                                Notes
+                              </span>
+                            </motion.a>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-8 bg-background border-2 hover:bg-accent" />
+                      <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 h-8 w-8 bg-background border-2 hover:bg-accent" />
+                    </Carousel>
+                    <div className="flex justify-center mt-3 gap-1">
+                      {chapterMaterials.map((_, index) => (
+                        <div 
+                          key={index} 
+                          className="w-2 h-2 rounded-full bg-primary/30 hover:bg-primary/60 transition-colors cursor-pointer"
+                        />
                       ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                  </Carousel>
+                    </div>
+                  </div>
                 ) : (
                   <div className="space-y-2">
                     {chapterMaterials.map((material, materialIndex) => (
@@ -411,32 +421,42 @@ const SubjectNotes: React.FC = () => {
                 </div>
 
                 {chapterMaterials.length > 1 ? (
-                  <Carousel className="w-full">
-                    <CarouselContent>
-                      {chapterMaterials.map((material, materialIndex) => (
-                        <CarouselItem key={material.id}>
-                          <motion.a
-                            href={material.downloadURL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
-                          >
-                            <div className="flex items-center gap-2">
-                              <Download size={16} />
-                              <span className="truncate">{material.fileName}</span>
-                            </div>
-                            <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
-                              Homework
-                            </span>
-                          </motion.a>
-                        </CarouselItem>
+                  <div className="relative">
+                    <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+                      <CarouselContent className="-ml-2 md:-ml-4">
+                        {chapterMaterials.map((material, materialIndex) => (
+                          <CarouselItem key={material.id} className="pl-2 md:pl-4">
+                            <motion.a
+                              href={material.downloadURL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group"
+                            >
+                              <div className="flex items-center gap-2 min-w-0">
+                                <Download size={16} className="flex-shrink-0" />
+                                <span className="truncate text-sm">{material.fileName}</span>
+                              </div>
+                              <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium flex-shrink-0">
+                                Homework
+                              </span>
+                            </motion.a>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-8 bg-background border-2 hover:bg-accent" />
+                      <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 h-8 w-8 bg-background border-2 hover:bg-accent" />
+                    </Carousel>
+                    <div className="flex justify-center mt-3 gap-1">
+                      {chapterMaterials.map((_, index) => (
+                        <div 
+                          key={index} 
+                          className="w-2 h-2 rounded-full bg-secondary/30 hover:bg-secondary/60 transition-colors cursor-pointer"
+                        />
                       ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                  </Carousel>
+                    </div>
+                  </div>
                 ) : (
                   <div className="space-y-2">
                     {chapterMaterials.map((material, materialIndex) => (
