@@ -228,11 +228,16 @@ const SubjectNotes: React.FC = () => {
             transition={{ duration: 0.8 }} 
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              📚 Study Notes
-            </h2>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="bg-primary text-primary-foreground p-3 rounded-xl">
+                <BookOpen size={28} />
+              </div>
+              <h2 className="text-3xl font-bold text-foreground">
+                Study Notes
+              </h2>
+            </div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Chapter-wise study notes and materials for comprehensive learning.
+              Chapter-wise study notes and comprehensive learning materials.
             </p>
           </motion.div>
 
@@ -244,17 +249,24 @@ const SubjectNotes: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300"
+                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden"
               >
-                <div className="flex items-start justify-between mb-4">
+                {/* Decorative gradient overlay */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-3xl"></div>
+                
+                <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-primary rounded-full"></div>
+                      <span className="text-xs font-medium text-primary uppercase tracking-wide">Study Notes</span>
+                    </div>
                     <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
                       {chapterName}
                     </h3>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
                         <FileText size={14} />
-                        <span>{chapterMaterials.length} notes</span>
+                        <span>{chapterMaterials.length} {chapterMaterials.length === 1 ? 'note' : 'notes'}</span>
                       </div>
                     </div>
                   </div>
@@ -267,15 +279,15 @@ const SubjectNotes: React.FC = () => {
                       href={material.downloadURL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full bg-blue-500 text-white py-2.5 px-4 rounded-lg font-medium flex items-center justify-between gap-2 hover:bg-blue-600 transition-colors block"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
                         <span className="truncate">{material.fileName}</span>
                       </div>
-                      <span className="text-xs bg-white/20 px-2 py-1 rounded">
+                      <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
                         Notes
                       </span>
                     </motion.a>
@@ -292,9 +304,12 @@ const SubjectNotes: React.FC = () => {
               transition={{ duration: 0.8 }} 
               className="text-center py-12"
             >
-              <div className="card-gradient rounded-2xl p-8">
+              <div className="card-gradient rounded-2xl p-8 border">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen size={24} className="text-muted-foreground" />
+                </div>
                 <h3 className="text-2xl font-bold text-foreground mb-4">
-                  No Notes Available
+                  No Study Notes Available
                 </h3>
                 <p className="text-muted-foreground mb-6">
                   Study notes for {subject} {className?.replace('-', ' ')} haven't been uploaded yet.
@@ -306,7 +321,7 @@ const SubjectNotes: React.FC = () => {
       </section>
 
       {/* Homework Section */}
-      <section className="py-20 bg-muted/20">
+      <section className="py-20 bg-gradient-to-br from-muted/30 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
@@ -314,11 +329,16 @@ const SubjectNotes: React.FC = () => {
             transition={{ duration: 0.8 }} 
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              📝 Homework & Assignments
-            </h2>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="bg-secondary text-secondary-foreground p-3 rounded-xl">
+                <FileText size={28} />
+              </div>
+              <h2 className="text-3xl font-bold text-foreground">
+                Homework & Assignments
+              </h2>
+            </div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Practice exercises and homework assignments for each chapter.
+              Practice exercises and homework assignments for skill development.
             </p>
           </motion.div>
 
@@ -330,17 +350,24 @@ const SubjectNotes: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300"
+                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden"
               >
-                <div className="flex items-start justify-between mb-4">
+                {/* Decorative gradient overlay */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-3xl"></div>
+                
+                <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                      <span className="text-xs font-medium text-secondary uppercase tracking-wide">Homework</span>
+                    </div>
                     <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
                       {chapterName}
                     </h3>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
                         <FileText size={14} />
-                        <span>{chapterMaterials.length} assignments</span>
+                        <span>{chapterMaterials.length} {chapterMaterials.length === 1 ? 'assignment' : 'assignments'}</span>
                       </div>
                     </div>
                   </div>
@@ -353,15 +380,15 @@ const SubjectNotes: React.FC = () => {
                       href={material.downloadURL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full bg-orange-500 text-white py-2.5 px-4 rounded-lg font-medium flex items-center justify-between gap-2 hover:bg-orange-600 transition-colors block"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
                         <span className="truncate">{material.fileName}</span>
                       </div>
-                      <span className="text-xs bg-white/20 px-2 py-1 rounded">
+                      <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
                         Homework
                       </span>
                     </motion.a>
@@ -378,7 +405,10 @@ const SubjectNotes: React.FC = () => {
               transition={{ duration: 0.8 }} 
               className="text-center py-12"
             >
-              <div className="card-gradient rounded-2xl p-8">
+              <div className="card-gradient rounded-2xl p-8 border">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileText size={24} className="text-muted-foreground" />
+                </div>
                 <h3 className="text-2xl font-bold text-foreground mb-4">
                   No Homework Available
                 </h3>
