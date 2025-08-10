@@ -131,6 +131,7 @@ const SubjectNotes: React.FC = () => {
 
   console.log("Materials from state:", materials);
   console.log("Grouped materials:", groupedMaterials);
+  console.log("Grouped materials entries:", Object.entries(groupedMaterials));
   console.log("Number of chapters:", Object.keys(groupedMaterials).length);
   
   // Debug: Show the actual material data
@@ -138,6 +139,7 @@ const SubjectNotes: React.FC = () => {
     console.log("First material details:", materials[0]);
     console.log("Chapter name:", materials[0].chapter);
     console.log("File name:", materials[0].fileName);
+    console.log("Download URL:", materials[0].downloadURL);
   }
 
   const IconComponent = getSubjectIcon(subject || '');
