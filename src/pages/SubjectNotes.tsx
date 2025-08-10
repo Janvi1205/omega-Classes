@@ -48,6 +48,15 @@ const SubjectNotes: React.FC = () => {
       console.log("- URL subject:", subject);
       console.log("- Processed subject:", properSubject);
       
+      // First, let's get ALL materials to see what's actually in the database
+      const allMaterialsQuery = query(collection(db, "materials"));
+      const allSnap = await getDocs(allMaterialsQuery);
+      const allMaterials = allSnap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
+      
+      console.log("ALL MATERIALS IN DATABASE:", allMaterials);
+      console.log("Total materials count:", allMaterials.length);
+      
+      // Now try the specific query
       const q = query(
         collection(db, "materials"),
         where("className", "==", properClassName),
@@ -58,8 +67,17 @@ const SubjectNotes: React.FC = () => {
         const snap = await getDocs(q);
         const materialsData = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
         
-        console.log("Query results:", materialsData);
-        console.log("Number of materials found:", materialsData.length);
+        console.log("FILTERED Query results:", materialsData);
+        console.log("Number of filtered materials found:", materialsData.length);
+        
+        // Let's also try a looser search to see if there are case issues
+        console.log("Looking for materials with similar class/subject:");
+        const similarMaterials = allMaterials.filter(m => 
+          m.className?.toLowerCase().includes('class 7') || 
+          m.className?.toLowerCase().includes('class-7') ||
+          m.subject?.toLowerCase().includes('physics')
+        );
+        console.log("Similar materials found:", similarMaterials);
         
         setMaterials(materialsData);
       } catch (error) {
