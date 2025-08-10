@@ -28,34 +28,118 @@ const StudyMaterial: React.FC = () => {
     }, 100);
   };
 
-  const subjects = [
-    {
-      name: "Mathematics",
-      icon: Calculator,
-      description: "Algebra, Geometry, Calculus & more",
-      color: "bg-blue-500",
-    },
-    {
-      name: "Physics",
-      icon: Zap,
-      description: "Mechanics, Electricity, Optics & more",
-      color: "bg-purple-500",
-    },
-    {
-      name: "Chemistry",
-      icon: Atom,
-      description: "Organic, Inorganic, Physical Chemistry",
-      color: "bg-green-500",
-    },
-    {
-      name: "Biology",
-      icon: Microscope,
-      description: "Life Sciences, Botany, Zoology & more",
-      color: "bg-red-500",
-    },
-  ];
+  // Subject configurations for different sections
+  const getSubjectsForClass = (className: string) => {
+    if (className.includes("Class 7") || className.includes("Class 8") || 
+        className.includes("Class 9") || className.includes("Class 10")) {
+      return [
+        {
+          name: "Mathematics",
+          icon: Calculator,
+          description: "Algebra, Geometry, Number Systems & more",
+          color: "bg-blue-500",
+        },
+        {
+          name: "Physics",
+          icon: Zap,
+          description: "Mechanics, Electricity, Light & more",
+          color: "bg-purple-500",
+        },
+        {
+          name: "Chemistry", 
+          icon: Atom,
+          description: "Atoms, Molecules, Acids & Bases",
+          color: "bg-green-500",
+        },
+        {
+          name: "Biology",
+          icon: Microscope,
+          description: "Life Processes, Heredity, Evolution",
+          color: "bg-orange-500",
+        },
+      ];
+    } else {
+      return [
+        {
+          name: "Mathematics",
+          icon: Calculator,
+          description: "Calculus, Algebra, Coordinate Geometry",
+          color: "bg-blue-500",
+        },
+        {
+          name: "Physics",
+          icon: Zap,
+          description: "Mechanics, Thermodynamics, Optics",
+          color: "bg-purple-500",
+        },
+        {
+          name: "Chemistry",
+          icon: Atom,
+          description: "Organic, Inorganic, Physical Chemistry",
+          color: "bg-green-500",
+        },
+        {
+          name: "Biology",
+          icon: Microscope,
+          description: "Cell Biology, Genetics, Ecology",
+          color: "bg-orange-500",
+        },
+      ];
+    }
+  };
 
   const classes = ["Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12"];
+  
+  const competitiveExams = [
+    {
+      name: "IIT Preparation",
+      description: "Advanced concepts for JEE Main & Advanced",
+      subjects: [
+        {
+          name: "Mathematics",
+          icon: Calculator,
+          description: "Advanced Calculus, Algebra, Coordinate Geometry",
+          color: "bg-blue-500",
+        },
+        {
+          name: "Physics",
+          icon: Zap,
+          description: "Advanced Mechanics, Electromagnetism, Modern Physics",
+          color: "bg-purple-500",
+        },
+        {
+          name: "Chemistry",
+          icon: Atom,
+          description: "Advanced Organic, Inorganic, Physical Chemistry",
+          color: "bg-green-500",
+        },
+      ]
+    },
+    {
+      name: "NEET Preparation", 
+      description: "Medical entrance exam preparation",
+      subjects: [
+        {
+          name: "Biology",
+          icon: Microscope,
+          description: "Botany, Zoology, Human Physiology, Genetics",
+          color: "bg-orange-500",
+        },
+        {
+          name: "Chemistry",
+          icon: Atom,
+          description: "Organic, Inorganic, Physical Chemistry for NEET",
+          color: "bg-green-500",
+        },
+        {
+          name: "Physics",
+          icon: Zap,
+          description: "Mechanics, Optics, Modern Physics for NEET",
+          color: "bg-purple-500",
+        },
+      ]
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -101,20 +185,23 @@ const StudyMaterial: React.FC = () => {
           </motion.div>
 
           <div className="space-y-12">
-            {classes.map((className, classIndex) => (
-              <motion.div
-                key={className}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: classIndex * 0.1 }}
-                className="card-gradient rounded-2xl p-8"
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-primary text-primary-foreground p-3 rounded-lg">
-                    <BookOpen size={24} />
+            {/* School Classes Section */}
+            {classes.map((className, classIndex) => {
+              const subjects = getSubjectsForClass(className);
+              return (
+                <motion.div
+                  key={className}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: classIndex * 0.1 }}
+                  className="card-gradient rounded-2xl p-8"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-primary text-primary-foreground p-3 rounded-lg">
+                      <BookOpen size={24} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-foreground">{className}</h3>
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">{className}</h3>
-                </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
                   {subjects.map((subject, index) => {
@@ -133,6 +220,66 @@ const StudyMaterial: React.FC = () => {
                       >
                         <Link
                           to={`/subject/${className.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
+                          className="block"
+                        >
+                          <div className="flex flex-col items-center text-center">
+                            <div
+                              className={`${subject.color} text-white p-3 sm:p-4 rounded-full mb-3 sm:mb-4`}
+                            >
+                              <IconComponent size={24} className="sm:w-8 sm:h-8" />
+                            </div>
+                            <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg">
+                              {subject.name}
+                            </h4>
+                            <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
+                              {subject.description}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+              );
+            })}
+
+            {/* Competitive Exams Section */}
+            {competitiveExams.map((exam, examIndex) => (
+              <motion.div
+                key={exam.name}
+                initial={{ opacity: 0, y: 50 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: (classes.length + examIndex) * 0.1 }}
+                className="card-gradient rounded-2xl p-8 border-2 border-primary/20"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground p-3 rounded-lg">
+                    <BookOpen size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-foreground">{exam.name}</h3>
+                    <p className="text-muted-foreground text-sm">{exam.description}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                  {exam.subjects.map((subject, index) => {
+                    const IconComponent = subject.icon;
+                    return (
+                      <motion.div
+                        key={subject.name}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{
+                          duration: 0.4,
+                          delay: (classes.length + examIndex) * 0.1 + index * 0.05,
+                        }}
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        className="bg-background rounded-xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-300 cursor-pointer"
+                      >
+                        <Link
+                          to={`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
                           className="block"
                         >
                           <div className="flex flex-col items-center text-center">
