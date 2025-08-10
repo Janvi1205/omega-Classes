@@ -5,7 +5,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 const classes = ["Class 7", "Class 8", "Class 9", "Class 10", "Class 11", "Class 12", "IIT Preparation", "NEET Preparation"];
-const subjects = ["Mathematics", "Physics", "Chemistry", "Biology"];
+const subjects = ["Mathematics", "Science", "Physics", "Chemistry", "Biology"];
 
 const UploadMaterial: React.FC = () => {
   const [className, setClassName] = useState(classes[0]);

@@ -36,26 +36,12 @@ const StudyMaterial: React.FC = () => {
         {
           name: "Mathematics",
           icon: Calculator,
-          description: "Algebra, Geometry, Number Systems & more",
           color: "bg-blue-500",
         },
         {
-          name: "Physics",
-          icon: Zap,
-          description: "Mechanics, Electricity, Light & more",
-          color: "bg-purple-500",
-        },
-        {
-          name: "Chemistry", 
+          name: "Science",
           icon: Atom,
-          description: "Atoms, Molecules, Acids & Bases",
           color: "bg-green-500",
-        },
-        {
-          name: "Biology",
-          icon: Microscope,
-          description: "Life Processes, Heredity, Evolution",
-          color: "bg-orange-500",
         },
       ];
     } else {
@@ -63,25 +49,21 @@ const StudyMaterial: React.FC = () => {
         {
           name: "Mathematics",
           icon: Calculator,
-          description: "Calculus, Algebra, Coordinate Geometry",
           color: "bg-blue-500",
         },
         {
           name: "Physics",
           icon: Zap,
-          description: "Mechanics, Thermodynamics, Optics",
           color: "bg-purple-500",
         },
         {
           name: "Chemistry",
           icon: Atom,
-          description: "Organic, Inorganic, Physical Chemistry",
           color: "bg-green-500",
         },
         {
           name: "Biology",
           icon: Microscope,
-          description: "Cell Biology, Genetics, Ecology",
           color: "bg-orange-500",
         },
       ];
@@ -98,19 +80,16 @@ const StudyMaterial: React.FC = () => {
         {
           name: "Mathematics",
           icon: Calculator,
-          description: "Advanced Calculus, Algebra, Coordinate Geometry",
           color: "bg-blue-500",
         },
         {
           name: "Physics",
           icon: Zap,
-          description: "Advanced Mechanics, Electromagnetism, Modern Physics",
           color: "bg-purple-500",
         },
         {
           name: "Chemistry",
           icon: Atom,
-          description: "Advanced Organic, Inorganic, Physical Chemistry",
           color: "bg-green-500",
         },
       ]
@@ -122,19 +101,16 @@ const StudyMaterial: React.FC = () => {
         {
           name: "Biology",
           icon: Microscope,
-          description: "Botany, Zoology, Human Physiology, Genetics",
           color: "bg-orange-500",
         },
         {
           name: "Chemistry",
           icon: Atom,
-          description: "Organic, Inorganic, Physical Chemistry for NEET",
           color: "bg-green-500",
         },
         {
           name: "Physics",
           icon: Zap,
-          description: "Mechanics, Optics, Modern Physics for NEET",
           color: "bg-purple-500",
         },
       ]
@@ -203,7 +179,7 @@ const StudyMaterial: React.FC = () => {
                     <h3 className="text-2xl font-bold text-foreground">{className}</h3>
                   </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <div className={`grid gap-4 sm:gap-6 ${subjects.length === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-2 md:grid-cols-4'}`}>
                   {subjects.map((subject, index) => {
                     const IconComponent = subject.icon;
                     return (
@@ -231,9 +207,6 @@ const StudyMaterial: React.FC = () => {
                             <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg">
                               {subject.name}
                             </h4>
-                            <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
-                              {subject.description}
-                            </p>
                           </div>
                         </Link>
                       </motion.div>
@@ -291,9 +264,6 @@ const StudyMaterial: React.FC = () => {
                             <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg">
                               {subject.name}
                             </h4>
-                            <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
-                              {subject.description}
-                            </p>
                           </div>
                         </Link>
                       </motion.div>
