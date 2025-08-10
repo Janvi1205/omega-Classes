@@ -13,20 +13,27 @@ const SubjectNotes: React.FC = () => {
     const load = async () => {
       setLoading(true);
       
-      // Debug logging
+      // Fix case sensitivity issues
       const decodedSubject = decodeURIComponent(subject || "");
       const processedClassName = className?.replace("-", " ") || className;
       
+      // Convert to proper case for matching
+      const properClassName = processedClassName.split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+      
+      const properSubject = decodedSubject.charAt(0).toUpperCase() + decodedSubject.slice(1).toLowerCase();
+      
       console.log("SubjectNotes Debug:");
       console.log("- URL className:", className);
-      console.log("- Processed className:", processedClassName);
+      console.log("- Processed className:", properClassName);
       console.log("- URL subject:", subject);
-      console.log("- Decoded subject:", decodedSubject);
+      console.log("- Processed subject:", properSubject);
       
       const q = query(
         collection(db, "materials"),
-        where("className", "==", processedClassName),
-        where("subject", "==", decodedSubject)
+        where("className", "==", properClassName),
+        where("subject", "==", properSubject)
       );
       
       try {
