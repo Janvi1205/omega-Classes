@@ -170,38 +170,68 @@ const SubjectNotes: React.FC = () => {
       // Show loading toast
       toast({
         title: "Starting Download",
-        description: `Downloading ${material.fileName}...`,
+        description: `Preparing ${material.fileName} for download...`,
         duration: 2000,
       });
 
-      // Simple approach: open in new tab with download intent
-      const link = document.createElement('a');
-      link.href = material.downloadURL;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.download = material.fileName;
-      
-      // Trigger click
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Show success toast
-      setTimeout(() => {
-        toast({
-          title: "Download Started",
-          description: `${material.fileName} should start downloading. If it opens in browser, right-click and select "Save As".`,
-          duration: 4000,
+      // Try to fetch and force download as blob
+      try {
+        const response = await fetch(material.downloadURL, {
+          mode: 'no-cors',
+          method: 'GET',
         });
-      }, 500);
+        
+        // If fetch succeeds, create blob and download
+        if (response.ok || response.type === 'opaque') {
+          const blob = await response.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = material.fileName;
+          link.style.display = 'none';
+          
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          URL.revokeObjectURL(blobUrl);
+          
+          toast({
+            title: "Download Completed",
+            description: `${material.fileName} has been downloaded to your system.`,
+            duration: 3000,
+          });
+          return;
+        }
+      } catch (fetchError) {
+        console.log('Fetch failed, trying alternative method:', fetchError);
+      }
+      
+      // Fallback: Try iframe download method
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = material.downloadURL;
+      document.body.appendChild(iframe);
+      
+      // Remove iframe after download attempt
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+      }, 3000);
+      
+      toast({
+        title: "Download Initiated",
+        description: `${material.fileName} download started. Check your downloads folder.`,
+        duration: 3000,
+      });
       
     } catch (error) {
       console.error('Download error:', error);
       toast({
-        title: "Download Failed", 
-        description: "Please try right-clicking the file and selecting 'Save Link As'.",
+        title: "Manual Download Required", 
+        description: `Please right-click the download button and select "Save Link As" to download ${material.fileName}.`,
         variant: "destructive",
-        duration: 4000,
+        duration: 5000,
       });
     }
   };
