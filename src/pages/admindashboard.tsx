@@ -46,29 +46,56 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Admin Dashboard</h2>
-        <div className="flex gap-2">
-          <Link to="/admin/upload" className="btn-primary">Upload material</Link>
-          <button className="btn-ghost" onClick={() => logout()}>Logout</button>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        {materials.map(m => (
-          <div key={m.id} className="p-4 bg-background rounded shadow-sm flex justify-between items-center">
-            <div>
-              <div className="font-semibold">{m.fileName} <span className="text-sm text-muted">({m.type})</span></div>
-              <div className="text-sm">{m.className} • {m.subject} • {m.chapter}</div>
-            </div>
-            <div className="flex gap-2">
-              <a href={m.downloadURL} target="_blank" rel="noreferrer" className="btn-secondary">Open</a>
-              <button className="btn-destructive" onClick={()=>handleDelete(m)}>Delete</button>
-            </div>
+    <div className="min-h-screen bg-background">
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold text-foreground">Admin Dashboard</h2>
+          <div className="flex gap-3">
+            <Link to="/admin/upload" className="btn-primary">
+              Upload Material
+            </Link>
+            <button className="btn-ghost" onClick={() => logout()}>
+              Logout
+            </button>
           </div>
-        ))}
-        {materials.length === 0 && <div>No materials yet</div>}
+        </div>
+
+        <div className="space-y-4">
+          {materials.map(m => (
+            <div key={m.id} className="p-6 bg-card rounded-xl shadow-md flex justify-between items-center hover:shadow-lg transition-shadow">
+              <div>
+                <div className="font-semibold text-lg text-foreground">
+                  {m.fileName} 
+                  <span className="text-sm text-muted-foreground ml-2">({m.type})</span>
+                </div>
+                <div className="text-sm text-muted-foreground mt-1">
+                  {m.className} • {m.subject} • {m.chapter}
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <a 
+                  href={m.downloadURL} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="btn-secondary"
+                >
+                  Open
+                </a>
+                <button 
+                  className="btn-destructive" 
+                  onClick={()=>handleDelete(m)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+          {materials.length === 0 && (
+            <div className="text-center py-12 text-muted-foreground">
+              No materials uploaded yet. Click "Upload Material" to get started.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -62,33 +62,104 @@ const UploadMaterial: React.FC = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-8 p-6 bg-card rounded">
-      <h3 className="text-xl font-semibold mb-4">Upload study material</h3>
-      <form onSubmit={handleUpload} className="space-y-4">
-        <select value={className} onChange={(e)=>setClassName(e.target.value)} className="input">
-          {classes.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+    <div className="min-h-screen bg-background">
+      <div className="max-w-3xl mx-auto pt-8 p-6">
+        <div className="bg-card rounded-xl shadow-lg p-8">
+          <h3 className="text-2xl font-bold mb-6 text-foreground">Upload Study Material</h3>
+          <form onSubmit={handleUpload} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Class</label>
+              <select value={className} onChange={(e)=>setClassName(e.target.value)} className="input">
+                {classes.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
 
-        <select value={subject} onChange={(e)=>setSubject(e.target.value)} className="input">
-          {subjects.map(s => <option key={s} value={s}>{s}</option>)}
-        </select>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Subject</label>
+              <select value={subject} onChange={(e)=>setSubject(e.target.value)} className="input">
+                {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
 
-        <input className="input" placeholder="Chapter name" value={chapter} onChange={(e)=>setChapter(e.target.value)} />
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Chapter Name</label>
+              <input 
+                className="input" 
+                placeholder="Enter chapter name" 
+                value={chapter} 
+                onChange={(e)=>setChapter(e.target.value)} 
+                required
+              />
+            </div>
 
-        <div className="flex gap-4">
-          <label className="flex items-center gap-2"><input type="radio" checked={sectionType==="Notes"} onChange={()=>setSectionType("Notes")} /> Notes</label>
-          <label className="flex items-center gap-2"><input type="radio" checked={sectionType==="Homework"} onChange={()=>setSectionType("Homework")} /> Homework</label>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-3">Material Type</label>
+              <div className="flex gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    checked={sectionType==="Notes"} 
+                    onChange={()=>setSectionType("Notes")}
+                    className="text-primary focus:ring-primary"
+                  /> 
+                  <span className="text-foreground">Notes</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    checked={sectionType==="Homework"} 
+                    onChange={()=>setSectionType("Homework")}
+                    className="text-primary focus:ring-primary"
+                  /> 
+                  <span className="text-foreground">Homework</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Upload File</label>
+              <input 
+                type="file" 
+                onChange={(e)=>setFile(e.target.files?.[0] ?? null)}
+                className="input"
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png"
+                required
+              />
+            </div>
+
+            {progress !== null && (
+              <div className="bg-muted p-4 rounded-lg">
+                <div className="text-sm font-medium text-foreground mb-2">
+                  Uploading: {progress}%
+                </div>
+                <div className="w-full bg-background rounded-full h-2">
+                  <div 
+                    className="bg-primary h-2 rounded-full transition-all duration-300" 
+                    style={{width: `${progress}%`}}
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex gap-4 pt-4">
+              <button 
+                className="btn-primary flex-1" 
+                type="submit" 
+                disabled={loading}
+              >
+                {loading ? "Uploading..." : "Upload Material"}
+              </button>
+              <button 
+                type="button" 
+                className="btn-ghost px-8" 
+                onClick={()=>navigate("/admin")}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
-
-        <input type="file" onChange={(e)=>setFile(e.target.files?.[0] ?? null)} />
-
-        {progress !== null && <div>Uploading: {progress}%</div>}
-
-        <div className="flex gap-3">
-          <button className="btn-primary" type="submit" disabled={loading}>{loading ? "Uploading..." : "Upload"}</button>
-          <button type="button" className="btn-secondary" onClick={()=>navigate("/admin")}>Cancel</button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

@@ -22,14 +22,36 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-24 p-6 bg-card rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Teacher Login</h2>
-      {err && <div className="text-sm text-red-500 mb-2">{err}</div>}
-      <form onSubmit={submit} className="space-y-4">
-        <input className="input" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} required />
-        <input className="input" placeholder="Password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} required />
-        <button className="btn-primary w-full" type="submit">Sign in</button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="max-w-md w-full mx-4 p-8 bg-card rounded-xl shadow-lg">
+        <h2 className="text-3xl font-bold mb-6 text-center text-foreground">Teacher Login</h2>
+        {err && (
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm p-3 rounded-lg mb-4">
+            {err}
+          </div>
+        )}
+        <form onSubmit={submit} className="space-y-6">
+          <input 
+            className="input" 
+            placeholder="Email" 
+            type="email"
+            value={email} 
+            onChange={(e)=>setEmail(e.target.value)} 
+            required 
+          />
+          <input 
+            className="input" 
+            placeholder="Password" 
+            type="password" 
+            value={password} 
+            onChange={(e)=>setPassword(e.target.value)} 
+            required 
+          />
+          <button className="btn-primary w-full" type="submit">
+            Sign in
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
