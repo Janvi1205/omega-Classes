@@ -119,8 +119,20 @@ const SubjectNotes: React.FC = () => {
     }
   };
 
-  // Group materials by chapter
-  const groupedMaterials = materials.reduce((acc, material) => {
+  // Group materials by type (Notes vs Homework) and then by chapter
+  const notesMaterials = materials.filter(material => material.type === 'Notes');
+  const homeworkMaterials = materials.filter(material => material.type === 'Homework');
+
+  const groupedNotes = notesMaterials.reduce((acc, material) => {
+    const chapter = material.chapter || 'Untitled';
+    if (!acc[chapter]) {
+      acc[chapter] = [];
+    }
+    acc[chapter].push(material);
+    return acc;
+  }, {} as Record<string, Material[]>);
+
+  const groupedHomework = homeworkMaterials.reduce((acc, material) => {
     const chapter = material.chapter || 'Untitled';
     if (!acc[chapter]) {
       acc[chapter] = [];
@@ -130,9 +142,12 @@ const SubjectNotes: React.FC = () => {
   }, {} as Record<string, Material[]>);
 
   console.log("Materials from state:", materials);
-  console.log("Grouped materials:", groupedMaterials);
-  console.log("Grouped materials entries:", Object.entries(groupedMaterials));
-  console.log("Number of chapters:", Object.keys(groupedMaterials).length);
+  console.log("Notes materials:", notesMaterials);
+  console.log("Homework materials:", homeworkMaterials);
+  console.log("Grouped notes:", groupedNotes);
+  console.log("Grouped homework:", groupedHomework);
+  console.log("Number of note chapters:", Object.keys(groupedNotes).length);
+  console.log("Number of homework chapters:", Object.keys(groupedHomework).length);
   
   // Debug: Show the actual material data
   if (materials.length > 0) {
@@ -140,10 +155,12 @@ const SubjectNotes: React.FC = () => {
     console.log("Chapter name:", materials[0].chapter);
     console.log("File name:", materials[0].fileName);
     console.log("Download URL:", materials[0].downloadURL);
+    console.log("Material type:", materials[0].type);
   }
   
   console.log("isInView state:", isInView);
-  console.log("Should render materials:", Object.keys(groupedMaterials).length > 0);
+  console.log("Should render notes:", Object.keys(groupedNotes).length > 0);
+  console.log("Should render homework:", Object.keys(groupedHomework).length > 0);
 
   const IconComponent = getSubjectIcon(subject || '');
   const subjectColor = getSubjectColor(subject || '');
@@ -202,7 +219,7 @@ const SubjectNotes: React.FC = () => {
         </div>
       </section>
 
-      {/* Chapter Materials */}
+      {/* Notes Section */}
       <section className="py-20" ref={ref}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -212,17 +229,17 @@ const SubjectNotes: React.FC = () => {
             className="text-center mb-12"
           >
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Chapter-wise Materials
+              📚 Study Notes
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Access comprehensive notes and practice materials for each chapter.
+              Chapter-wise study notes and materials for comprehensive learning.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Object.entries(groupedMaterials).map(([chapterName, chapterMaterials], index) => (
+            {Object.entries(groupedNotes).map(([chapterName, chapterMaterials], index) => (
               <motion.div 
-                key={chapterName}
+                key={`notes-${chapterName}`}
                 initial={{ opacity: 0, y: 50 }} 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -237,7 +254,7 @@ const SubjectNotes: React.FC = () => {
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
                         <FileText size={14} />
-                        <span>{chapterMaterials.length} files</span>
+                        <span>{chapterMaterials.length} notes</span>
                       </div>
                     </div>
                   </div>
@@ -252,14 +269,14 @@ const SubjectNotes: React.FC = () => {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-full bg-primary text-primary-foreground py-2.5 px-4 rounded-lg font-medium flex items-center justify-between gap-2 hover:bg-primary/90 transition-colors block"
+                      className="w-full bg-blue-500 text-white py-2.5 px-4 rounded-lg font-medium flex items-center justify-between gap-2 hover:bg-blue-600 transition-colors block"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
                         <span className="truncate">{material.fileName}</span>
                       </div>
-                      <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded">
-                        {material.type}
+                      <span className="text-xs bg-white/20 px-2 py-1 rounded">
+                        Notes
                       </span>
                     </motion.a>
                   ))}
@@ -268,7 +285,7 @@ const SubjectNotes: React.FC = () => {
             ))}
           </div>
 
-          {Object.keys(groupedMaterials).length === 0 && (
+          {Object.keys(groupedNotes).length === 0 && (
             <motion.div 
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }}
@@ -277,15 +294,97 @@ const SubjectNotes: React.FC = () => {
             >
               <div className="card-gradient rounded-2xl p-8">
                 <h3 className="text-2xl font-bold text-foreground mb-4">
-                  No Materials Yet!
+                  No Notes Available
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Materials for {subject} {className?.replace('-', ' ')} haven't been uploaded yet. 
-                  Check back soon or contact your teacher.
+                  Study notes for {subject} {className?.replace('-', ' ')} haven't been uploaded yet.
                 </p>
-                <Link to="/study-material" className="btn-primary">
-                  Browse Other Subjects
-                </Link>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Homework Section */}
+      <section className="py-20 bg-muted/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }} 
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              📝 Homework & Assignments
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Practice exercises and homework assignments for each chapter.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Object.entries(groupedHomework).map(([chapterName, chapterMaterials], index) => (
+              <motion.div 
+                key={`homework-${chapterName}`}
+                initial={{ opacity: 0, y: 50 }} 
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -2 }} 
+                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
+                      {chapterName}
+                    </h3>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <FileText size={14} />
+                        <span>{chapterMaterials.length} assignments</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  {chapterMaterials.map((material, materialIndex) => (
+                    <motion.a
+                      key={material.id}
+                      href={material.downloadURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-full bg-orange-500 text-white py-2.5 px-4 rounded-lg font-medium flex items-center justify-between gap-2 hover:bg-orange-600 transition-colors block"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Download size={16} />
+                        <span className="truncate">{material.fileName}</span>
+                      </div>
+                      <span className="text-xs bg-white/20 px-2 py-1 rounded">
+                        Homework
+                      </span>
+                    </motion.a>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {Object.keys(groupedHomework).length === 0 && (
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }} 
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }} 
+              className="text-center py-12"
+            >
+              <div className="card-gradient rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  No Homework Available
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Homework assignments for {subject} {className?.replace('-', ' ')} haven't been uploaded yet.
+                </p>
               </div>
             </motion.div>
           )}
