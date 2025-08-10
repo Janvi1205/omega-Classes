@@ -289,8 +289,7 @@ const AdminDashboard: React.FC = () => {
                                   rel="noreferrer"
                                 >
                                   <Download size={12} className="sm:w-3.5 sm:h-3.5" />
-                                  <span className="hidden sm:inline">Open</span>
-                                  <span className="sm:hidden">View</span>
+                                  View
                                 </a>
                               </Button>
                               <Button
@@ -300,8 +299,7 @@ const AdminDashboard: React.FC = () => {
                                 className="gap-1 sm:gap-2 text-xs sm:text-sm"
                               >
                                 <Trash2 size={12} className="sm:w-3.5 sm:h-3.5" />
-                                <span className="hidden sm:inline">Delete</span>
-                                <span className="sm:hidden">Del</span>
+                                Delete
                               </Button>
                             </div>
                           </div>
