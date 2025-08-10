@@ -164,75 +164,13 @@ const SubjectNotes: React.FC = () => {
   console.log("Should render notes:", Object.keys(groupedNotes).length > 0);
   console.log("Should render homework:", Object.keys(groupedHomework).length > 0);
 
-  // Download handler function
-  const handleDownload = async (material: Material) => {
-    try {
-      // Show loading toast
-      toast({
-        title: "Starting Download",
-        description: `Downloading ${material.fileName}...`,
-        duration: 2000,
-      });
-
-      // Create download URL with proper Firebase parameters
-      let downloadUrl = material.downloadURL;
-      
-      // Add download parameter to Firebase URL
-      if (downloadUrl.includes('?')) {
-        downloadUrl += '&response-content-disposition=attachment';
-      } else {
-        downloadUrl += '?response-content-disposition=attachment';
-      }
-      
-      // Method 1: Try window.open with download
-      const downloadWindow = window.open(downloadUrl, '_blank');
-      
-      // Close the window after a short delay
-      setTimeout(() => {
-        if (downloadWindow) {
-          downloadWindow.close();
-        }
-      }, 1000);
-      
-      // Show success toast
-      setTimeout(() => {
-        toast({
-          title: "Download Started",
-          description: `${material.fileName} should be downloading. Check your Downloads folder.`,
-          duration: 4000,
-        });
-      }, 500);
-      
-    } catch (error) {
-      console.error('Download error:', error);
-      
-      // Fallback: Create a temporary link
-      try {
-        const link = document.createElement('a');
-        link.href = material.downloadURL;
-        link.download = material.fileName;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        
-        // Add to DOM, click, and remove
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        toast({
-          title: "Download Attempted",
-          description: `If download didn't start, right-click and "Save Link As" to download ${material.fileName}.`,
-          duration: 4000,
-        });
-      } catch (fallbackError) {
-        toast({
-          title: "Manual Download Required", 
-          description: `Please right-click the download button and select "Save Link As" to download ${material.fileName}.`,
-          variant: "destructive",
-          duration: 5000,
-        });
-      }
-    }
+  // Download handler function - simplified approach
+  const handleDownload = (material: Material) => {
+    toast({
+      title: "Download Starting",
+      description: `${material.fileName} will download shortly. Check your Downloads folder.`,
+      duration: 3000,
+    });
   };
 
   const IconComponent = getSubjectIcon(subject || '');
@@ -347,12 +285,16 @@ const SubjectNotes: React.FC = () => {
 
                 <div className="space-y-2">
                   {chapterMaterials.map((material, materialIndex) => (
-                    <motion.button
+                    <motion.a
                       key={material.id}
+                      href={material.downloadURL}
+                      download={material.fileName}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => handleDownload(material)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300"
+                      className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 no-underline"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
@@ -361,7 +303,7 @@ const SubjectNotes: React.FC = () => {
                       <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
                         Notes
                       </span>
-                    </motion.button>
+                    </motion.a>
                   ))}
                 </div>
               </motion.div>
@@ -446,12 +388,16 @@ const SubjectNotes: React.FC = () => {
 
                 <div className="space-y-2">
                   {chapterMaterials.map((material, materialIndex) => (
-                    <motion.button
+                    <motion.a
                       key={material.id}
+                      href={material.downloadURL}
+                      download={material.fileName}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => handleDownload(material)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300"
+                      className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 no-underline"
                     >
                       <div className="flex items-center gap-2">
                         <Download size={16} />
@@ -460,7 +406,7 @@ const SubjectNotes: React.FC = () => {
                       <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
                         Homework
                       </span>
-                    </motion.button>
+                    </motion.a>
                   ))}
                 </div>
               </motion.div>
