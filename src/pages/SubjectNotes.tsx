@@ -141,6 +141,9 @@ const SubjectNotes: React.FC = () => {
     console.log("File name:", materials[0].fileName);
     console.log("Download URL:", materials[0].downloadURL);
   }
+  
+  console.log("isInView state:", isInView);
+  console.log("Should render materials:", Object.keys(groupedMaterials).length > 0);
 
   const IconComponent = getSubjectIcon(subject || '');
   const subjectColor = getSubjectColor(subject || '');
