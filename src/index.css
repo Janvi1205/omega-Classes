@@ -7,47 +7,47 @@
 @layer base {
   :root {
     /* Base colors - Light mode */
-    --background: 0 0% 98%;
-    --foreground: 213 17% 17%;
+    --background: 220 20% 97%;
+    --foreground: 215 20% 25%;
 
     /* Card colors */
-    --card: 0 0% 100%;
-    --card-foreground: 213 17% 17%;
+    --card: 220 25% 96%;
+    --card-foreground: 215 20% 25%;
 
-    /* Primary - Navy Blue */
-    --primary: 200 25% 14%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 200 25% 10%;
-    --primary-light: 200 25% 20%;
+    /* Primary - Sophisticated Navy */
+    --primary: 215 25% 18%;
+    --primary-foreground: 220 20% 97%;
+    --primary-hover: 215 25% 15%;
+    --primary-light: 215 25% 22%;
 
-    /* Secondary - Teal */
-    --secondary: 203 78% 26%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Muted Teal */
+    --secondary: 200 35% 35%;
+    --secondary-foreground: 220 20% 97%;
 
     /* Muted */
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 220 15% 93%;
+    --muted-foreground: 215 15% 50%;
 
-    /* Accent - Aqua */
-    --accent: 185 100% 38%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Soft Blue */
+    --accent: 210 40% 55%;
+    --accent-foreground: 220 20% 97%;
 
     /* Success */
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
+    --success: 145 40% 45%;
+    --success-foreground: 220 20% 97%;
 
     /* Warning */
-    --warning: 45 93% 47%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 35 60% 55%;
+    --warning-foreground: 220 20% 97%;
 
     /* Destructive */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 355 55% 55%;
+    --destructive-foreground: 220 20% 97%;
 
     /* Borders and inputs */
-    --border: 200 15% 85%;
-    --input: 200 15% 90%;
-    --ring: 185 100% 38%;
+    --border: 220 15% 87%;
+    --input: 220 15% 90%;
+    --ring: 210 40% 55%;
 
     /* Modern Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(200 25% 14%) 0%, hsl(203 78% 26%) 50%, hsl(0 0% 98%) 100%);
@@ -87,51 +87,51 @@
 
   .dark {
     /* Base colors - Dark mode */
-    --background: 200 25% 8%;
-    --foreground: 0 0% 98%;
+    --background: 215 25% 10%;
+    --foreground: 220 15% 88%;
 
     /* Card colors */
-    --card: 200 25% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 215 25% 13%;
+    --card-foreground: 220 15% 88%;
 
     /* Popover */
-    --popover: 200 25% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 215 25% 13%;
+    --popover-foreground: 220 15% 88%;
 
-    /* Primary - Navy Blue for dark mode */
-    --primary: 200 25% 20%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 200 25% 25%;
-    --primary-light: 200 25% 30%;
+    /* Primary - Soft Navy for dark mode */
+    --primary: 210 30% 25%;
+    --primary-foreground: 220 15% 88%;
+    --primary-hover: 210 30% 30%;
+    --primary-light: 210 30% 35%;
 
-    /* Secondary - Teal */
-    --secondary: 203 78% 36%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Muted Teal */
+    --secondary: 200 25% 40%;
+    --secondary-foreground: 220 15% 88%;
 
     /* Muted */
-    --muted: 200 15% 15%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 215 20% 16%;
+    --muted-foreground: 220 10% 65%;
 
-    /* Accent - Aqua */
-    --accent: 185 100% 48%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Soft Blue */
+    --accent: 210 35% 50%;
+    --accent-foreground: 220 15% 88%;
 
     /* Success */
-    --success: 142 71% 55%;
-    --success-foreground: 0 0% 100%;
+    --success: 145 35% 50%;
+    --success-foreground: 220 15% 88%;
 
     /* Warning */
-    --warning: 45 93% 57%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 35 50% 60%;
+    --warning-foreground: 220 15% 88%;
 
     /* Destructive */
-    --destructive: 0 84% 70%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 355 45% 60%;
+    --destructive-foreground: 220 15% 88%;
 
     /* Borders and inputs */
-    --border: 200 15% 25%;
-    --input: 200 15% 20%;
-    --ring: 185 100% 48%;
+    --border: 215 20% 20%;
+    --input: 215 20% 18%;
+    --ring: 210 35% 50%;
 
     /* Dark mode gradients */
     --gradient-hero: linear-gradient(135deg, hsl(200 25% 8%) 0%, hsl(203 78% 26%) 50%, hsl(185 100% 48%) 100%);

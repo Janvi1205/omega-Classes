@@ -218,19 +218,21 @@ const AdminDashboard: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: groupIndex * 0.1 }}
               >
-                <Card className="overflow-hidden">
-                  <CardHeader className={`bg-gradient-to-r ${gradientColor} text-white`}>
+                <Card className={`overflow-hidden border ${gradientColor.split(' ').slice(-1)[0]}`}>
+                  <CardHeader className={`bg-gradient-to-r ${gradientColor.split(' ').slice(0, -1).join(' ')} backdrop-blur-sm`}>
                     <CardTitle className="flex items-center gap-3">
-                      <SubjectIcon size={24} />
+                      <div className="bg-card/80 p-2 rounded-lg backdrop-blur-sm">
+                        <SubjectIcon size={24} className="text-foreground" />
+                      </div>
                       <div>
-                        <h3 className="text-xl font-bold">{group.subject}</h3>
-                        <p className="text-white/90 text-sm">{group.className}</p>
+                        <h3 className="text-xl font-bold text-foreground">{group.subject}</h3>
+                        <p className="text-muted-foreground text-sm">{group.className}</p>
                       </div>
                       <div className="ml-auto flex gap-2">
-                        <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                        <Badge variant="secondary" className="bg-card/60 text-foreground border-border/50 backdrop-blur-sm">
                           {group.materials.filter(m => m.type === 'Notes').length} Notes
                         </Badge>
-                        <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                        <Badge variant="secondary" className="bg-card/60 text-foreground border-border/50 backdrop-blur-sm">
                           {group.materials.filter(m => m.type === 'Homework').length} Homework
                         </Badge>
                       </div>
