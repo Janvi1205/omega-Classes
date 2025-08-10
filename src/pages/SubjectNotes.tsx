@@ -7,6 +7,7 @@ import { motion, useInView } from 'framer-motion';
 import { Download, FileText, BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 
 type Material = {
   id: string;
@@ -272,27 +273,56 @@ const SubjectNotes: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  {chapterMaterials.map((material, materialIndex) => (
-                    <motion.a
-                      key={material.id}
-                      href={material.downloadURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Download size={16} />
-                        <span className="truncate">{material.fileName}</span>
-                      </div>
-                      <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
-                        Notes
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
+                {chapterMaterials.length > 1 ? (
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {chapterMaterials.map((material, materialIndex) => (
+                        <CarouselItem key={material.id}>
+                          <motion.a
+                            href={material.downloadURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                          >
+                            <div className="flex items-center gap-2">
+                              <Download size={16} />
+                              <span className="truncate">{material.fileName}</span>
+                            </div>
+                            <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
+                              Notes
+                            </span>
+                          </motion.a>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                ) : (
+                  <div className="space-y-2">
+                    {chapterMaterials.map((material, materialIndex) => (
+                      <motion.a
+                        key={material.id}
+                        href={material.downloadURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Download size={16} />
+                          <span className="truncate">{material.fileName}</span>
+                        </div>
+                        <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
+                          Notes
+                        </span>
+                      </motion.a>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -373,27 +403,56 @@ const SubjectNotes: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  {chapterMaterials.map((material, materialIndex) => (
-                    <motion.a
-                      key={material.id}
-                      href={material.downloadURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Download size={16} />
-                        <span className="truncate">{material.fileName}</span>
-                      </div>
-                      <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
-                        Homework
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
+                {chapterMaterials.length > 1 ? (
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {chapterMaterials.map((material, materialIndex) => (
+                        <CarouselItem key={material.id}>
+                          <motion.a
+                            href={material.downloadURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                          >
+                            <div className="flex items-center gap-2">
+                              <Download size={16} />
+                              <span className="truncate">{material.fileName}</span>
+                            </div>
+                            <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
+                              Homework
+                            </span>
+                          </motion.a>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                ) : (
+                  <div className="space-y-2">
+                    {chapterMaterials.map((material, materialIndex) => (
+                      <motion.a
+                        key={material.id}
+                        href={material.downloadURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Download size={16} />
+                          <span className="truncate">{material.fileName}</span>
+                        </div>
+                        <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
+                          Homework
+                        </span>
+                      </motion.a>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
