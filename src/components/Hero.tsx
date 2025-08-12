@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import studentHero from '@/assets/student-hero.jpg';
+import Particles from '@/components/ui/particles';
 const Hero = () => {
   const scrollToCourses = () => {
     const element = document.querySelector('#batches');
@@ -8,8 +9,25 @@ const Hero = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  return <section className="min-h-screen hero-gradient flex items-center pt-16 px-4">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
+  return <section className="min-h-screen hero-gradient flex items-center pt-16 px-4 relative overflow-hidden">
+      {/* Particle Background */}
+      <div className="absolute inset-0 w-full h-full">
+        <Particles
+          particleCount={150}
+          particleSpread={15}
+          speed={0.05}
+          particleColors={["#ffffff", "#e0e7ff", "#c7d2fe"]}
+          moveParticlesOnHover={true}
+          particleHoverFactor={0.5}
+          alphaParticles={true}
+          particleBaseSize={80}
+          sizeRandomness={0.8}
+          cameraDistance={25}
+          className="opacity-30"
+        />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <motion.div initial={{
