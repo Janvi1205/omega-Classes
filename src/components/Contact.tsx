@@ -25,8 +25,12 @@ const Contact = () => {
     details: 'Flat No. 102, Lalti Apartment, Kali Mandir Road, Hanuman Nagar, Kankarbagh, Patna - 800020',
     subtitle: 'Visit our campus'
   }];
-  return <section id="contact" className="py-12 sm:py-20 bg-secondary/30" ref={ref}>
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  return <section id="contact" className="py-12 sm:py-20 bg-secondary/30 relative overflow-hidden" ref={ref}>
+    {/* Floating elements */}
+    <div className="floating-circle w-28 h-28 top-10 right-10 animate-float opacity-10" />
+    <div className="floating-square w-16 h-16 bottom-20 left-20 animate-float-slow opacity-15" style={{ animationDelay: '2s' }} />
+    
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <motion.div initial={{
         opacity: 0,
         y: 50
@@ -70,8 +74,12 @@ const Contact = () => {
             } : {}} transition={{
               duration: 0.6,
               delay: 0.3 + index * 0.1
-            }} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-white/50 transition-colors group">
-              <div className="bg-primary text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-110 transition-transform flex-shrink-0">
+            }} whileHover={{ 
+              scale: 1.02, 
+              y: -5,
+              boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+            }} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-white/50 transition-all duration-300 group glass-morphism border border-white/10 hover:border-primary/30">
+              <div className="bg-primary text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 flex-shrink-0 animate-float">
                 <item.icon size={20} className="sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">
@@ -105,22 +113,26 @@ const Contact = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a href="https://wa.me/917070960095" className="w-full sm:w-auto">
                 <motion.button whileHover={{
-                  scale: 1.05
+                  scale: 1.05,
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
                 }} whileTap={{
                   scale: 0.95
-                }} className="btn-primary flex items-center justify-center gap-2 w-full text-sm sm:text-base py-3 px-4">
-                  <MessageCircle size={18} className="sm:w-5 sm:h-5" />
-                  WhatsApp Us
+                }} className="btn-primary flex items-center justify-center gap-2 w-full text-sm sm:text-base py-3 px-4 relative overflow-hidden group/btn">
+                  <MessageCircle size={18} className="sm:w-5 sm:h-5 relative z-10" />
+                  <span className="relative z-10">WhatsApp Us</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
                 </motion.button>
               </a>
               <a href='tel:+917070960095' className="w-full sm:flex-1">
                 <motion.button whileHover={{
-                  scale: 1.05
+                  scale: 1.05,
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
                 }} whileTap={{
                   scale: 0.95
-                }} className="btn-secondary flex items-center justify-center gap-2 w-full text-sm sm:text-base py-3 px-4">
-                  <Phone size={18} className="sm:w-5 sm:h-5" />
-                  Call Now
+                }} className="btn-secondary flex items-center justify-center gap-2 w-full text-sm sm:text-base py-3 px-4 relative overflow-hidden group/btn2">
+                  <Phone size={18} className="sm:w-5 sm:h-5 relative z-10" />
+                  <span className="relative z-10">Call Now</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn2:translate-x-full transition-transform duration-700" />
                 </motion.button>
               </a>
             </div>

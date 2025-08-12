@@ -255,4 +255,109 @@
     @apply bg-destructive hover:bg-destructive/90 text-destructive-foreground px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105;
     box-shadow: 0 4px 12px -4px hsl(var(--destructive) / 0.25);
   }
+
+  /* Advanced animations inspired by Aceternity UI */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.6); }
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-20px, -20px); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsl(var(--primary) / 0.2), 
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-gradient {
+    background: linear-gradient(-45deg, 
+      hsl(var(--primary)), 
+      hsl(var(--accent)), 
+      hsl(var(--primary-glow)), 
+      hsl(var(--accent))
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  .grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: grid-move 20s linear infinite;
+  }
+
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Floating elements */
+  .floating-element {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .floating-circle {
+    @apply floating-element rounded-full opacity-20;
+    background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .floating-square {
+    @apply floating-element opacity-10;
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
+    transform: rotate(45deg);
+  }
+
+  /* Animation utilities */
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
 }
