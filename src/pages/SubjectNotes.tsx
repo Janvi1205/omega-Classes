@@ -351,16 +351,24 @@ const SubjectNotes: React.FC = () => {
                             Study Notes
                           </span>
                         </div>
-                        <h3 className={`font-bold text-foreground mb-4 text-xl leading-tight bg-clip-text text-transparent ${
+                        <h3 className={`font-bold mb-4 text-xl leading-tight transition-colors duration-300 ${
+                          subject?.toLowerCase() === 'mathematics' ? 'text-foreground group-hover:text-blue-600' :
+                          subject?.toLowerCase() === 'science' ? 'text-foreground group-hover:text-green-600' :
+                          subject?.toLowerCase() === 'physics' ? 'text-foreground group-hover:text-purple-600' :
+                          subject?.toLowerCase() === 'chemistry' ? 'text-foreground group-hover:text-green-600' :
+                          subject?.toLowerCase() === 'biology' ? 'text-foreground group-hover:text-orange-600' :
+                          'text-foreground group-hover:text-primary'
+                        }`}>
+                          {chapterName}
+                        </h3>
+                        <div className={`w-8 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 mb-4 ${
                           subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
                           subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
                           subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
                           subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-r from-green-500 to-green-600' :
                           subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
                           'bg-gradient-to-r from-primary to-secondary'
-                        }`}>
-                          {chapterName}
-                        </h3>
+                        }`}></div>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
                           <div className="flex items-center gap-2 bg-muted/50 rounded-full px-3 py-1">
                             <FileText size={14} />
@@ -535,9 +543,24 @@ const SubjectNotes: React.FC = () => {
                         'text-secondary'
                       }`}>Homework</span>
                     </div>
-                    <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
+                    <h3 className={`font-semibold mb-3 text-lg leading-tight transition-colors duration-300 ${
+                      subject?.toLowerCase() === 'mathematics' ? 'text-foreground group-hover:text-blue-600' :
+                      subject?.toLowerCase() === 'science' ? 'text-foreground group-hover:text-green-600' :
+                      subject?.toLowerCase() === 'physics' ? 'text-foreground group-hover:text-purple-600' :
+                      subject?.toLowerCase() === 'chemistry' ? 'text-foreground group-hover:text-green-600' :
+                      subject?.toLowerCase() === 'biology' ? 'text-foreground group-hover:text-orange-600' :
+                      'text-foreground group-hover:text-primary'
+                    }`}>
                       {chapterName}
                     </h3>
+                    <div className={`w-8 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 mb-3 ${
+                      subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                      subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                      subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                      subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                      subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                      'bg-gradient-to-r from-primary to-secondary'
+                    }`}></div>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                       <div className="flex items-center gap-1">
                         <FileText size={14} />
