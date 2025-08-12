@@ -4,6 +4,7 @@ import { Bell, Menu, X } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NotificationPanel from './NotificationPanel';
 import { useNotifications } from '@/contexts/NotificationContext';
+import GooeyNav from '@/components/ui/gooey-nav';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,13 @@ const Navbar = () => {
     { name: 'Courses', path: '#batches' },
     { name: 'Contact', path: '#contact' },
     { name: 'Study Material', path: '/study-material' },
+  ];
+
+  const gooeyNavItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Courses', href: '#batches' },
+    { label: 'Contact', href: '#contact' },
+    { label: 'Study Material', href: '/study-material' },
   ];
 
   // Handle scrolling to section after navigation
@@ -40,6 +48,16 @@ const Navbar = () => {
     const element = document.querySelector(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleGooeyNavClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    if (href.startsWith('#')) {
+      scrollToSection(href);
+    } else {
+      navigate(href);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -73,31 +91,21 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              {navItems.map((item) => (
-                <div key={item.name}>
-                  {item.path.startsWith('#') ? (
-                    <button
-                      onClick={() => scrollToSection(item.path)}
-                      className="nav-link"
-                    >
-                      {item.name}
-                    </button>
-                  ) : (
-                    <Link 
-                      to={item.path} 
-                      className="nav-link"
-                      onClick={() => window.scrollTo(0, 0)}
-                    >
-                      {item.name}
-                    </Link>
-                  )}
-                </div>
-              ))}
-               <motion.button
+              <GooeyNav 
+                items={gooeyNavItems}
+                initialActiveIndex={0}
+                animationTime={400}
+                particleCount={12}
+                particleDistances={[70, 8]}
+                particleR={80}
+                timeVariance={200}
+                colors={[1, 2, 3, 4]}
+              />
+              <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsNotificationOpen(true)}
-                className="text-primary hover:text-accent transition-colors relative"
+                className="text-primary hover:text-accent transition-colors relative ml-4"
               >
                 <Bell size={20} />
                 {unreadCount > 0 && (
