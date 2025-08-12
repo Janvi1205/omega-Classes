@@ -191,38 +191,70 @@ const SubjectNotes: React.FC = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="pt-20 pb-12 hero-gradient">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hero Section with Gen Z vibes */}
+      <section className="pt-20 pb-12 hero-gradient relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 grid-pattern opacity-30"></div>
+        <div className="floating-circle w-40 h-40 top-10 right-10 animate-float opacity-20" />
+        <div className="floating-square w-24 h-24 bottom-20 left-10 animate-float-slow opacity-15" />
+        <div className="floating-circle w-16 h-16 top-1/2 left-1/3 animate-float opacity-25" style={{ animationDelay: '3s' }} />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.8 }} 
             className="text-center text-primary-foreground"
           >
-            <Link 
-              to="/study-material" 
-              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors"
+            <motion.div
+              whileHover={{ scale: 1.05, x: -5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <ArrowLeft size={20} />
-              Back to Study Materials
-            </Link>
+              <Link 
+                to="/study-material" 
+                className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full"
+              >
+                <ArrowLeft size={20} />
+                Back to Study Materials
+              </Link>
+            </motion.div>
             <div className="flex items-center justify-center gap-4 mb-4">
-              <div className={`${subjectColor} text-white p-3 rounded-lg`}>
+              <motion.div 
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                className={`${subjectColor} text-white p-3 rounded-lg animate-neon-glow`}
+              >
                 <IconComponent size={32} />
-              </div>
+              </motion.div>
               <div className="text-left">
-                <h1 className="text-4xl md:text-5xl font-bold">
-                  {subject}
-                </h1>
-                <p className="text-xl mt-3 text-primary-foreground/90 capitalize">
-                  {className?.replace('-', ' ')} Notes
-                </p>
+                <motion.h1 
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-4xl md:text-6xl font-bold"
+                >
+                  {subject} ✨
+                </motion.h1>
+                <motion.p 
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="text-xl mt-3 text-primary-foreground/90 capitalize"
+                >
+                  {className?.replace('-', ' ')} Notes 📚
+                </motion.p>
               </div>
             </div>
-            <p className="text-lg text-primary-foreground/90 max-w-3xl mx-auto">
-              Chapter-wise notes, exercises, and study materials for comprehensive learning.
-            </p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="text-lg text-primary-foreground/90 max-w-3xl mx-auto"
+            >
+              Chapter-wise notes, exercises, and study materials for comprehensive learning 🚀
+            </motion.p>
           </motion.div>
         </div>
       </section>
@@ -256,8 +288,9 @@ const SubjectNotes: React.FC = () => {
                 initial={{ opacity: 0, y: 50 }} 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden"
+                whileHover={{ scale: 1.05, y: -8, rotateY: 3 }} 
+                whileTap={{ scale: 0.95 }}
+                className="genz-card p-6 relative overflow-hidden group cursor-pointer"
               >
                 {/* Decorative gradient overlay */}
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-3xl"></div>
@@ -290,17 +323,18 @@ const SubjectNotes: React.FC = () => {
                               href={material.downloadURL}
                               target="_blank"
                               rel="noopener noreferrer"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group"
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group relative overflow-hidden"
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <Download size={16} className="flex-shrink-0" />
                                 <span className="truncate text-sm">{material.fileName}</span>
                               </div>
-                              <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium flex-shrink-0">
-                                Notes
-                              </span>
+                                 <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium flex-shrink-0 group-hover:bg-primary-foreground/40 transition-colors">
+                                 Notes 📝
+                               </span>
+                               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                             </motion.a>
                           </CarouselItem>
                         ))}
@@ -325,17 +359,18 @@ const SubjectNotes: React.FC = () => {
                         href={material.downloadURL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block relative overflow-hidden group"
                       >
                         <div className="flex items-center gap-2">
                           <Download size={16} />
                           <span className="truncate">{material.fileName}</span>
                         </div>
-                        <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
-                          Notes
-                        </span>
+                         <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium group-hover:bg-primary-foreground/40 transition-colors">
+                           Notes 📝
+                         </span>
+                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                       </motion.a>
                     ))}
                   </div>
@@ -396,8 +431,9 @@ const SubjectNotes: React.FC = () => {
                 initial={{ opacity: 0, y: 50 }} 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden"
+                whileHover={{ scale: 1.05, y: -8, rotateY: 3 }} 
+                whileTap={{ scale: 0.95 }}
+                className="genz-card p-6 relative overflow-hidden group cursor-pointer"
               >
                 {/* Decorative gradient overlay */}
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-3xl"></div>

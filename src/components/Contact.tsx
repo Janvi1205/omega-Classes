@@ -79,7 +79,7 @@ const Contact = () => {
               y: -5,
               boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
             }} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-white/50 transition-all duration-300 group glass-morphism border border-white/10 hover:border-primary/30">
-              <div className="bg-primary text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 flex-shrink-0 animate-float">
+              <div className="bg-primary text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 flex-shrink-0">
                 <item.icon size={20} className="sm:w-6 sm:h-6" />
               </div>
               <div className="min-w-0">

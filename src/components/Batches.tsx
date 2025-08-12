@@ -92,10 +92,10 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   whileHover={{ 
-                    scale: 1.02, 
-                    y: -10,
-                    rotateY: 5,
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                    scale: 1.03, 
+                    y: -8,
+                    rotateX: 2,
+                    transition: { duration: 0.3, ease: "easeOut" }
                   }}
                   className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full border border-white/10 hover:border-primary/30 transition-all duration-500"
                 >
