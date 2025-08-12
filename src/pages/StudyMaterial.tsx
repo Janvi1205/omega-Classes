@@ -263,20 +263,48 @@ const StudyMaterial: React.FC = () => {
                                 className="block"
                               >
                                 <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-300 overflow-hidden">
-                                  {/* Hover gradient overlay */}
-                                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                  {/* Subject-specific hover gradient overlay */}
+                                  <div className={`absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
+                                    subject.name === 'Mathematics' ? 'bg-gradient-to-br from-blue-500/10 via-transparent to-blue-600/10' :
+                                    subject.name === 'Science' ? 'bg-gradient-to-br from-green-500/10 via-transparent to-green-600/10' :
+                                    subject.name === 'Physics' ? 'bg-gradient-to-br from-purple-500/10 via-transparent to-purple-600/10' :
+                                    subject.name === 'Chemistry' ? 'bg-gradient-to-br from-green-500/10 via-transparent to-green-600/10' :
+                                    subject.name === 'Biology' ? 'bg-gradient-to-br from-orange-500/10 via-transparent to-orange-600/10' :
+                                    'bg-gradient-to-br from-primary/10 via-transparent to-secondary/10'
+                                  }`}></div>
                                   
-                                  {/* Floating icon background */}
-                                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                  {/* Subject-specific floating icon background */}
+                                  <div className={`absolute -top-4 -right-4 w-16 h-16 rounded-full blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
+                                    subject.name === 'Mathematics' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/20' :
+                                    subject.name === 'Science' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
+                                    subject.name === 'Physics' ? 'bg-gradient-to-br from-purple-500/20 to-purple-600/20' :
+                                    subject.name === 'Chemistry' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
+                                    subject.name === 'Biology' ? 'bg-gradient-to-br from-orange-500/20 to-orange-600/20' :
+                                    'bg-gradient-to-br from-primary/20 to-secondary/20'
+                                  }`}></div>
                                   
                                   <div className="relative z-10 flex flex-col items-center text-center">
                                     <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-6 transition-transform duration-300`}>
                                       <IconComponent size={28} />
                                     </div>
-                                    <h4 className="font-bold text-foreground mb-2 text-lg group-hover/card:text-primary transition-colors duration-300">
+                                    <h4 className={`font-bold text-foreground mb-2 text-lg transition-colors duration-300 ${
+                                      subject.name === 'Mathematics' ? 'group-hover/card:text-blue-600' :
+                                      subject.name === 'Science' ? 'group-hover/card:text-green-600' :
+                                      subject.name === 'Physics' ? 'group-hover/card:text-purple-600' :
+                                      subject.name === 'Chemistry' ? 'group-hover/card:text-green-600' :
+                                      subject.name === 'Biology' ? 'group-hover/card:text-orange-600' :
+                                      'group-hover/card:text-primary'
+                                    }`}>
                                       {subject.name}
                                     </h4>
-                                    <div className="w-8 h-1 bg-gradient-to-r from-primary to-secondary rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                    <div className={`w-8 h-1 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
+                                      subject.name === 'Mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                                      subject.name === 'Science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                                      subject.name === 'Physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                                      subject.name === 'Chemistry' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                                      subject.name === 'Biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                                      'bg-gradient-to-r from-primary to-secondary'
+                                    }`}></div>
                                   </div>
                                 </div>
                               </Link>
