@@ -85,13 +85,12 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                   initial={{ opacity: 0, y: 100 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
-                  whileHover={{ scale: 1.02, y: -5, rotateY: 5 }}
-                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full hover:black-matte-animation"
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full"
                 >
-                  {/* Luxury Background Effects */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/30 to-primary/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-500 rotate-glow"></div>
-                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-secondary/20 to-accent/10 rounded-full blur-2xl group-hover:blur-xl transition-all duration-500"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-accent/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Background decoration */}
+                  <div className={`absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-2xl sm:blur-3xl group-hover:opacity-40 transition-all duration-500`} />
+                  <div className={`absolute bottom-0 left-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-xl sm:blur-2xl group-hover:opacity-25 transition-all duration-500`} />
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6">

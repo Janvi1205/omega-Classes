@@ -80,14 +80,12 @@ const Hero = () => {
           duration: 0.8,
           delay: 0.3
         }} className="relative order-first lg:order-last">
-            <div className="relative floating">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl sm:rounded-2xl blur-xl"></div>
+            <div className="relative">
               <img 
                 src={studentHero} 
                 alt="Student holding books - Quality education at Omega Pro Classes" 
-                className="relative w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl max-h-[400px] sm:max-h-none object-cover black-matte-animation"
+                className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl max-h-[400px] sm:max-h-none object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-accent/5 rounded-xl sm:rounded-2xl"></div>
             </div>
           </motion.div>
         </div>
