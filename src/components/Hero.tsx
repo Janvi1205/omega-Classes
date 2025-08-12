@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import studentHero from '@/assets/student-hero.jpg';
 import Particles from '@/components/ui/particles';
+import TextType from '@/components/ui/text-type';
 const Hero = () => {
   const scrollToCourses = () => {
     const element = document.querySelector('#batches');
@@ -50,7 +51,26 @@ const Hero = () => {
             delay: 0.2
           }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 leading-tight">
               Excellence in
-              <span className="block text-accent">Education</span>
+              <span className="block">
+                <TextType
+                  text={[
+                    "Education",
+                    "Science",
+                    "Mathematics", 
+                    "Learning",
+                    "Success"
+                  ]}
+                  className="text-accent font-bold"
+                  typingSpeed={100}
+                  deletingSpeed={50}
+                  pauseDuration={2000}
+                  cursorCharacter="|"
+                  cursorClassName="text-accent"
+                  textColors={["#60a5fa", "#34d399", "#f472b6", "#fbbf24", "#a78bfa"]}
+                  startOnVisible={true}
+                  loop={true}
+                />
+              </span>
             </motion.h1>
             
             <motion.p initial={{
@@ -63,8 +83,20 @@ const Hero = () => {
             duration: 0.8,
             delay: 0.4
           }} className="text-base sm:text-lg lg:text-xl text-primary-foreground/90 mb-6 sm:mb-8 leading-relaxed">
-              Join Omega Pro Classes for comprehensive coaching in Science and Mathematics. 
-              Empowering students from Class 7 to 12 with expert guidance and proven results.
+              <TextType
+                text={[
+                  "Join Omega Pro Classes for comprehensive coaching in Science and Mathematics.",
+                  "Empowering students from Class 7 to 12 with expert guidance and proven results.",
+                  "Transform your academic journey with personalized learning experiences.",
+                  "Achieve excellence through innovative teaching methodologies and dedicated support."
+                ]}
+                typingSpeed={30}
+                deletingSpeed={20}
+                pauseDuration={3000}
+                cursorCharacter=""
+                startOnVisible={true}
+                loop={true}
+              />
             </motion.p>
 
             <motion.div initial={{
