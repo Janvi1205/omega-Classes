@@ -5,7 +5,7 @@ import { BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap, GraduationCap, 
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import MagicBento from "@/components/ui/magic-bento";
+
 
 const StudyMaterial: React.FC = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -165,13 +165,37 @@ const StudyMaterial: React.FC = () => {
             {/* School Classes Section */}
             {classes.map((className, classIndex) => {
               const subjects = getSubjectsForClass(className);
-              const bentoCards = subjects.map((subject) => ({
-                title: subject.name,
-                description: `Comprehensive study materials for ${subject.name}`,
-                label: className,
-                icon: subject.icon,
-                onClick: () => navigate(`/subject/${className.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`)
-              }));
+              const subjectCards = subjects.map((subject, index) => (
+                <motion.div
+                  key={subject.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: (classIndex * 0.1) + (index * 0.1) }}
+                  className="bg-card text-card-foreground rounded-xl p-6 border border-border shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group hover:scale-105 relative overflow-hidden"
+                  onClick={() => navigate(`/subject/${className.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`)}
+                  style={{
+                    background: "linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)"
+                  }}
+                >
+                  {/* Hover Effect Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <div className="relative z-10">
+                    <div className={`${subject.color} text-white p-4 rounded-xl mb-4 inline-block group-hover:scale-110 transition-transform duration-300`}>
+                      <subject.icon size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">{subject.name}</h3>
+                    <p className="text-muted-foreground">
+                      Comprehensive study materials, notes, and practice questions for {subject.name}.
+                    </p>
+                  </div>
+                  
+                  {/* Ripple effect on click */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent animate-pulse" />
+                  </div>
+                </motion.div>
+              ));
 
               return (
                 <motion.div
@@ -191,18 +215,9 @@ const StudyMaterial: React.FC = () => {
                     </div>
                   </div>
 
-                  <MagicBento
-                    cards={bentoCards}
-                    enableStars={true}
-                    enableSpotlight={true}
-                    enableBorderGlow={true}
-                    enableTilt={true}
-                    clickEffect={true}
-                    enableMagnetism={true}
-                    glowColor="59, 130, 246"
-                    particleCount={6}
-                    spotlightRadius={250}
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {subjectCards}
+                  </div>
                 </motion.div>
               );
             })}
@@ -227,13 +242,34 @@ const StudyMaterial: React.FC = () => {
               </div>
 
               {competitiveExams.map((exam, examIndex) => {
-                const bentoCards = exam.subjects.map((subject) => ({
-                  title: subject.name,
-                  description: `${exam.description} - ${subject.name} preparation`,
-                  label: exam.name,
-                  icon: subject.icon,
-                  onClick: () => navigate(`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`)
-                }));
+                const examSubjectCards = exam.subjects.map((subject, index) => (
+                  <motion.div
+                    key={subject.name}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: (classes.length + examIndex + 1) * 0.1 + (index * 0.1) }}
+                    className="bg-gradient-to-br from-orange-500/10 to-red-500/10 text-card-foreground rounded-xl p-6 border border-orange-200 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group hover:scale-105 relative overflow-hidden"
+                    onClick={() => navigate(`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`)}
+                  >
+                    {/* Hover Effect Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <div className="relative z-10">
+                      <div className={`${subject.color} text-white p-4 rounded-xl mb-4 inline-block group-hover:scale-110 transition-transform duration-300`}>
+                        <subject.icon size={32} />
+                      </div>
+                      <h3 className="text-xl font-bold text-foreground mb-2">{subject.name}</h3>
+                      <p className="text-muted-foreground">
+                        {exam.description} - Advanced {subject.name} concepts and problem solving.
+                      </p>
+                    </div>
+                    
+                    {/* Ripple effect on click */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent animate-pulse" />
+                    </div>
+                  </motion.div>
+                ));
 
                 return (
                   <motion.div
@@ -253,18 +289,9 @@ const StudyMaterial: React.FC = () => {
                       </div>
                     </div>
 
-                    <MagicBento
-                      cards={bentoCards}
-                      enableStars={true}
-                      enableSpotlight={true}
-                      enableBorderGlow={true}
-                      enableTilt={true}
-                      clickEffect={true}
-                      enableMagnetism={true}
-                      glowColor="249, 115, 22"
-                      particleCount={8}
-                      spotlightRadius={300}
-                    />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {examSubjectCards}
+                    </div>
                   </motion.div>
                 );
               })}
