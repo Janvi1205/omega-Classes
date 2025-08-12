@@ -525,25 +525,29 @@ const SubjectNotes: React.FC = () => {
                 
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                        subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500 group-hover:bg-blue-600' :
-                        subject?.toLowerCase() === 'science' ? 'bg-green-500 group-hover:bg-green-600' :
-                        subject?.toLowerCase() === 'physics' ? 'bg-purple-500 group-hover:bg-purple-600' :
-                        subject?.toLowerCase() === 'chemistry' ? 'bg-green-500 group-hover:bg-green-600' :
-                        subject?.toLowerCase() === 'biology' ? 'bg-orange-500 group-hover:bg-orange-600' :
-                        'bg-secondary group-hover:bg-secondary'
-                      }`}></div>
-                      <span className={`text-xs font-medium uppercase tracking-wide transition-colors duration-300 ${
-                        subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 group-hover:text-blue-700' :
-                        subject?.toLowerCase() === 'science' ? 'text-green-600 group-hover:text-green-700' :
-                        subject?.toLowerCase() === 'physics' ? 'text-purple-600 group-hover:text-purple-700' :
-                        subject?.toLowerCase() === 'chemistry' ? 'text-green-600 group-hover:text-green-700' :
-                        subject?.toLowerCase() === 'biology' ? 'text-orange-600 group-hover:text-orange-700' :
-                        'text-secondary group-hover:text-secondary'
-                      }`}>Homework</span>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className={`p-2 rounded-xl ${
+                        subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                        subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                        subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                        subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                        subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                        'bg-gradient-to-r from-secondary to-secondary'
+                      }`}>
+                        <FileText size={16} className="text-white" />
+                      </div>
+                      <span className={`text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full transition-colors duration-300 ${
+                        subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 bg-blue-500/10 group-hover:text-white group-hover:bg-blue-600' :
+                        subject?.toLowerCase() === 'science' ? 'text-green-600 bg-green-500/10 group-hover:text-white group-hover:bg-green-600' :
+                        subject?.toLowerCase() === 'physics' ? 'text-purple-600 bg-purple-500/10 group-hover:text-white group-hover:bg-purple-600' :
+                        subject?.toLowerCase() === 'chemistry' ? 'text-green-600 bg-green-500/10 group-hover:text-white group-hover:bg-green-600' :
+                        subject?.toLowerCase() === 'biology' ? 'text-orange-600 bg-orange-500/10 group-hover:text-white group-hover:bg-orange-600' :
+                        'text-secondary bg-secondary/10 group-hover:text-white group-hover:bg-secondary'
+                      }`}>
+                        Homework
+                      </span>
                     </div>
-                    <h3 className={`font-semibold mb-3 text-lg leading-tight transition-colors duration-300 ${
+                    <h3 className={`font-bold mb-4 text-xl leading-tight transition-colors duration-300 ${
                       subject?.toLowerCase() === 'mathematics' ? 'text-foreground group-hover:text-blue-600' :
                       subject?.toLowerCase() === 'science' ? 'text-foreground group-hover:text-green-600' :
                       subject?.toLowerCase() === 'physics' ? 'text-foreground group-hover:text-purple-600' :
@@ -553,7 +557,7 @@ const SubjectNotes: React.FC = () => {
                     }`}>
                       {chapterName}
                     </h3>
-                    <div className={`w-8 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 mb-3 ${
+                    <div className={`w-8 h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 mb-4 ${
                       subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
                       subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
                       subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
@@ -561,10 +565,10 @@ const SubjectNotes: React.FC = () => {
                       subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
                       'bg-gradient-to-r from-primary to-secondary'
                     }`}></div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                      <div className="flex items-center gap-2 bg-muted/50 rounded-full px-3 py-1">
                         <FileText size={14} />
-                        <span>{chapterMaterials.length} {chapterMaterials.length === 1 ? 'assignment' : 'assignments'}</span>
+                        <span className="font-medium">{chapterMaterials.length} {chapterMaterials.length === 1 ? 'assignment' : 'assignments'}</span>
                       </div>
                     </div>
                   </div>
