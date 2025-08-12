@@ -63,7 +63,7 @@ const Navbar = () => {
                 alt="Omega Pro Classes" 
                 className="w-8 h-8 sm:w-10 sm:h-10"
               />
-              <span className="text-lg sm:text-xl font-black metallic-text">
+              <span className="text-lg sm:text-xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 <span className="hidden sm:inline">Omega Pro Classes</span>
                 <span className="sm:hidden">Omega Pro</span>
               </span>

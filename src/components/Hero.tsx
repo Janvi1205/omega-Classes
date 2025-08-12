@@ -32,7 +32,7 @@ const Hero = () => {
             delay: 0.2
           }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 leading-tight">
               Excellence in
-              <span className="block metallic-text neon-glow">Education</span>
+              <span className="block text-accent">Education</span>
             </motion.h1>
             
             <motion.p initial={{
@@ -85,7 +85,7 @@ const Hero = () => {
               <img 
                 src={studentHero} 
                 alt="Student holding books - Quality education at Omega Pro Classes" 
-                className="relative w-full h-auto rounded-xl sm:rounded-2xl matte-finish max-h-[400px] sm:max-h-none object-cover"
+                className="relative w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl max-h-[400px] sm:max-h-none object-cover black-matte-animation"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-accent/5 rounded-xl sm:rounded-2xl"></div>
             </div>

@@ -86,7 +86,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   whileHover={{ scale: 1.02, y: -5, rotateY: 5 }}
-                  className="matte-finish rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full hover:neon-glow"
+                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full hover:black-matte-animation"
                 >
                   {/* Luxury Background Effects */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/30 to-primary/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-500 rotate-glow"></div>
