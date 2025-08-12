@@ -192,37 +192,84 @@ const SubjectNotes: React.FC = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-12 hero-gradient">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-20 pb-16 hero-gradient relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent/10 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 right-1/6 w-24 h-24 bg-white/5 rounded-full blur-lg"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.8 }} 
             className="text-center text-primary-foreground"
           >
-            <Link 
-              to="/study-material" 
-              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors"
+            <motion.div
+              whileHover={{ x: -4 }}
+              className="inline-block mb-8"
             >
-              <ArrowLeft size={20} />
-              Back to Study Materials
-            </Link>
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className={`${subjectColor} text-white p-3 rounded-lg`}>
-                <IconComponent size={32} />
+              <Link 
+                to="/study-material" 
+                className="inline-flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/15"
+              >
+                <ArrowLeft size={20} />
+                Back to Study Materials
+              </Link>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="flex flex-col items-center justify-center gap-6 mb-8"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-white/20 rounded-3xl blur-xl"></div>
+                <div className={`relative ${subjectColor} text-white p-6 rounded-3xl shadow-2xl backdrop-blur-sm border border-white/20`}>
+                  <IconComponent size={48} />
+                </div>
               </div>
-              <div className="text-left">
-                <h1 className="text-4xl md:text-5xl font-bold">
+              
+              <div className="text-center">
+                <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent">
                   {subject}
                 </h1>
-                <p className="text-xl mt-3 text-primary-foreground/90 capitalize">
-                  {className?.replace('-', ' ')} Notes
-                </p>
+                <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-4">
+                  <p className="text-lg text-primary-foreground/90 capitalize font-medium">
+                    {className?.replace('-', ' ')} Study Materials
+                  </p>
+                </div>
               </div>
-            </div>
-            <p className="text-lg text-primary-foreground/90 max-w-3xl mx-auto">
-              Chapter-wise notes, exercises, and study materials for comprehensive learning.
-            </p>
+            </motion.div>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed"
+            >
+              Access comprehensive chapter-wise notes, detailed exercises, and curated study materials designed for academic excellence and deep understanding.
+            </motion.p>
+            
+            {/* Progress indicators */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex justify-center gap-6 mt-8"
+            >
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-center">
+                <div className="text-lg font-bold text-white">Notes</div>
+                <div className="text-sm text-white/80">Study Materials</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-center">
+                <div className="text-lg font-bold text-white">Practice</div>
+                <div className="text-sm text-white/80">Assignments</div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -249,36 +296,44 @@ const SubjectNotes: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Object.entries(groupedNotes).map(([chapterName, chapterMaterials], index) => (
               <motion.div 
                 key={`notes-${chapterName}`}
                 initial={{ opacity: 0, y: 50 }} 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden"
+                whileHover={{ scale: 1.03, y: -8 }} 
+                className="group relative"
               >
-                {/* Decorative gradient overlay */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-3xl"></div>
-                
-                <div className="flex items-start justify-between mb-4 relative z-10">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span className="text-xs font-medium text-primary uppercase tracking-wide">Study Notes</span>
-                    </div>
-                    <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
-                      {chapterName}
-                    </h3>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <FileText size={14} />
-                        <span>{chapterMaterials.length} {chapterMaterials.length === 1 ? 'note' : 'notes'}</span>
+                {/* Glass morphism card */}
+                <div className="relative bg-gradient-to-br from-card/60 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden">
+                  {/* Decorative elements */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-lg"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="bg-gradient-to-r from-primary to-secondary p-2 rounded-xl">
+                            <FileText size={16} className="text-white" />
+                          </div>
+                          <span className="text-sm font-bold text-primary uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
+                            Study Notes
+                          </span>
+                        </div>
+                        <h3 className="font-bold text-foreground mb-4 text-xl leading-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                          {chapterName}
+                        </h3>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                          <div className="flex items-center gap-2 bg-muted/50 rounded-full px-3 py-1">
+                            <FileText size={14} />
+                            <span className="font-medium">{chapterMaterials.length} {chapterMaterials.length === 1 ? 'note' : 'notes'}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
 
                 {chapterMaterials.length > 1 ? (
                   <div className="relative">
@@ -340,6 +395,8 @@ const SubjectNotes: React.FC = () => {
                     ))}
                   </div>
                 )}
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
