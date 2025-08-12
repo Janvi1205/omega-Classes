@@ -402,7 +402,14 @@ const SubjectNotes: React.FC = () => {
                       {chapterMaterials.map((_, index) => (
                         <div 
                           key={index} 
-                          className="w-2 h-2 rounded-full bg-primary/30 hover:bg-primary/60 transition-colors cursor-pointer"
+                           className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${
+                             subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500/30 hover:bg-blue-500/60' :
+                             subject?.toLowerCase() === 'science' ? 'bg-green-500/30 hover:bg-green-500/60' :
+                             subject?.toLowerCase() === 'physics' ? 'bg-purple-500/30 hover:bg-purple-500/60' :
+                             subject?.toLowerCase() === 'chemistry' ? 'bg-green-500/30 hover:bg-green-500/60' :
+                             subject?.toLowerCase() === 'biology' ? 'bg-orange-500/30 hover:bg-orange-500/60' :
+                             'bg-primary/30 hover:bg-primary/60'
+                           }`}
                         />
                       ))}
                     </div>
@@ -469,7 +476,14 @@ const SubjectNotes: React.FC = () => {
             className="text-center mb-12"
           >
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="bg-secondary text-secondary-foreground p-3 rounded-xl">
+              <div className={`p-3 rounded-xl ${
+                subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500 text-white' :
+                subject?.toLowerCase() === 'science' ? 'bg-green-500 text-white' :
+                subject?.toLowerCase() === 'physics' ? 'bg-purple-500 text-white' :
+                subject?.toLowerCase() === 'chemistry' ? 'bg-green-500 text-white' :
+                subject?.toLowerCase() === 'biology' ? 'bg-orange-500 text-white' :
+                'bg-secondary text-secondary-foreground'
+              }`}>
                 <FileText size={28} />
               </div>
               <h2 className="text-3xl font-bold text-foreground">
@@ -489,16 +503,37 @@ const SubjectNotes: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden"
+                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden group"
               >
-                {/* Decorative gradient overlay */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-3xl"></div>
+                {/* Subject-specific decorative gradient overlay */}
+                <div className={`absolute top-0 right-0 w-20 h-20 rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                  subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-br from-blue-500/10 to-transparent' :
+                  subject?.toLowerCase() === 'science' ? 'bg-gradient-to-br from-green-500/10 to-transparent' :
+                  subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-br from-purple-500/10 to-transparent' :
+                  subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-br from-green-500/10 to-transparent' :
+                  subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-br from-orange-500/10 to-transparent' :
+                  'bg-gradient-to-br from-secondary/10 to-transparent'
+                }`}></div>
                 
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                      <span className="text-xs font-medium text-secondary uppercase tracking-wide">Homework</span>
+                      <div className={`w-2 h-2 rounded-full ${
+                        subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500' :
+                        subject?.toLowerCase() === 'science' ? 'bg-green-500' :
+                        subject?.toLowerCase() === 'physics' ? 'bg-purple-500' :
+                        subject?.toLowerCase() === 'chemistry' ? 'bg-green-500' :
+                        subject?.toLowerCase() === 'biology' ? 'bg-orange-500' :
+                        'bg-secondary'
+                      }`}></div>
+                      <span className={`text-xs font-medium uppercase tracking-wide ${
+                        subject?.toLowerCase() === 'mathematics' ? 'text-blue-600' :
+                        subject?.toLowerCase() === 'science' ? 'text-green-600' :
+                        subject?.toLowerCase() === 'physics' ? 'text-purple-600' :
+                        subject?.toLowerCase() === 'chemistry' ? 'text-green-600' :
+                        subject?.toLowerCase() === 'biology' ? 'text-orange-600' :
+                        'text-secondary'
+                      }`}>Homework</span>
                     </div>
                     <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight">
                       {chapterName}
@@ -544,7 +579,14 @@ const SubjectNotes: React.FC = () => {
                       {chapterMaterials.map((_, index) => (
                         <div 
                           key={index} 
-                          className="w-2 h-2 rounded-full bg-secondary/30 hover:bg-secondary/60 transition-colors cursor-pointer"
+                           className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${
+                             subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500/30 hover:bg-blue-500/60' :
+                             subject?.toLowerCase() === 'science' ? 'bg-green-500/30 hover:bg-green-500/60' :
+                             subject?.toLowerCase() === 'physics' ? 'bg-purple-500/30 hover:bg-purple-500/60' :
+                             subject?.toLowerCase() === 'chemistry' ? 'bg-green-500/30 hover:bg-green-500/60' :
+                             subject?.toLowerCase() === 'biology' ? 'bg-orange-500/30 hover:bg-orange-500/60' :
+                             'bg-secondary/30 hover:bg-secondary/60'
+                           }`}
                         />
                       ))}
                     </div>
