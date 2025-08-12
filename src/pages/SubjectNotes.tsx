@@ -340,13 +340,13 @@ const SubjectNotes: React.FC = () => {
                           }`}>
                             <FileText size={16} className="text-white" />
                           </div>
-                          <span className={`text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
-                            subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 bg-blue-500/10' :
-                            subject?.toLowerCase() === 'science' ? 'text-green-600 bg-green-500/10' :
-                            subject?.toLowerCase() === 'physics' ? 'text-purple-600 bg-purple-500/10' :
-                            subject?.toLowerCase() === 'chemistry' ? 'text-green-600 bg-green-500/10' :
-                            subject?.toLowerCase() === 'biology' ? 'text-orange-600 bg-orange-500/10' :
-                            'text-primary bg-primary/10'
+                          <span className={`text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full transition-colors duration-300 ${
+                            subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 bg-blue-500/10 group-hover:text-white group-hover:bg-blue-600' :
+                            subject?.toLowerCase() === 'science' ? 'text-green-600 bg-green-500/10 group-hover:text-white group-hover:bg-green-600' :
+                            subject?.toLowerCase() === 'physics' ? 'text-purple-600 bg-purple-500/10 group-hover:text-white group-hover:bg-purple-600' :
+                            subject?.toLowerCase() === 'chemistry' ? 'text-green-600 bg-green-500/10 group-hover:text-white group-hover:bg-green-600' :
+                            subject?.toLowerCase() === 'biology' ? 'text-orange-600 bg-orange-500/10 group-hover:text-white group-hover:bg-orange-600' :
+                            'text-primary bg-primary/10 group-hover:text-white group-hover:bg-primary'
                           }`}>
                             Study Notes
                           </span>
@@ -526,21 +526,21 @@ const SubjectNotes: React.FC = () => {
                 <div className="flex items-start justify-between mb-4 relative z-10">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className={`w-2 h-2 rounded-full ${
-                        subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500' :
-                        subject?.toLowerCase() === 'science' ? 'bg-green-500' :
-                        subject?.toLowerCase() === 'physics' ? 'bg-purple-500' :
-                        subject?.toLowerCase() === 'chemistry' ? 'bg-green-500' :
-                        subject?.toLowerCase() === 'biology' ? 'bg-orange-500' :
-                        'bg-secondary'
+                      <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                        subject?.toLowerCase() === 'mathematics' ? 'bg-blue-500 group-hover:bg-blue-600' :
+                        subject?.toLowerCase() === 'science' ? 'bg-green-500 group-hover:bg-green-600' :
+                        subject?.toLowerCase() === 'physics' ? 'bg-purple-500 group-hover:bg-purple-600' :
+                        subject?.toLowerCase() === 'chemistry' ? 'bg-green-500 group-hover:bg-green-600' :
+                        subject?.toLowerCase() === 'biology' ? 'bg-orange-500 group-hover:bg-orange-600' :
+                        'bg-secondary group-hover:bg-secondary'
                       }`}></div>
-                      <span className={`text-xs font-medium uppercase tracking-wide ${
-                        subject?.toLowerCase() === 'mathematics' ? 'text-blue-600' :
-                        subject?.toLowerCase() === 'science' ? 'text-green-600' :
-                        subject?.toLowerCase() === 'physics' ? 'text-purple-600' :
-                        subject?.toLowerCase() === 'chemistry' ? 'text-green-600' :
-                        subject?.toLowerCase() === 'biology' ? 'text-orange-600' :
-                        'text-secondary'
+                      <span className={`text-xs font-medium uppercase tracking-wide transition-colors duration-300 ${
+                        subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 group-hover:text-blue-700' :
+                        subject?.toLowerCase() === 'science' ? 'text-green-600 group-hover:text-green-700' :
+                        subject?.toLowerCase() === 'physics' ? 'text-purple-600 group-hover:text-purple-700' :
+                        subject?.toLowerCase() === 'chemistry' ? 'text-green-600 group-hover:text-green-700' :
+                        subject?.toLowerCase() === 'biology' ? 'text-orange-600 group-hover:text-orange-700' :
+                        'text-secondary group-hover:text-secondary'
                       }`}>Homework</span>
                     </div>
                     <h3 className={`font-semibold mb-3 text-lg leading-tight transition-colors duration-300 ${
