@@ -60,20 +60,20 @@ const Contact = () => {
             Contact Information
           </h3>
 
-          <div className="space-y-4 sm:space-y-6">
-            {contactInfo.map((item, index) => <motion.div key={item.title} initial={{
-              opacity: 0,
-              y: 20
-            }} animate={isInView ? {
-              opacity: 1,
-              y: 0
-            } : {}} transition={{
-              duration: 0.6,
-              delay: 0.3 + index * 0.1
-            }} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg hover:bg-white/50 transition-colors group">
-              <div className="bg-primary text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-110 transition-transform flex-shrink-0">
-                <item.icon size={20} className="sm:w-6 sm:h-6" />
-              </div>
+            <div className="space-y-4 sm:space-y-6">
+              {contactInfo.map((item, index) => <motion.div key={item.title} initial={{
+                opacity: 0,
+                y: 20
+              }} animate={isInView ? {
+                opacity: 1,
+                y: 0
+              } : {}} transition={{
+                duration: 0.6,
+                delay: 0.3 + index * 0.1
+              }} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg glass-effect hover:matte-finish transition-all duration-300 group">
+                <div className="matte-finish text-primary-foreground p-2 sm:p-3 rounded-lg group-hover:scale-110 group-hover:neon-glow transition-all duration-300 flex-shrink-0">
+                  <item.icon size={20} className="sm:w-6 sm:h-6" />
+                </div>
               <div className="min-w-0">
                 <h4 className="font-semibold text-foreground mb-1 text-sm sm:text-base">
                   {item.title}
@@ -157,7 +157,7 @@ const Contact = () => {
             <div className="absolute bottom-4 left-4 right-4">
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg"
+                className="glass-effect rounded-lg p-4 neon-glow"
               >
                 <div className="flex items-center justify-between">
                   <div>

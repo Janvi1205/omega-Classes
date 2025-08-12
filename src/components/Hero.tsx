@@ -32,7 +32,7 @@ const Hero = () => {
             delay: 0.2
           }} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-foreground mb-4 sm:mb-6 leading-tight">
               Excellence in
-              <span className="block text-accent">Education</span>
+              <span className="block metallic-text neon-glow">Education</span>
             </motion.h1>
             
             <motion.p initial={{
@@ -80,12 +80,14 @@ const Hero = () => {
           duration: 0.8,
           delay: 0.3
         }} className="relative order-first lg:order-last">
-            <div className="relative">
+            <div className="relative floating">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl sm:rounded-2xl blur-xl"></div>
               <img 
                 src={studentHero} 
                 alt="Student holding books - Quality education at Omega Pro Classes" 
-                className="w-full h-auto rounded-xl sm:rounded-2xl shadow-2xl max-h-[400px] sm:max-h-none object-cover"
+                className="relative w-full h-auto rounded-xl sm:rounded-2xl matte-finish max-h-[400px] sm:max-h-none object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-accent/5 rounded-xl sm:rounded-2xl"></div>
             </div>
           </motion.div>
         </div>
