@@ -61,13 +61,7 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
   ];
 
   return (
-    <section id="batches" className="py-20 bg-secondary/50 relative overflow-hidden" ref={ref}>
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="floating-circle w-40 h-40 top-10 right-10 animate-float opacity-10" />
-        <div className="floating-square w-24 h-24 bottom-20 left-10 animate-float-slow opacity-5" />
-        <div className="floating-circle w-16 h-16 top-1/2 left-1/3 animate-float opacity-15" style={{ animationDelay: '3s' }} />
-      </div>
+    <section id="batches" className="py-20 bg-secondary/50" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -91,18 +85,12 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                   initial={{ opacity: 0, y: 100 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
-                  whileHover={{ 
-                    scale: 1.03, 
-                    y: -8,
-                    rotateX: 2,
-                    transition: { duration: 0.3, ease: "easeOut" }
-                  }}
-                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full border border-white/10 hover:border-primary/30 transition-all duration-500"
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full"
                 >
-                  {/* Enhanced background decoration with animation */}
-                  <div className={`absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-2xl sm:blur-3xl group-hover:opacity-40 transition-all duration-500 animate-float`} />
-                  <div className={`absolute bottom-0 left-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-xl sm:blur-2xl group-hover:opacity-25 transition-all duration-500 animate-float-slow`} />
-                  <div className="absolute inset-0 animate-shimmer group-hover:opacity-100 opacity-0 transition-opacity duration-500" />
+                  {/* Background decoration */}
+                  <div className={`absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-2xl sm:blur-3xl group-hover:opacity-40 transition-all duration-500`} />
+                  <div className={`absolute bottom-0 left-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-tr ${batch.color} opacity-10 rounded-full blur-xl sm:blur-2xl group-hover:opacity-25 transition-all duration-500`} />
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6">
@@ -164,16 +152,12 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
 
                     {/* Register Button */}
                     <motion.button
-                      whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
-                      }}
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => onRegisterClick(batch.title)}
-                      className="btn-primary w-full mt-auto text-sm sm:text-base py-2 sm:py-3 relative overflow-hidden group/btn"
+                      className="btn-primary w-full mt-auto text-sm sm:text-base py-2 sm:py-3"
                     >
-                      <span className="relative z-10">Register Now</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
+                      Register Now
                     </motion.button>
                   </div>
                 </motion.div>

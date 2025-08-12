@@ -121,46 +121,26 @@ const StudyMaterial: React.FC = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Hero Section with Gen Z vibes */}
-      <section className="pt-20 pb-12 hero-gradient relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 grid-pattern opacity-30"></div>
-        <div className="floating-circle w-32 h-32 top-10 right-10 animate-float opacity-20" />
-        <div className="floating-square w-20 h-20 bottom-20 left-10 animate-float-slow opacity-15" />
-        <div className="floating-circle w-16 h-16 top-1/2 left-1/4 animate-float opacity-25" style={{ animationDelay: '2s' }} />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Hero Section */}
+      <section className="pt-20 pb-12 hero-gradient">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center text-primary-foreground"
           >
-            <motion.button
+            <button
               onClick={handleBackToHome}
-              whileHover={{ scale: 1.05, x: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full cursor-pointer"
+              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors bg-transparent border-none cursor-pointer"
             >
               <ArrowLeft size={20} />
               Back to Home
-            </motion.button>
-            <motion.h1 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 animate-neon-glow"
-            >
-              Study Materials ✨
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg sm:text-xl text-primary-foreground/90 max-w-3xl mx-auto"
-            >
-              Access comprehensive study materials for all classes to enhance your learning journey 🚀
-            </motion.p>
+            </button>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Study Materials</h1>
+            <p className="text-lg sm:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+              Access comprehensive study materials for all classes to enhance your learning.
+            </p>
           </motion.div>
         </div>
       </section>
@@ -211,27 +191,23 @@ const StudyMaterial: React.FC = () => {
                           duration: 0.4,
                           delay: classIndex * 0.1 + index * 0.05,
                         }}
-                        whileHover={{ scale: 1.05, y: -8, rotateY: 5 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="genz-card p-4 sm:p-6 cursor-pointer group relative"
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        className="bg-background rounded-xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-300 cursor-pointer"
                       >
                         <Link
                           to={`/subject/${className.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
                           className="block"
                         >
-                           <div className="flex flex-col items-center text-center">
-                             <motion.div
-                               whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                               transition={{ duration: 0.4 }}
-                               className={`${subject.color} text-white p-3 sm:p-4 rounded-full mb-3 sm:mb-4 relative group-hover:animate-bounce-in`}
-                             >
-                               <IconComponent size={24} className="sm:w-8 sm:h-8" />
-                               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                             </motion.div>
-                             <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg group-hover:text-primary transition-colors duration-300">
-                               {subject.name} 📚
-                             </h4>
-                           </div>
+                          <div className="flex flex-col items-center text-center">
+                            <div
+                              className={`${subject.color} text-white p-3 sm:p-4 rounded-full mb-3 sm:mb-4`}
+                            >
+                              <IconComponent size={24} className="sm:w-8 sm:h-8" />
+                            </div>
+                            <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg">
+                              {subject.name}
+                            </h4>
+                          </div>
                         </Link>
                       </motion.div>
                     );
@@ -272,27 +248,23 @@ const StudyMaterial: React.FC = () => {
                           duration: 0.4,
                           delay: (classes.length + examIndex) * 0.1 + index * 0.05,
                         }}
-                        whileHover={{ scale: 1.05, y: -8, rotateY: 5 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="genz-card p-4 sm:p-6 cursor-pointer group relative"
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        className="bg-background rounded-xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-300 cursor-pointer"
                       >
                         <Link
                           to={`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
                           className="block"
                         >
-                           <div className="flex flex-col items-center text-center">
-                             <motion.div
-                               whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                               transition={{ duration: 0.4 }}
-                               className={`${subject.color} text-white p-3 sm:p-4 rounded-full mb-3 sm:mb-4 relative group-hover:animate-neon-glow`}
-                             >
-                               <IconComponent size={24} className="sm:w-8 sm:h-8" />
-                               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
-                             </motion.div>
-                             <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg group-hover:text-primary transition-colors duration-300">
-                               {subject.name} 🎯
-                             </h4>
-                           </div>
+                          <div className="flex flex-col items-center text-center">
+                            <div
+                              className={`${subject.color} text-white p-3 sm:p-4 rounded-full mb-3 sm:mb-4`}
+                            >
+                              <IconComponent size={24} className="sm:w-8 sm:h-8" />
+                            </div>
+                            <h4 className="font-semibold text-foreground mb-2 text-sm sm:text-lg">
+                              {subject.name}
+                            </h4>
+                          </div>
                         </Link>
                       </motion.div>
                     );

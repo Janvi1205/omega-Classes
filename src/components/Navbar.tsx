@@ -48,7 +48,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md navbar-shadow border-b border-white/10"
+      className="fixed top-0 left-0 right-0 z-50 bg-background navbar-shadow"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -56,12 +56,12 @@ const Navbar = () => {
           <Link to="/" className="flex-shrink-0">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-2 sm:gap-3 group"
+              className="flex items-center gap-2 sm:gap-3"
             >
               <img 
                 src="/lovable-uploads/015a5adc-4651-42f3-b1d0-de3d52e59fe2.png" 
                 alt="Omega Pro Classes" 
-                className="w-8 h-8 sm:w-10 sm:h-10 group-hover:rotate-12 transition-transform duration-300"
+                className="w-8 h-8 sm:w-10 sm:h-10"
               />
               <span className="text-lg sm:text-xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 <span className="hidden sm:inline">Omega Pro Classes</span>
