@@ -163,26 +163,6 @@ const StudyMaterial: React.FC = () => {
               Access comprehensive study materials for all classes to enhance your learning journey
             </p>
             
-            {/* Stats cards */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-6 mt-12"
-            >
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-6 py-4 text-center">
-                <div className="text-2xl font-bold text-white">6</div>
-                <div className="text-sm text-white/80">Classes</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-6 py-4 text-center">
-                <div className="text-2xl font-bold text-white">4</div>
-                <div className="text-sm text-white/80">Subjects</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-6 py-4 text-center">
-                <div className="text-2xl font-bold text-white">100+</div>
-                <div className="text-sm text-white/80">Materials</div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </section>

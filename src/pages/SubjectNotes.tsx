@@ -308,22 +308,57 @@ const SubjectNotes: React.FC = () => {
               >
                 {/* Glass morphism card */}
                 <div className="relative bg-gradient-to-br from-card/60 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden">
-                  {/* Decorative elements */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-lg"></div>
+                  {/* Subject-specific decorative elements */}
+                  <div className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                    subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/20' :
+                    subject?.toLowerCase() === 'science' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
+                    subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-br from-purple-500/20 to-purple-600/20' :
+                    subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
+                    subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-br from-orange-500/20 to-orange-600/20' :
+                    'bg-gradient-to-br from-primary/20 to-secondary/20'
+                  }`}></div>
+                  <div className={`absolute -bottom-4 -left-4 w-16 h-16 rounded-full blur-lg ${
+                    subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-tr from-blue-500/10 to-transparent' :
+                    subject?.toLowerCase() === 'science' ? 'bg-gradient-to-tr from-green-500/10 to-transparent' :
+                    subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-tr from-purple-500/10 to-transparent' :
+                    subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-tr from-green-500/10 to-transparent' :
+                    subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-tr from-orange-500/10 to-transparent' :
+                    'bg-gradient-to-tr from-primary/10 to-transparent'
+                  }`}></div>
                   
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="bg-gradient-to-r from-primary to-secondary p-2 rounded-xl">
+                          <div className={`p-2 rounded-xl ${
+                            subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                            subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                            subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                            subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                            subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                            'bg-gradient-to-r from-primary to-secondary'
+                          }`}>
                             <FileText size={16} className="text-white" />
                           </div>
-                          <span className="text-sm font-bold text-primary uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
+                          <span className={`text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
+                            subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 bg-blue-500/10' :
+                            subject?.toLowerCase() === 'science' ? 'text-green-600 bg-green-500/10' :
+                            subject?.toLowerCase() === 'physics' ? 'text-purple-600 bg-purple-500/10' :
+                            subject?.toLowerCase() === 'chemistry' ? 'text-green-600 bg-green-500/10' :
+                            subject?.toLowerCase() === 'biology' ? 'text-orange-600 bg-orange-500/10' :
+                            'text-primary bg-primary/10'
+                          }`}>
                             Study Notes
                           </span>
                         </div>
-                        <h3 className="font-bold text-foreground mb-4 text-xl leading-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        <h3 className={`font-bold text-foreground mb-4 text-xl leading-tight bg-clip-text text-transparent ${
+                          subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                          subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                          subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                          subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                          subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
+                          'bg-gradient-to-r from-primary to-secondary'
+                        }`}>
                           {chapterName}
                         </h3>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
