@@ -118,8 +118,22 @@ const StudyMaterial: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <Navbar />
+    <div className="min-h-screen relative">
+      {/* Dynamic gradient background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5"></div>
+      
+      {/* Animated background patterns */}
+      <div className="fixed inset-0 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-tl from-accent/10 to-primary/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-secondary/10 to-accent/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+      
+      {/* Mesh gradient overlay */}
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(var(--secondary)/0.08),transparent_50%),radial-gradient(circle_at_40%_40%,hsl(var(--accent)/0.05),transparent_50%)]"></div>
+      
+      <div className="relative z-10">
+        <Navbar />
 
       {/* Hero Section */}
       <section className="pt-20 pb-16 hero-gradient relative overflow-hidden">
@@ -169,6 +183,8 @@ const StudyMaterial: React.FC = () => {
 
       {/* Study Materials */}
       <section className="py-24 relative" ref={ref}>
+        {/* Section background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/5 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -443,6 +459,7 @@ const StudyMaterial: React.FC = () => {
       </section>
 
       <Footer />
+      </div>
     </div>
   );
 };

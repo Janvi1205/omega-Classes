@@ -188,8 +188,59 @@ const SubjectNotes: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
+    <div className="min-h-screen relative">
+      {/* Dynamic subject-themed background */}
+      <div className={`fixed inset-0 ${
+        subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-br from-background via-blue-50/20 to-blue-100/30 dark:via-blue-950/20 dark:to-blue-900/30' :
+        subject?.toLowerCase() === 'science' ? 'bg-gradient-to-br from-background via-green-50/20 to-green-100/30 dark:via-green-950/20 dark:to-green-900/30' :
+        subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-br from-background via-purple-50/20 to-purple-100/30 dark:via-purple-950/20 dark:to-purple-900/30' :
+        subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-br from-background via-green-50/20 to-green-100/30 dark:via-green-950/20 dark:to-green-900/30' :
+        subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-br from-background via-orange-50/20 to-orange-100/30 dark:via-orange-950/20 dark:to-orange-900/30' :
+        'bg-gradient-to-br from-background via-primary/5 to-secondary/10'
+      }`}></div>
+      
+      {/* Animated subject-themed patterns */}
+      <div className="fixed inset-0 opacity-40">
+        <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse ${
+          subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-br from-blue-500/15 to-blue-600/5' :
+          subject?.toLowerCase() === 'science' ? 'bg-gradient-to-br from-green-500/15 to-green-600/5' :
+          subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-br from-purple-500/15 to-purple-600/5' :
+          subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-br from-green-500/15 to-green-600/5' :
+          subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-br from-orange-500/15 to-orange-600/5' :
+          'bg-gradient-to-br from-primary/15 to-secondary/5'
+        }`}></div>
+        
+        <div className={`absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full blur-3xl animate-pulse delay-1000 ${
+          subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-tl from-blue-600/10 to-blue-400/5' :
+          subject?.toLowerCase() === 'science' ? 'bg-gradient-to-tl from-green-600/10 to-green-400/5' :
+          subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-tl from-purple-600/10 to-purple-400/5' :
+          subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-tl from-green-600/10 to-green-400/5' :
+          subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-tl from-orange-600/10 to-orange-400/5' :
+          'bg-gradient-to-tl from-accent/10 to-primary/5'
+        }`}></div>
+        
+        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl animate-pulse delay-500 ${
+          subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-400/8 to-blue-500/8' :
+          subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-400/8 to-green-500/8' :
+          subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-400/8 to-purple-500/8' :
+          subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-r from-green-400/8 to-green-500/8' :
+          subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-400/8 to-orange-500/8' :
+          'bg-gradient-to-r from-secondary/8 to-accent/8'
+        }`}></div>
+      </div>
+      
+      {/* Mesh gradient overlay */}
+      <div className={`fixed inset-0 ${
+        subject?.toLowerCase() === 'mathematics' ? 'bg-[radial-gradient(circle_at_30%_20%,hsl(217_91%_60%/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(221_83%_53%/0.08),transparent_50%)]' :
+        subject?.toLowerCase() === 'science' ? 'bg-[radial-gradient(circle_at_30%_20%,hsl(142_76%_36%/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(158_64%_52%/0.08),transparent_50%)]' :
+        subject?.toLowerCase() === 'physics' ? 'bg-[radial-gradient(circle_at_30%_20%,hsl(258_90%_66%/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(271_81%_56%/0.08),transparent_50%)]' :
+        subject?.toLowerCase() === 'chemistry' ? 'bg-[radial-gradient(circle_at_30%_20%,hsl(142_76%_36%/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(158_64%_52%/0.08),transparent_50%)]' :
+        subject?.toLowerCase() === 'biology' ? 'bg-[radial-gradient(circle_at_30%_20%,hsl(20_84%_60%/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(24_95%_53%/0.08),transparent_50%)]' :
+        'bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(var(--secondary)/0.08),transparent_50%)]'
+      }`}></div>
+      
+      <div className="relative z-10">
+        <Navbar />
       
       {/* Hero Section */}
       <section className="pt-20 pb-16 hero-gradient relative overflow-hidden">
@@ -275,7 +326,16 @@ const SubjectNotes: React.FC = () => {
       </section>
 
       {/* Notes Section */}
-      <section className="py-20" ref={ref}>
+      <section className="py-20 relative" ref={ref}>
+        {/* Section background with subject theming */}
+        <div className={`absolute inset-0 opacity-50 ${
+          subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-b from-transparent via-blue-50/10 to-transparent dark:via-blue-950/10' :
+          subject?.toLowerCase() === 'science' ? 'bg-gradient-to-b from-transparent via-green-50/10 to-transparent dark:via-green-950/10' :
+          subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-b from-transparent via-purple-50/10 to-transparent dark:via-purple-950/10' :
+          subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-b from-transparent via-green-50/10 to-transparent dark:via-green-950/10' :
+          subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-b from-transparent via-orange-50/10 to-transparent dark:via-orange-950/10' :
+          'bg-gradient-to-b from-transparent via-card/5 to-transparent'
+        }`}></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
@@ -475,7 +535,16 @@ const SubjectNotes: React.FC = () => {
       </section>
 
       {/* Homework Section */}
-      <section className="py-20 bg-gradient-to-br from-muted/30 to-background">
+      <section className="py-20 relative">
+        {/* Enhanced section background with subject theming */}
+        <div className={`absolute inset-0 ${
+          subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-br from-blue-500/5 via-blue-600/3 to-blue-400/5' :
+          subject?.toLowerCase() === 'science' ? 'bg-gradient-to-br from-green-500/5 via-green-600/3 to-green-400/5' :
+          subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-br from-purple-500/5 via-purple-600/3 to-purple-400/5' :
+          subject?.toLowerCase() === 'chemistry' ? 'bg-gradient-to-br from-green-500/5 via-green-600/3 to-green-400/5' :
+          subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-br from-orange-500/5 via-orange-600/3 to-orange-400/5' :
+          'bg-gradient-to-br from-secondary/5 via-accent/3 to-primary/5'
+        }`}></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
@@ -669,6 +738,7 @@ const SubjectNotes: React.FC = () => {
       </section>
 
       <Footer />
+      </div>
     </div>
   );
 };
