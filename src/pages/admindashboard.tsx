@@ -6,7 +6,8 @@ import { ref, deleteObject } from "firebase/storage";
 import { useAuth } from "@/contexts/Authcontext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, BookOpen, Download, Trash2, Upload, LogOut, Users, GraduationCap, Calculator, Atom, Microscope, Zap } from "lucide-react";
+import { FileText, BookOpen, Download, Trash2, Upload, LogOut, Users, GraduationCap, Calculator, Atom, Microscope, Zap, Megaphone } from "lucide-react";
+import AnnouncementModal from "@/components/AnnouncementModal";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ const AdminDashboard: React.FC = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedClass, setSelectedClass] = useState<string>("all");
+  const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
   const { logout } = useAuth();
 
   const load = async () => {
@@ -155,6 +157,16 @@ const AdminDashboard: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button 
+                onClick={() => setIsAnnouncementModalOpen(true)}
+                variant="secondary" 
+                className="gap-2 text-sm" 
+                size="sm"
+              >
+                <Megaphone size={14} />
+                <span className="hidden sm:inline">Post Announcement</span>
+                <span className="sm:hidden">Announce</span>
+              </Button>
               <Button asChild variant="default" className="gap-2 text-sm" size="sm">
                 <Link to="/admin/upload">
                   <Upload size={14} />
@@ -343,6 +355,12 @@ const AdminDashboard: React.FC = () => {
           </motion.div>
         )}
       </div>
+
+      {/* Announcement Modal */}
+      <AnnouncementModal 
+        isOpen={isAnnouncementModalOpen}
+        onClose={() => setIsAnnouncementModalOpen(false)}
+      />
     </div>
   );
 };
