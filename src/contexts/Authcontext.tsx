@@ -31,13 +31,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
-        // Check user role from Firestore
+        // Check user role from Firestore - check teachers collection first
         try {
-          const userDoc = await getDoc(doc(db, "users", u.uid));
-          if (userDoc.exists()) {
-            setUserRole(userDoc.data()?.role || 'student');
+          console.log("Checking user role for UID:", u.uid);
+          const teacherDoc = await getDoc(doc(db, "teachers", u.uid));
+          if (teacherDoc.exists()) {
+            console.log("Found teacher document:", teacherDoc.data());
+            setUserRole('teacher');
           } else {
-            setUserRole('student'); // Default to student if no role found
+            // Fallback to users collection
+            const userDoc = await getDoc(doc(db, "users", u.uid));
+            if (userDoc.exists()) {
+              console.log("Found user document:", userDoc.data());
+              setUserRole(userDoc.data()?.role || 'student');
+            } else {
+              console.log("No document found, defaulting to student");
+              setUserRole('student');
+            }
           }
         } catch (error) {
           console.error("Error fetching user role:", error);
