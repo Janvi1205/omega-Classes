@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/Authcontext";
 import { useNavigate } from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore";
-import { db, auth } from "@/lib/firebase";
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -53,34 +51,6 @@ const AdminLogin: React.FC = () => {
     }
   };
 
-  const makeTeacherAccount = async () => {
-    if (!email) {
-      setErr("Please enter your email first");
-      return;
-    }
-    
-    try {
-      // First login to get user
-      await login(email, password);
-      console.log("Making teacher account for:", email);
-      
-      // Get current user and set their role to teacher
-      const user = auth.currentUser;
-      if (user) {
-        await setDoc(doc(db, "users", user.uid), {
-          email: user.email,
-          role: "teacher",
-          createdAt: new Date(),
-        });
-        console.log("Teacher role set successfully");
-        setErr("Account converted to teacher! Please try logging in again.");
-      }
-    } catch (error: any) {
-      console.error("Error making teacher account:", error);
-      setErr(error.message || "Failed to convert account");
-    }
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-background relative overflow-x-hidden">
       {/* Floating animated shapes */}
@@ -115,20 +85,6 @@ const AdminLogin: React.FC = () => {
             Sign in
           </button>
         </form>
-        
-        {/* Temporary teacher setup button */}
-        <div className="mt-4 pt-4 border-t border-border">
-          <p className="text-sm text-muted-foreground mb-2 text-center">
-            First time? Convert your account to teacher:
-          </p>
-          <button 
-            onClick={makeTeacherAccount}
-            className="w-full bg-secondary text-secondary-foreground px-4 py-2 rounded-lg hover:bg-secondary/80 transition-colors"
-            type="button"
-          >
-            Make Teacher Account
-          </button>
-        </div>
       </div>
     </div>
   );

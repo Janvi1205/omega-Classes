@@ -29,19 +29,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
-      console.log("Auth state changed:", u?.uid);
       setUser(u);
       if (u) {
         // Check user role from Firestore
         try {
-          console.log("Fetching user role for:", u.uid);
           const userDoc = await getDoc(doc(db, "users", u.uid));
           if (userDoc.exists()) {
-            const userData = userDoc.data();
-            console.log("User data from Firestore:", userData);
-            setUserRole(userData?.role || 'student');
+            setUserRole(userDoc.data()?.role || 'student');
           } else {
-            console.log("No user document found, defaulting to student");
             setUserRole('student'); // Default to student if no role found
           }
         } catch (error) {
@@ -49,7 +44,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUserRole('student');
         }
       } else {
-        console.log("User logged out");
         setUserRole(null);
       }
       setLoading(false);
