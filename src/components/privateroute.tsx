@@ -4,7 +4,9 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/Authcontext";
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, isTeacher, loading } = useAuth();
+  const { user, isTeacher, loading, userRole } = useAuth();
+  
+  console.log("PrivateRoute - user:", user?.uid, "role:", userRole, "isTeacher:", isTeacher, "loading:", loading);
   
   if (loading) {
     return (
