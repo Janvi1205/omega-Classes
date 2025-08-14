@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap } from "lucide-react";
+import { BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap, Sparkles, Target, Trophy, Star } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -36,12 +36,16 @@ const StudyMaterial: React.FC = () => {
         {
           name: "Mathematics",
           icon: Calculator,
-          color: "bg-blue-500",
+          color: "bg-gradient-to-br from-blue-500 to-blue-600",
+          description: "Algebra, Geometry & Trigonometry",
+          topics: ["Algebra", "Geometry", "Trigonometry"]
         },
         {
           name: "Science",
           icon: Atom,
-          color: "bg-green-500",
+          color: "bg-gradient-to-br from-green-500 to-green-600",
+          description: "Physics, Chemistry & Biology",
+          topics: ["Physics", "Chemistry", "Biology"]
         },
       ];
     } else {
@@ -49,22 +53,30 @@ const StudyMaterial: React.FC = () => {
         {
           name: "Mathematics",
           icon: Calculator,
-          color: "bg-blue-500",
+          color: "bg-gradient-to-br from-blue-500 to-blue-600",
+          description: "Advanced Calculus & Algebra",
+          topics: ["Calculus", "Algebra", "Statistics"]
         },
         {
           name: "Physics",
           icon: Zap,
-          color: "bg-purple-500",
+          color: "bg-gradient-to-br from-purple-500 to-purple-600",
+          description: "Mechanics, Electricity & Optics",
+          topics: ["Mechanics", "Electricity", "Optics"]
         },
         {
           name: "Chemistry",
           icon: Atom,
-          color: "bg-green-500",
+          color: "bg-gradient-to-br from-green-500 to-green-600",
+          description: "Organic, Inorganic & Physical",
+          topics: ["Organic", "Inorganic", "Physical"]
         },
         {
           name: "Biology",
           icon: Microscope,
-          color: "bg-orange-500",
+          color: "bg-gradient-to-br from-orange-500 to-orange-600",
+          description: "Cell Biology & Genetics",
+          topics: ["Cell Biology", "Genetics", "Ecology"]
         },
       ];
     }
@@ -76,57 +88,86 @@ const StudyMaterial: React.FC = () => {
     {
       name: "IIT Preparation",
       description: "Advanced concepts for JEE Main & Advanced",
+      badge: "Premium",
+      icon: Target,
       subjects: [
         {
           name: "Mathematics",
           icon: Calculator,
-          color: "bg-blue-500",
+          color: "bg-gradient-to-br from-blue-500 to-blue-600",
+          description: "Advanced Calculus & Algebra",
+          topics: ["Calculus", "Algebra", "Statistics"]
         },
         {
           name: "Physics",
           icon: Zap,
-          color: "bg-purple-500",
+          color: "bg-gradient-to-br from-purple-500 to-purple-600",
+          description: "Mechanics, Electricity & Optics",
+          topics: ["Mechanics", "Electricity", "Optics"]
         },
         {
           name: "Chemistry",
           icon: Atom,
-          color: "bg-green-500",
+          color: "bg-gradient-to-br from-green-500 to-green-600",
+          description: "Organic, Inorganic & Physical",
+          topics: ["Organic", "Inorganic", "Physical"]
         },
       ]
     },
     {
       name: "NEET Preparation", 
       description: "Medical entrance exam preparation",
+      badge: "Premium",
+      icon: Trophy,
       subjects: [
         {
           name: "Biology",
           icon: Microscope,
-          color: "bg-orange-500",
+          color: "bg-gradient-to-br from-orange-500 to-orange-600",
+          description: "Cell Biology & Genetics",
+          topics: ["Cell Biology", "Genetics", "Ecology"]
         },
         {
           name: "Chemistry",
           icon: Atom,
-          color: "bg-green-500",
+          color: "bg-gradient-to-br from-green-500 to-green-600",
+          description: "Organic, Inorganic & Physical",
+          topics: ["Organic", "Inorganic", "Physical"]
         },
         {
           name: "Physics",
           icon: Zap,
-          color: "bg-purple-500",
+          color: "bg-gradient-to-br from-purple-500 to-purple-600",
+          description: "Mechanics, Electricity & Optics",
+          topics: ["Mechanics", "Electricity", "Optics"]
         },
       ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 relative overflow-x-hidden">
+      {/* Enhanced floating animated shapes */}
+      <div className="floating-shape" style={{top: '10%', left: '5%', width: '180px', height: '180px', background: 'linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%)', animationDelay: '0s'}}></div>
+      <div className="floating-shape" style={{top: '60%', left: '80%', width: '120px', height: '120px', background: 'linear-gradient(135deg, #f472b6 0%, #a5b4fc 100%)', animationDelay: '4s'}}></div>
+      <div className="floating-shape" style={{top: '80%', left: '20%', width: '100px', height: '100px', background: 'linear-gradient(135deg, #38bdf8 0%, #a5b4fc 100%)', animationDelay: '8s'}}></div>
+      <div className="floating-shape" style={{top: '30%', left: '70%', width: '140px', height: '140px', background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 100%)', animationDelay: '2s'}}></div>
+      <div className="floating-shape" style={{top: '15%', left: '85%', width: '80px', height: '80px', background: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)', animationDelay: '6s'}}></div>
+      <div className="floating-shape" style={{top: '45%', left: '10%', width: '90px', height: '90px', background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', animationDelay: '3s'}}></div>
+      <div className="floating-shape" style={{top: '75%', left: '60%', width: '110px', height: '110px', background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)', animationDelay: '5s'}}></div>
+      <div className="floating-shape" style={{top: '25%', left: '40%', width: '70px', height: '70px', background: 'linear-gradient(135deg, #f97316 0%, #eab308 100%)', animationDelay: '7s'}}></div>
+      <div className="floating-shape" style={{top: '5%', left: '50%', width: '60px', height: '60px', background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)', animationDelay: '1s'}}></div>
+      <div className="floating-shape" style={{top: '90%', left: '90%', width: '50px', height: '50px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', animationDelay: '9s'}}></div>
+      
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="pt-20 pb-16 hero-gradient relative overflow-hidden">
-        {/* Background decorative elements */}
+        {/* Enhanced background decorative elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent/10 rounded-full blur-2xl"></div>
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl animate-pulse md:opacity-100 opacity-30"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent/10 rounded-full blur-2xl animate-pulse md:opacity-100 opacity-30" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-full blur-3xl animate-pulse md:opacity-100 opacity-20" style={{animationDelay: '2s'}}></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -138,8 +179,9 @@ const StudyMaterial: React.FC = () => {
           >
             <motion.button
               onClick={handleBackToHome}
-              whileHover={{ x: -4 }}
-              className="inline-flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground mb-8 transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/15"
+              whileHover={{ x: -4, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground mb-8 transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/15 hover:shadow-lg hover:shadow-white/10 btn-glow"
             >
               <ArrowLeft size={20} />
               Back to Home
@@ -151,23 +193,42 @@ const StudyMaterial: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="mb-6"
             >
-              <div className="inline-block p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 mb-6">
-                <BookOpen size={48} className="text-white" />
+              <div className="relative inline-block">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-xl animate-pulse"></div>
+                <div className="relative p-6 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20 mb-6 shadow-2xl">
+                  <div className="relative">
+                    <BookOpen size={48} className="text-white relative z-10" />
+                    <Sparkles size={24} className="text-yellow-300 absolute -top-2 -right-2 animate-bounce" />
+                  </div>
+                </div>
               </div>
             </motion.div>
             
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent leading-tight text-glow"
+            >
               Study Materials
-            </h1>
-            <p className="text-xl sm:text-2xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed">
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-xl sm:text-2xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed mb-8"
+            >
               Access comprehensive study materials for all classes to enhance your learning journey
-            </p>
+            </motion.p>
+
+
             
           </motion.div>
         </div>
       </section>
 
-      {/* Study Materials */}
+      {/* Enhanced Study Materials */}
       <section className="py-24 relative" ref={ref}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -176,10 +237,10 @@ const StudyMaterial: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <div className="inline-block p-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl mb-6">
+            <div className="inline-block p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl mb-6 shadow-lg">
               <BookOpen size={32} className="text-primary" />
             </div>
-            <h2 className="text-4xl font-bold text-foreground mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Class-wise Study Materials
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -188,7 +249,7 @@ const StudyMaterial: React.FC = () => {
           </motion.div>
 
           <div className="space-y-16">
-            {/* School Classes Section */}
+            {/* Enhanced School Classes Section */}
             {classes.map((className, classIndex) => {
               const subjects = getSubjectsForClass(className);
               return (
@@ -199,18 +260,22 @@ const StudyMaterial: React.FC = () => {
                   transition={{ duration: 0.6, delay: classIndex * 0.1 }}
                   className="relative group"
                 >
-                  {/* Glass morphism card */}
-                  <div className="relative bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl hover:shadow-primary/5 transition-all duration-500 overflow-hidden">
-                    {/* Decorative gradient overlay */}
+                  {/* Enhanced glass morphism card */}
+                  <div className="relative bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl transition-all duration-500 overflow-hidden">
+                    {/* Enhanced decorative gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
-                    {/* Floating elements */}
-                    <div className="absolute top-6 right-6 w-20 h-20 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl opacity-50"></div>
+                    {/* Enhanced floating elements */}
+                    <div className="absolute top-6 right-6 w-20 h-20 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl opacity-50 animate-pulse"></div>
+                    <div className="absolute bottom-6 left-6 w-16 h-16 bg-gradient-to-tr from-accent/10 to-transparent rounded-full blur-lg animate-pulse" style={{animationDelay: '1s'}}></div>
                     
                     <div className="relative z-10">
                       <div className="flex items-center gap-4 mb-8">
-                        <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground p-4 rounded-2xl shadow-lg">
-                          <BookOpen size={28} />
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-lg opacity-50"></div>
+                          <div className="relative bg-gradient-to-r from-primary to-secondary text-primary-foreground p-4 rounded-2xl shadow-lg">
+                            <BookOpen size={28} />
+                          </div>
                         </div>
                         <div>
                           <h3 className="text-3xl font-bold text-foreground bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -242,8 +307,8 @@ const StudyMaterial: React.FC = () => {
                                 to={`/subject/${className.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
                                 className="block"
                               >
-                                <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-300 overflow-hidden">
-                                  {/* Subject-specific hover gradient overlay */}
+                                <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-300 overflow-hidden enhanced-card">
+                                  {/* Enhanced subject-specific hover gradient overlay */}
                                   <div className={`absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
                                     subject.name === 'Mathematics' ? 'bg-gradient-to-br from-blue-500/10 via-transparent to-blue-600/10' :
                                     subject.name === 'Science' ? 'bg-gradient-to-br from-green-500/10 via-transparent to-green-600/10' :
@@ -253,7 +318,7 @@ const StudyMaterial: React.FC = () => {
                                     'bg-gradient-to-br from-primary/10 via-transparent to-secondary/10'
                                   }`}></div>
                                   
-                                  {/* Subject-specific floating icon background */}
+                                  {/* Enhanced subject-specific floating icon background */}
                                   <div className={`absolute -top-4 -right-4 w-16 h-16 rounded-full blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
                                     subject.name === 'Mathematics' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/20' :
                                     subject.name === 'Science' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
@@ -264,8 +329,9 @@ const StudyMaterial: React.FC = () => {
                                   }`}></div>
                                   
                                   <div className="relative z-10 flex flex-col items-center text-center">
-                                    <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-6 transition-transform duration-300`}>
-                                      <IconComponent size={28} />
+                                    <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-6 transition-transform duration-300 relative overflow-hidden`}>
+                                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                      <IconComponent size={28} className="relative z-10" />
                                     </div>
                                     <h4 className={`font-bold text-foreground mb-2 text-lg transition-colors duration-300 ${
                                       subject.name === 'Mathematics' ? 'group-hover/card:text-blue-600' :
@@ -277,6 +343,7 @@ const StudyMaterial: React.FC = () => {
                                     }`}>
                                       {subject.name}
                                     </h4>
+
                                     <div className={`w-8 h-1 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
                                       subject.name === 'Mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
                                       subject.name === 'Science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
@@ -298,7 +365,7 @@ const StudyMaterial: React.FC = () => {
               );
             })}
 
-            {/* Competitive Exams Section */}
+            {/* Enhanced Competitive Exams Section */}
             <div className="space-y-8">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -306,96 +373,107 @@ const StudyMaterial: React.FC = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-center"
               >
-                <div className="inline-block p-3 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl mb-4">
-                  <Zap size={28} className="text-amber-500" />
+                <div className="inline-block p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl mb-4 shadow-lg">
+                  <div className="relative">
+                    <Target size={28} className="text-amber-500 relative z-10" />
+                    <Star size={16} className="text-yellow-400 absolute -top-1 -right-1 animate-pulse" />
+                  </div>
                 </div>
-                <h2 className="text-3xl font-bold text-foreground mb-4 bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
                   Competitive Exam Preparation
                 </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
+                <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
                   Advanced materials for JEE and NEET preparation with comprehensive study resources.
                 </p>
               </motion.div>
               
-              {competitiveExams.map((exam, examIndex) => (
-                <motion.div
-                  key={exam.name}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: (classes.length + examIndex) * 0.1 }}
-                  className="relative group"
-                >
-                  {/* Special competitive exam styling */}
-                  <div className="relative bg-gradient-to-br from-amber-500/5 via-card/50 to-orange-500/5 backdrop-blur-xl border-2 border-amber-500/20 rounded-3xl p-8 shadow-2xl hover:shadow-amber-500/10 transition-all duration-500 overflow-hidden">
-                    {/* Premium badge */}
-                    <div className="absolute top-6 right-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
-                      PREMIUM
-                    </div>
-                    
-                    {/* Decorative elements */}
-                    <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-2xl"></div>
-                    <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-orange-500/10 to-transparent rounded-full blur-xl"></div>
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-start gap-4 mb-8">
-                        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-xl">
-                          <BookOpen size={32} />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-3xl font-bold text-foreground bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent mb-2">
-                            {exam.name}
-                          </h3>
-                          <p className="text-muted-foreground text-lg">{exam.description}</p>
-                        </div>
+              {competitiveExams.map((exam, examIndex) => {
+                const ExamIcon = exam.icon;
+                return (
+                  <motion.div
+                    key={exam.name}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: (classes.length + examIndex) * 0.1 }}
+                    className="relative group"
+                  >
+                    {/* Enhanced special competitive exam styling */}
+                    <div className="relative bg-gradient-to-br from-amber-500/5 via-card/50 to-orange-500/5 backdrop-blur-xl border-2 border-amber-500/20 rounded-3xl p-8 shadow-2xl transition-all duration-500 overflow-hidden">
+                      {/* Enhanced premium badge */}
+                      <div className="absolute top-6 right-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg flex items-center gap-2">
+                        <Star size={12} />
+                        {exam.badge}
                       </div>
+                      
+                      {/* Enhanced decorative elements */}
+                      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-2xl animate-pulse"></div>
+                      <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-orange-500/10 to-transparent rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+                      
+                      <div className="relative z-10">
+                        <div className="flex items-start gap-4 mb-8">
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur-lg opacity-50"></div>
+                            <div className="relative bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-xl">
+                              <ExamIcon size={32} />
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-3xl font-bold text-foreground bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent mb-2">
+                              {exam.name}
+                            </h3>
+                            <p className="text-muted-foreground text-lg">{exam.description}</p>
+                          </div>
+                        </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        {exam.subjects.map((subject, index) => {
-                          const IconComponent = subject.icon;
-                          return (
-                            <motion.div
-                              key={subject.name}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                              transition={{
-                                duration: 0.4,
-                                delay: (classes.length + examIndex) * 0.1 + index * 0.05,
-                              }}
-                              whileHover={{ scale: 1.05, y: -8 }}
-                              whileTap={{ scale: 0.98 }}
-                              className="group/card relative"
-                            >
-                              <Link
-                                to={`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
-                                className="block"
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                          {exam.subjects.map((subject, index) => {
+                            const IconComponent = subject.icon;
+                            return (
+                              <motion.div
+                                key={subject.name}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                                transition={{
+                                  duration: 0.4,
+                                  delay: (classes.length + examIndex) * 0.1 + index * 0.05,
+                                }}
+                                whileHover={{ scale: 1.05, y: -8 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="group/card relative"
                               >
-                                <div className="relative bg-background/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300 overflow-hidden">
-                                  {/* Hover effects */}
-                                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
-                                  
-                                  <div className="relative z-10 flex flex-col items-center text-center">
-                                    <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-12 group-hover/card:scale-110 transition-all duration-300`}>
-                                      <IconComponent size={28} />
+                                <Link
+                                  to={`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
+                                  className="block"
+                                >
+                                  <div className="relative bg-background/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300 overflow-hidden">
+                                    {/* Enhanced hover effects */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                    
+                                    <div className="relative z-10 flex flex-col items-center text-center">
+                                      <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-12 group-hover/card:scale-110 transition-all duration-300`}>
+                                        <IconComponent size={28} />
+                                      </div>
+                                      <h4 className="font-bold text-foreground mb-2 text-lg group-hover/card:text-amber-600 transition-colors duration-300">
+                                        {subject.name}
+                                      </h4>
+
+                                      <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
                                     </div>
-                                    <h4 className="font-bold text-foreground mb-2 text-lg group-hover/card:text-amber-600 transition-colors duration-300">
-                                      {subject.name}
-                                    </h4>
-                                    <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
                                   </div>
-                                </div>
-                              </Link>
-                            </motion.div>
-                          );
-                        })}
+                                </Link>
+                              </motion.div>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Additional Resources */}
+          {/* Enhanced Additional Resources */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -403,16 +481,16 @@ const StudyMaterial: React.FC = () => {
             className="mt-20"
           >
             <div className="relative bg-gradient-to-br from-primary/5 via-card/50 to-secondary/5 backdrop-blur-xl border border-border/50 rounded-3xl p-12 text-center overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-xl"></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-secondary/10 to-transparent rounded-full blur-xl"></div>
+              {/* Enhanced decorative elements */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl animate-pulse"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+              <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-secondary/10 to-transparent rounded-full blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
               
               <div className="relative z-10">
-                <div className="inline-block p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl mb-6">
+                <div className="inline-block p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl mb-6 shadow-lg">
                   <BookOpen size={40} className="text-primary" />
                 </div>
-                <h3 className="text-3xl font-bold text-foreground mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   Need More Resources?
                 </h3>
                 <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
@@ -423,7 +501,7 @@ const StudyMaterial: React.FC = () => {
                     onClick={handleContactRedirect} 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
-                    className="btn-primary px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-primary/25"
+                    className="btn-primary px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-primary/25 btn-glow"
                   >
                     Contact Us
                   </motion.button>
@@ -431,7 +509,7 @@ const StudyMaterial: React.FC = () => {
                     onClick={handleBackToHome} 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
-                    className="btn-secondary px-8 py-4 text-lg font-semibold"
+                    className="btn-secondary px-8 py-4 text-lg font-semibold btn-glow"
                   >
                     Back to Home
                   </motion.button>

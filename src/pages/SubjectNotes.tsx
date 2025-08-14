@@ -12,7 +12,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 type Material = {
   id: string;
   className: string;
-  subject: string;
   chapter: string;
   type: string;
   fileName: string;
@@ -188,7 +187,13 @@ const SubjectNotes: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-x-hidden">
+      {/* Floating animated shapes */}
+      <div className="floating-shape" style={{top: '12%', left: '8%', width: '160px', height: '160px', background: 'linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%)', animationDelay: '0s'}}></div>
+      <div className="floating-shape" style={{top: '70%', left: '75%', width: '110px', height: '110px', background: 'linear-gradient(135deg, #f472b6 0%, #a5b4fc 100%)', animationDelay: '4s'}}></div>
+      <div className="floating-shape" style={{top: '85%', left: '25%', width: '90px', height: '90px', background: 'linear-gradient(135deg, #38bdf8 0%, #a5b4fc 100%)', animationDelay: '8s'}}></div>
+      <div className="floating-shape" style={{top: '5%', left: '50%', width: '70px', height: '70px', background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)', animationDelay: '1s'}}></div>
+      <div className="floating-shape" style={{top: '90%', left: '90%', width: '60px', height: '60px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', animationDelay: '9s'}}></div>
       <Navbar />
       
       {/* Hero Section */}
@@ -234,7 +239,7 @@ const SubjectNotes: React.FC = () => {
               </div>
               
               <div className="text-center">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent">
+                <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent text-glow">
                   {subject}
                 </h1>
                 <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-4">
@@ -296,7 +301,7 @@ const SubjectNotes: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {Object.entries(groupedNotes).map(([chapterName, chapterMaterials], index) => (
               <motion.div 
                 key={`notes-${chapterName}`}
@@ -307,7 +312,7 @@ const SubjectNotes: React.FC = () => {
                 className="group relative"
               >
                 {/* Glass morphism card */}
-                <div className="relative bg-gradient-to-br from-card/60 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden">
+                <div className="relative bg-gradient-to-br from-card/60 to-card/30 backdrop-blur-xl border border-border/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden enhanced-card">
                   {/* Subject-specific decorative elements */}
                   <div className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
                     subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/20' :
@@ -329,8 +334,8 @@ const SubjectNotes: React.FC = () => {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className={`p-2 rounded-xl ${
+                        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                          <div className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl ${
                             subject?.toLowerCase() === 'mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
                             subject?.toLowerCase() === 'science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
                             subject?.toLowerCase() === 'physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
@@ -338,9 +343,9 @@ const SubjectNotes: React.FC = () => {
                             subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
                             'bg-gradient-to-r from-primary to-secondary'
                           }`}>
-                            <FileText size={16} className="text-white" />
+                            <FileText size={14} className="sm:text-base text-white" />
                           </div>
-                          <span className={`text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full transition-colors duration-300 ${
+                          <span className={`text-xs sm:text-sm font-bold uppercase tracking-wider px-2 sm:px-3 py-1 rounded-full transition-colors duration-300 ${
                             subject?.toLowerCase() === 'mathematics' ? 'text-blue-600 bg-blue-500/10 group-hover:text-white group-hover:bg-blue-600' :
                             subject?.toLowerCase() === 'science' ? 'text-green-600 bg-green-500/10 group-hover:text-white group-hover:bg-green-600' :
                             subject?.toLowerCase() === 'physics' ? 'text-purple-600 bg-purple-500/10 group-hover:text-white group-hover:bg-purple-600' :
@@ -351,7 +356,7 @@ const SubjectNotes: React.FC = () => {
                             Study Notes
                           </span>
                         </div>
-                        <h3 className={`font-bold mb-4 text-xl leading-tight transition-colors duration-300 ${
+                        <h3 className={`font-bold mb-3 sm:mb-4 text-lg sm:text-xl leading-tight transition-colors duration-300 ${
                           subject?.toLowerCase() === 'mathematics' ? 'text-foreground group-hover:text-blue-600' :
                           subject?.toLowerCase() === 'science' ? 'text-foreground group-hover:text-green-600' :
                           subject?.toLowerCase() === 'physics' ? 'text-foreground group-hover:text-purple-600' :
@@ -369,9 +374,9 @@ const SubjectNotes: React.FC = () => {
                           subject?.toLowerCase() === 'biology' ? 'bg-gradient-to-r from-orange-500 to-orange-600' :
                           'bg-gradient-to-r from-primary to-secondary'
                         }`}></div>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
-                          <div className="flex items-center gap-2 bg-muted/50 rounded-full px-3 py-1">
-                            <FileText size={14} />
+                        <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
+                          <div className="flex items-center gap-1.5 sm:gap-2 bg-muted/50 rounded-full px-2 sm:px-3 py-1">
+                            <FileText size={12} className="sm:text-sm" />
                             <span className="font-medium">{chapterMaterials.length} {chapterMaterials.length === 1 ? 'note' : 'notes'}</span>
                           </div>
                         </div>
@@ -390,15 +395,15 @@ const SubjectNotes: React.FC = () => {
                               rel="noopener noreferrer"
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
-                              className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group"
+                              className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block group btn-enhanced"
                             >
-                              <div className="flex items-center gap-2 min-w-0">
-                                <Download size={16} className="flex-shrink-0" />
-                                <span className="truncate text-sm">{material.fileName}</span>
-                              </div>
-                              <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium flex-shrink-0">
-                                Notes
-                              </span>
+                                                              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
+                                  <Download size={14} className="sm:text-base flex-shrink-0" />
+                                  <span className="truncate text-xs sm:text-sm">{material.fileName}</span>
+                                </div>
+                                <span className="text-xs bg-primary-foreground/20 px-1.5 sm:px-2 py-1 rounded-md font-medium flex-shrink-0">
+                                  Notes
+                                </span>
                             </motion.a>
                           </CarouselItem>
                         ))}
@@ -432,13 +437,13 @@ const SubjectNotes: React.FC = () => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full btn-primary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                        className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block btn-enhanced"
                       >
-                        <div className="flex items-center gap-2">
-                          <Download size={16} />
-                          <span className="truncate">{material.fileName}</span>
+                        <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                          <Download size={14} className="sm:text-base" />
+                          <span className="truncate text-xs sm:text-sm">{material.fileName}</span>
                         </div>
-                        <span className="text-xs bg-primary-foreground/20 px-2 py-1 rounded-md font-medium">
+                        <span className="text-xs bg-primary-foreground/20 px-1.5 sm:px-2 py-1 rounded-md font-medium flex-shrink-0">
                           Notes
                         </span>
                       </motion.a>
@@ -503,7 +508,7 @@ const SubjectNotes: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {Object.entries(groupedHomework).map(([chapterName, chapterMaterials], index) => (
               <motion.div 
                 key={`homework-${chapterName}`}
@@ -511,7 +516,7 @@ const SubjectNotes: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, y: -2 }} 
-                className="card-gradient rounded-xl p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden group"
+                className="card-gradient rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border hover:shadow-md transition-all duration-300 relative overflow-hidden group enhanced-card"
               >
                 {/* Subject-specific decorative gradient overlay */}
                 <div className={`absolute top-0 right-0 w-20 h-20 rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
@@ -586,7 +591,7 @@ const SubjectNotes: React.FC = () => {
                               rel="noopener noreferrer"
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
-                              className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group"
+                              className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group btn-enhanced"
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <Download size={16} className="flex-shrink-0" />
@@ -628,7 +633,7 @@ const SubjectNotes: React.FC = () => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block"
+                        className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block btn-enhanced"
                       >
                         <div className="flex items-center gap-2">
                           <Download size={16} />

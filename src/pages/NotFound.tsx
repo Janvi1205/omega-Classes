@@ -12,7 +12,11 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 relative overflow-x-hidden">
+      {/* Floating animated shapes */}
+      <div className="floating-shape" style={{top: '12%', left: '8%', width: '160px', height: '160px', background: 'linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%)', animationDelay: '0s'}}></div>
+      <div className="floating-shape" style={{top: '70%', left: '75%', width: '110px', height: '110px', background: 'linear-gradient(135deg, #f472b6 0%, #a5b4fc 100%)', animationDelay: '4s'}}></div>
+      <div className="floating-shape" style={{top: '85%', left: '25%', width: '90px', height: '90px', background: 'linear-gradient(135deg, #38bdf8 0%, #a5b4fc 100%)', animationDelay: '8s'}}></div>
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">404</h1>
         <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
