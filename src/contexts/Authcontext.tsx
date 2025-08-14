@@ -52,7 +52,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    console.log("AuthContext: Attempting Firebase login");
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log("AuthContext: Firebase login successful", result.user.uid);
+    } catch (error) {
+      console.error("AuthContext: Firebase login failed", error);
+      throw error;
+    }
   };
 
   const logout = async () => {
