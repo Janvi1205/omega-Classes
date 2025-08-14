@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, X, Clock, BookOpen, AlertCircle, Calendar, Info, Trash2 } from 'lucide-react';
+import { Bell, X, Clock, BookOpen, AlertCircle, Calendar, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNotifications } from '@/contexts/NotificationContext';
 
@@ -9,7 +9,7 @@ interface NotificationPanelProps {
 }
 
 const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
-  const { notifications, markAsRead, markAllAsRead, removeNotification, clearAllNotifications } = useNotifications();
+  const { notifications, markAsRead, markAllAsRead } = useNotifications();
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
 
   const filteredNotifications = notifications.filter(notification => 
@@ -145,20 +145,9 @@ const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
                             }`}>
                               {notification.title}
                             </h3>
-                            <div className="flex items-center gap-2">
-                              {!notification.read && (
-                                <div className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0 animate-pulse" />
-                              )}
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  removeNotification(notification.id);
-                                }}
-                                className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-100 dark:hover:bg-red-950 rounded transition-all"
-                              >
-                                <Trash2 className="w-3 h-3 text-red-500" />
-                              </button>
-                            </div>
+                            {!notification.read && (
+                              <div className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0 animate-pulse" />
+                            )}
                           </div>
                           <p className="text-xs text-muted-foreground mb-2 whitespace-pre-wrap break-words">
                             {notification.message}
@@ -187,21 +176,13 @@ const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t space-y-2">
+            <div className="p-4 border-t">
               {notifications.filter(n => !n.read).length > 0 && (
                 <button 
                   onClick={markAllAsRead}
                   className="w-full text-center text-sm text-primary hover:text-primary/80 transition-colors py-2 border border-primary/20 rounded-lg hover:bg-primary/5"
                 >
                   Mark all as read
-                </button>
-              )}
-              {notifications.length > 0 && (
-                <button 
-                  onClick={clearAllNotifications}
-                  className="w-full text-center text-sm text-red-500 hover:text-red-600 transition-colors py-2 border border-red-500/20 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/20"
-                >
-                  Clear all notifications
                 </button>
               )}
             </div>
