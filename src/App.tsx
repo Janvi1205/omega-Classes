@@ -1,5 +1,6 @@
 // src/App.tsx (modify)
 import { AuthProvider } from "@/contexts/Authcontext";
+import { NotificationProvider } from "@/contexts/NotificationContext";
 import PrivateRoute from "@/components/privateroute";
 import AdminLogin from "@/pages/adminlogin";
 import AdminDashboard from "@/pages/admindashboard";
@@ -23,18 +24,20 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/study-material" element={<StudyMaterial />} />
-            <Route path="/subject/:className/:subject" element={<SubjectNotes />} />
+          <NotificationProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/study-material" element={<StudyMaterial />} />
+              <Route path="/subject/:className/:subject" element={<SubjectNotes />} />
 
-            {/* Admin routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
-            <Route path="/admin/upload" element={<PrivateRoute><UploadMaterial /></PrivateRoute>} />
+              {/* Admin routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+              <Route path="/admin/upload" element={<PrivateRoute><UploadMaterial /></PrivateRoute>} />
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </NotificationProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
