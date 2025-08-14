@@ -188,38 +188,38 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                               Type
                             </label>
                             <Select value={type} onValueChange={(value: any) => setType(value)}>
-                              <SelectTrigger className="w-full">
+                              <SelectTrigger className="w-full bg-background">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
-                                <SelectItem value="info" className="bg-background hover:bg-muted">
+                              <SelectContent className="bg-background border-border shadow-xl z-[9999]">
+                                <SelectItem value="info">
                                   <div className="flex items-center gap-2">
                                     <Info className="w-4 h-4 text-blue-500" />
-                                    <span className="text-foreground">Information</span>
+                                    Information
                                   </div>
                                 </SelectItem>
-                                <SelectItem value="assignment" className="bg-background hover:bg-muted">
+                                <SelectItem value="assignment">
                                   <div className="flex items-center gap-2">
                                     <BookOpen className="w-4 h-4 text-green-500" />
-                                    <span className="text-foreground">Assignment</span>
+                                    Assignment
                                   </div>
                                 </SelectItem>
-                                <SelectItem value="exam" className="bg-background hover:bg-muted">
+                                <SelectItem value="exam">
                                   <div className="flex items-center gap-2">
                                     <Calendar className="w-4 h-4 text-orange-500" />
-                                    <span className="text-foreground">Exam</span>
+                                    Exam
                                   </div>
                                 </SelectItem>
-                                <SelectItem value="important" className="bg-background hover:bg-muted">
+                                <SelectItem value="important">
                                   <div className="flex items-center gap-2">
                                     <AlertCircle className="w-4 h-4 text-red-500" />
-                                    <span className="text-foreground">Important</span>
+                                    Important
                                   </div>
                                 </SelectItem>
-                                <SelectItem value="update" className="bg-background hover:bg-muted">
+                                <SelectItem value="update">
                                   <div className="flex items-center gap-2">
                                     <Info className="w-4 h-4 text-purple-500" />
-                                    <span className="text-foreground">Update</span>
+                                    Update
                                   </div>
                                 </SelectItem>
                               </SelectContent>
@@ -231,26 +231,26 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                               Priority
                             </label>
                             <Select value={priority} onValueChange={(value: any) => setPriority(value)}>
-                              <SelectTrigger className="w-full">
+                              <SelectTrigger className="w-full bg-background">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-background border shadow-lg z-50">
-                                <SelectItem value="low" className="bg-background hover:bg-muted">
+                              <SelectContent className="bg-background border-border shadow-xl z-[9999]">
+                                <SelectItem value="low">
                                   <span className="flex items-center gap-2">
                                     <div className="w-2 h-2 rounded-full bg-gray-400"></div>
-                                    <span className="text-foreground">Low</span>
+                                    Low
                                   </span>
                                 </SelectItem>
-                                <SelectItem value="medium" className="bg-background hover:bg-muted">
+                                <SelectItem value="medium">
                                   <span className="flex items-center gap-2">
                                     <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                                    <span className="text-foreground">Medium</span>
+                                    Medium
                                   </span>
                                 </SelectItem>
-                                <SelectItem value="high" className="bg-background hover:bg-muted">
+                                <SelectItem value="high">
                                   <span className="flex items-center gap-2">
                                     <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                                    <span className="text-foreground">High</span>
+                                    High
                                   </span>
                                 </SelectItem>
                               </SelectContent>

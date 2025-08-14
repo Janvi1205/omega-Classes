@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { FileText, BookOpen, Download, Trash2, Upload, Calculator, Atom, Microscope, Zap, Filter } from "lucide-react";
 import AnnouncementModal from "@/components/AnnouncementModal";
 import { AdminSidebar } from "@/components/AdminSidebar";
-import { AdminStats } from "@/components/AdminStats";
+import { AdminDashboardOverview } from "@/components/AdminDashboardOverview";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -144,57 +144,70 @@ const AdminDashboard: React.FC = () => {
           </header>
 
           {/* Content */}
-          <main className="flex-1 overflow-auto p-6 space-y-8">
-            {/* Stats Overview */}
-            <section>
-              <h2 className="text-lg font-semibold text-foreground mb-4">Overview</h2>
-              <AdminStats materials={materials} selectedClass={selectedClass} />
-            </section>
-
-            {/* Filters */}
-            {availableClasses.length > 0 && (
+          <main className="flex-1 overflow-auto">
+            <div className="p-6 space-y-8">
+              {/* Enhanced Dashboard Overview */}
               <section>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Filter size={20} />
-                      Filter by Class
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-4">
-                      <label className="text-sm font-medium text-foreground">
-                        Select Class:
-                      </label>
-                      <Select value={selectedClass} onValueChange={setSelectedClass}>
-                        <SelectTrigger className="w-64">
-                          <SelectValue placeholder="All Classes" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Classes</SelectItem>
-                          {availableClasses.map((className) => (
-                            <SelectItem key={className} value={className}>
-                              {className}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
+                  <p className="text-muted-foreground">
+                    Welcome back! Here's what's happening with your educational content.
+                  </p>
+                </div>
+                <AdminDashboardOverview 
+                  materials={materials} 
+                  selectedClass={selectedClass}
+                  onAnnouncementClick={() => setIsAnnouncementModalOpen(true)}
+                />
               </section>
-            )}
 
-            {/* Materials by Subject */}
-            <section>
-              <h2 className="text-lg font-semibold text-foreground mb-4">
-                Study Materials
-                {selectedClass !== "all" && (
-                  <span className="text-sm font-normal text-muted-foreground ml-2">
-                    for {selectedClass}
-                  </span>
-                )}
-              </h2>
+              {/* Filters */}
+              {availableClasses.length > 0 && (
+                <section>
+                  <Card className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-0 shadow-lg">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Filter size={20} />
+                        Class Management
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center gap-4">
+                        <label className="text-sm font-medium text-foreground">
+                          Select Class to Filter:
+                        </label>
+                        <Select value={selectedClass} onValueChange={setSelectedClass}>
+                          <SelectTrigger className="w-64 bg-background">
+                            <SelectValue placeholder="All Classes" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border-border shadow-xl z-[9999]">
+                            <SelectItem value="all">All Classes</SelectItem>
+                            {availableClasses.map((className) => (
+                              <SelectItem key={className} value={className}>
+                                {className}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </section>
+              )}
+
+              {/* Materials by Subject */}
+              <section>
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-foreground mb-2">
+                    Study Materials Management
+                    {selectedClass !== "all" && (
+                      <span className="text-base font-normal text-muted-foreground ml-2">
+                        for {selectedClass}
+                      </span>
+                    )}
+                  </h2>
+                  <p className="text-muted-foreground">Manage and organize educational content</p>
+                </div>
               
               <div className="space-y-6">
                 {Object.entries(groupedMaterials).map(([key, group], groupIndex) => {
@@ -324,6 +337,7 @@ const AdminDashboard: React.FC = () => {
                 </motion.div>
               )}
             </section>
+            </div>
           </main>
         </div>
 
