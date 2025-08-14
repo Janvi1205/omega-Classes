@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, AlertCircle, Info, Calendar, BookOpen } from "lucide-react";
+import { X, Send, AlertCircle, Info, Calendar, BookOpen, Trash2, List, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNotifications } from "@/contexts/NotificationContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -20,8 +22,9 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
   const [type, setType] = useState<'info' | 'important' | 'assignment' | 'exam' | 'update'>('info');
   const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState("create");
   
-  const { addNotification } = useNotifications();
+  const { notifications, addNotification, removeNotification } = useNotifications();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,7 +61,7 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
       setMessage("");
       setType('info');
       setPriority('medium');
-      onClose();
+      setActiveTab("list"); // Switch to list view after posting
     } catch (error) {
       toast({
         title: "Error posting announcement",
@@ -68,6 +71,14 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleDelete = (id: string) => {
+    removeNotification(id);
+    toast({
+      title: "Announcement Deleted",
+      description: "The announcement has been removed successfully.",
+    });
   };
 
   const getTypeIcon = (type: string) => {
@@ -114,8 +125,8 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                         <Send size={20} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-foreground">Post Announcement</h3>
-                        <p className="text-sm text-muted-foreground font-normal">Send a notification to all students</p>
+                        <h3 className="text-xl font-bold text-foreground">Manage Announcements</h3>
+                        <p className="text-sm text-muted-foreground font-normal">Create and manage announcements</p>
                       </div>
                     </CardTitle>
                     <Button variant="ghost" size="sm" onClick={onClose}>
@@ -125,182 +136,294 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                 </CardHeader>
 
                 <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Title */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">
-                        Announcement Title *
-                      </label>
-                      <Input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g., New Assignment Posted"
-                        className="w-full"
-                        maxLength={100}
-                      />
-                    </div>
+                  <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="create" className="gap-2">
+                        <Plus size={16} />
+                        Create New
+                      </TabsTrigger>
+                      <TabsTrigger value="list" className="gap-2">
+                        <List size={16} />
+                        All Announcements ({notifications.length})
+                      </TabsTrigger>
+                    </TabsList>
 
-                    {/* Message */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">
-                        Message *
-                      </label>
-                      <Textarea
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Write your announcement message here..."
-                        className="w-full min-h-[100px] resize-none"
-                        maxLength={500}
-                      />
-                      <p className="text-xs text-muted-foreground text-right">
-                        {message.length}/500 characters
-                      </p>
-                    </div>
+                    <TabsContent value="create" className="mt-6">
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        {/* Title */}
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-foreground">
+                            Announcement Title *
+                          </label>
+                          <Input
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder="e.g., New Assignment Posted"
+                            className="w-full"
+                            maxLength={100}
+                          />
+                        </div>
 
-                    {/* Type and Priority */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-foreground">
-                          Type
-                        </label>
-                        <Select value={type} onValueChange={(value: any) => setType(value)}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="info">
-                              <div className="flex items-center gap-2">
-                                <Info className="w-4 h-4 text-blue-500" />
-                                Information
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="assignment">
-                              <div className="flex items-center gap-2">
-                                <BookOpen className="w-4 h-4 text-green-500" />
-                                Assignment
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="exam">
-                              <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-orange-500" />
-                                Exam
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="important">
-                              <div className="flex items-center gap-2">
-                                <AlertCircle className="w-4 h-4 text-red-500" />
-                                Important
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="update">
-                              <div className="flex items-center gap-2">
-                                <Info className="w-4 h-4 text-purple-500" />
-                                Update
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
+                        {/* Message */}
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-foreground">
+                            Message *
+                          </label>
+                          <Textarea
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="Write your announcement message here..."
+                            className="w-full min-h-[100px] resize-none"
+                            maxLength={500}
+                          />
+                          <p className="text-xs text-muted-foreground text-right">
+                            {message.length}/500 characters
+                          </p>
+                        </div>
 
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-foreground">
-                          Priority
-                        </label>
-                        <Select value={priority} onValueChange={(value: any) => setPriority(value)}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="low">
-                              <span className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-gray-400"></div>
-                                Low
-                              </span>
-                            </SelectItem>
-                            <SelectItem value="medium">
-                              <span className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                                Medium
-                              </span>
-                            </SelectItem>
-                            <SelectItem value="high">
-                              <span className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                                High
-                              </span>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
+                        {/* Type and Priority */}
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-foreground">
+                              Type
+                            </label>
+                            <Select value={type} onValueChange={(value: any) => setType(value)}>
+                              <SelectTrigger className="w-full">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="info">
+                                  <div className="flex items-center gap-2">
+                                    <Info className="w-4 h-4 text-blue-500" />
+                                    Information
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="assignment">
+                                  <div className="flex items-center gap-2">
+                                    <BookOpen className="w-4 h-4 text-green-500" />
+                                    Assignment
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="exam">
+                                  <div className="flex items-center gap-2">
+                                    <Calendar className="w-4 h-4 text-orange-500" />
+                                    Exam
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="important">
+                                  <div className="flex items-center gap-2">
+                                    <AlertCircle className="w-4 h-4 text-red-500" />
+                                    Important
+                                  </div>
+                                </SelectItem>
+                                <SelectItem value="update">
+                                  <div className="flex items-center gap-2">
+                                    <Info className="w-4 h-4 text-purple-500" />
+                                    Update
+                                  </div>
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
 
-                    {/* Preview */}
-                    {(title || message) && (
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-foreground">
-                          Preview
-                        </label>
-                        <div className={`p-3 rounded-lg border-l-4 ${
-                          priority === 'high' 
-                            ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
-                            : priority === 'medium'
-                            ? 'border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950/20'
-                            : 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/20'
-                        }`}>
-                          <div className="flex items-start gap-3">
-                            <div className="mt-1">
-                              {getTypeIcon(type)}
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="font-medium text-foreground text-sm">
-                                {title || "Announcement Title"}
-                              </h4>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                {message || "Your announcement message will appear here..."}
-                              </p>
-                              <div className="flex items-center justify-between mt-2">
-                                <span className="text-xs text-muted-foreground">Just now</span>
-                                <span className={`text-xs px-2 py-1 rounded-full ${
-                                  priority === 'high' 
-                                    ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'
-                                    : priority === 'medium'
-                                    ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
-                                    : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-                                }`}>
-                                  {priority}
-                                </span>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-foreground">
+                              Priority
+                            </label>
+                            <Select value={priority} onValueChange={(value: any) => setPriority(value)}>
+                              <SelectTrigger className="w-full">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="low">
+                                  <span className="flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-gray-400"></div>
+                                    Low
+                                  </span>
+                                </SelectItem>
+                                <SelectItem value="medium">
+                                  <span className="flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                    Medium
+                                  </span>
+                                </SelectItem>
+                                <SelectItem value="high">
+                                  <span className="flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                                    High
+                                  </span>
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        {/* Preview */}
+                        {(title || message) && (
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-foreground">
+                              Preview
+                            </label>
+                            <div className={`p-3 rounded-lg border-l-4 ${
+                              priority === 'high' 
+                                ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
+                                : priority === 'medium'
+                                ? 'border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950/20'
+                                : 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/20'
+                            }`}>
+                              <div className="flex items-start gap-3">
+                                <div className="mt-1">
+                                  {getTypeIcon(type)}
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="font-medium text-foreground text-sm">
+                                    {title || "Announcement Title"}
+                                  </h4>
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    {message || "Your announcement message will appear here..."}
+                                  </p>
+                                  <div className="flex items-center justify-between mt-2">
+                                    <span className="text-xs text-muted-foreground">Just now</span>
+                                    <span className={`text-xs px-2 py-1 rounded-full ${
+                                      priority === 'high' 
+                                        ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'
+                                        : priority === 'medium'
+                                        ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
+                                        : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                                    }`}>
+                                      {priority}
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Actions */}
-                    <div className="flex gap-3 pt-4">
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        onClick={onClose}
-                        className="flex-1"
-                        disabled={isSubmitting}
-                      >
-                        Cancel
-                      </Button>
-                      <Button 
-                        type="submit" 
-                        className="flex-1 gap-2"
-                        disabled={isSubmitting || !title.trim() || !message.trim()}
-                      >
-                        {isSubmitting ? (
-                          <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                        ) : (
-                          <Send size={16} />
                         )}
-                        {isSubmitting ? "Posting..." : "Post Announcement"}
-                      </Button>
-                    </div>
-                  </form>
+
+                        {/* Actions */}
+                        <div className="flex gap-3 pt-4">
+                          <Button 
+                            type="button" 
+                            variant="outline" 
+                            onClick={() => setActiveTab("list")}
+                            className="flex-1"
+                            disabled={isSubmitting}
+                          >
+                            View All
+                          </Button>
+                          <Button 
+                            type="submit" 
+                            className="flex-1 gap-2"
+                            disabled={isSubmitting || !title.trim() || !message.trim()}
+                          >
+                            {isSubmitting ? (
+                              <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <Send size={16} />
+                            )}
+                            {isSubmitting ? "Posting..." : "Post Announcement"}
+                          </Button>
+                        </div>
+                      </form>
+                    </TabsContent>
+
+                    <TabsContent value="list" className="mt-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-sm font-medium text-foreground">
+                            All Announcements ({notifications.length})
+                          </h4>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => setActiveTab("create")}
+                            className="gap-2"
+                          >
+                            <Plus size={14} />
+                            New
+                          </Button>
+                        </div>
+
+                        {notifications.length === 0 ? (
+                          <div className="text-center py-8">
+                            <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-3">
+                              <Send size={20} className="text-muted-foreground" />
+                            </div>
+                            <p className="text-sm text-muted-foreground">No announcements yet</p>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setActiveTab("create")}
+                              className="mt-3 gap-2"
+                            >
+                              <Plus size={14} />
+                              Create First Announcement
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                            {notifications.map((notification) => (
+                              <motion.div
+                                key={notification.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className={`p-4 rounded-lg border-l-4 ${
+                                  notification.priority === 'high' 
+                                    ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
+                                    : notification.priority === 'medium'
+                                    ? 'border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950/20'
+                                    : 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/20'
+                                }`}
+                              >
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="flex items-start gap-3 flex-1">
+                                    <div className="mt-1">
+                                      {getTypeIcon(notification.type)}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <h4 className="font-medium text-foreground text-sm truncate">
+                                          {notification.title}
+                                        </h4>
+                                        <Badge variant={
+                                          notification.priority === 'high' ? 'destructive' :
+                                          notification.priority === 'medium' ? 'default' : 'secondary'
+                                        } className="text-xs">
+                                          {notification.priority}
+                                        </Badge>
+                                      </div>
+                                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                                        {notification.message}
+                                      </p>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-xs text-muted-foreground">
+                                          {notification.time}
+                                        </span>
+                                        <Badge variant="outline" className="text-xs">
+                                          {notification.type}
+                                        </Badge>
+                                        {!notification.read && (
+                                          <div className="w-2 h-2 bg-primary rounded-full"></div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleDelete(notification.id)}
+                                    className="text-destructive hover:text-destructive hover:bg-destructive/10 flex-shrink-0"
+                                  >
+                                    <Trash2 size={14} />
+                                  </Button>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </TabsContent>
+                  </Tabs>
                 </CardContent>
               </Card>
             </motion.div>
