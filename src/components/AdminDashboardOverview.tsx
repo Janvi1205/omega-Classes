@@ -70,17 +70,6 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
       change: "+15%",
       trend: "up"
     },
-    {
-      title: selectedClass === "all" ? "Classes" : "Subjects",
-      value: selectedClass === "all" ? totalClasses : totalSubjects,
-      description: selectedClass === "all" ? "Total classes managed" : "Subjects covered",
-      icon: Users,
-      color: "text-purple-500",
-      bgColor: "bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/50 dark:to-purple-900/50",
-      iconBg: "bg-purple-500",
-      change: "+5%",
-      trend: "up"
-    },
   ];
 
   const quickActions = [
@@ -97,20 +86,13 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
       icon: BookOpen,
       color: "bg-gradient-to-r from-green-500 to-green-600",
       href: "/admin/upload"
-    },
-    {
-      title: "View Analytics",
-      description: "Track student engagement",
-      icon: BarChart3,
-      color: "bg-gradient-to-r from-purple-500 to-purple-600",
-      action: () => console.log("Analytics clicked")
     }
   ];
 
   return (
     <div className="space-y-8">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (
           <motion.div
             key={stat.title}
@@ -163,7 +145,7 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {quickActions.map((action, index) => (
                 <motion.div
                   key={action.title}

@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/contexts/Authcontext";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
   { 
@@ -61,78 +62,96 @@ export function AdminSidebar({ onAnnouncementClick }: AdminSidebarProps) {
   const isCollapsed = state === "collapsed";
 
   return (
-    <Sidebar className={isCollapsed ? "w-16" : "w-64"}>
-      <SidebarContent className="bg-card border-r">
+    <Sidebar className={isCollapsed ? "w-16" : "w-72"}>
+      <SidebarContent className="bg-gradient-to-b from-slate-900 to-slate-800 text-white border-r-0 shadow-2xl">
         {/* Header */}
-        <div className="p-4 border-b">
+        <div className="p-6 border-b border-slate-700/50">
           <div className="flex items-center gap-3">
-            <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-              <GraduationCap size={20} />
+            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-xl shadow-lg">
+              <GraduationCap size={24} className="text-white" />
             </div>
             {!isCollapsed && (
               <div>
-                <h2 className="font-bold text-foreground">Admin Panel</h2>
-                <p className="text-xs text-muted-foreground">Education Management</p>
+                <h2 className="text-xl font-bold text-white">Admin Panel</h2>
+                <p className="text-sm text-slate-300">Education Management</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Navigation */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url} end className={getNavCls}>
-                      <item.icon className="h-4 w-4" />
+        <div className="py-6">
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-slate-400 text-xs uppercase tracking-wider font-semibold px-6 mb-3">
+              Navigation
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className="space-y-2 px-3">
+                {menuItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <NavLink 
+                        to={item.url} 
+                        end 
+                        className={({ isActive }) => cn(
+                          "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group hover:bg-white/10",
+                          isActive 
+                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg" 
+                            : "text-slate-300 hover:text-white"
+                        )}
+                      >
+                        <item.icon className="h-5 w-5 flex-shrink-0" />
+                        {!isCollapsed && (
+                          <div className="min-w-0 flex-1">
+                            <span className="font-medium text-sm block">{item.title}</span>
+                            <p className="text-xs opacity-75 mt-0.5">{item.description}</p>
+                          </div>
+                        )}
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Quick Actions */}
+          <SidebarGroup className="mt-8">
+            <SidebarGroupLabel className="text-slate-400 text-xs uppercase tracking-wider font-semibold px-6 mb-3">
+              Quick Actions
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className="space-y-2 px-3">
+                {quickActions.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton 
+                      onClick={onAnnouncementClick}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-slate-300 hover:text-white hover:bg-white/10 group cursor-pointer"
+                    >
+                      <item.icon className="h-5 w-5 flex-shrink-0" />
                       {!isCollapsed && (
-                        <div>
-                          <span className="font-medium">{item.title}</span>
-                          <p className="text-xs text-muted-foreground">{item.description}</p>
+                        <div className="min-w-0 flex-1">
+                          <span className="font-medium text-sm block">{item.title}</span>
+                          <p className="text-xs opacity-75 mt-0.5">{item.description}</p>
                         </div>
                       )}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Quick Actions */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Quick Actions</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {quickActions.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton onClick={onAnnouncementClick}>
-                    <item.icon className="h-4 w-4" />
-                    {!isCollapsed && (
-                      <div>
-                        <span className="font-medium">{item.title}</span>
-                        <p className="text-xs text-muted-foreground">{item.description}</p>
-                      </div>
-                    )}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
 
         {/* Footer */}
-        <div className="mt-auto p-4 border-t">
+        <div className="mt-auto p-6 border-t border-slate-700/50">
           <Button 
             variant="ghost" 
             onClick={logout}
-            className="w-full justify-start gap-2 text-destructive hover:text-destructive hover:bg-destructive/10"
+            className="w-full justify-start gap-3 p-3 text-slate-300 hover:text-white hover:bg-red-500/20 transition-all duration-200 rounded-xl"
           >
-            <LogOut className="h-4 w-4" />
-            {!isCollapsed && "Sign Out"}
+            <LogOut className="h-5 w-5 flex-shrink-0" />
+            {!isCollapsed && <span className="font-medium">Sign Out</span>}
           </Button>
         </div>
       </SidebarContent>
