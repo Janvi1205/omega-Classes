@@ -46,9 +46,47 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   useEffect(() => {
     const q = query(collection(db, 'notifications'), orderBy('createdAt', 'desc'));
     
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      console.log('Firebase snapshot received, docs count:', snapshot.docs.length);
+      
+      if (snapshot.docs.length === 0) {
+        console.log('No notifications in Firebase, adding default ones...');
+        // Add default notifications if collection is empty
+        const defaultNotifications = [
+          {
+            title: "Welcome to the Notification System",
+            message: "This is your first notification! Admin can now post announcements that will appear here.",
+            type: "info",
+            priority: "medium",
+            read: false
+          },
+          {
+            title: "Test Announcement",
+            message: "This is a test announcement to verify the system is working properly.",
+            type: "important",
+            priority: "high", 
+            read: false
+          }
+        ];
+        
+        try {
+          for (const notif of defaultNotifications) {
+            await addDoc(collection(db, 'notifications'), {
+              ...notif,
+              createdAt: new Date(),
+              time: 'Just now'
+            });
+          }
+          console.log('Default notifications added to Firebase');
+        } catch (error) {
+          console.error('Error adding default notifications:', error);
+        }
+        return;
+      }
+      
       const notificationData = snapshot.docs.map(doc => {
         const data = doc.data();
+        console.log('Processing notification:', data);
         return {
           id: doc.id,
           ...data,
@@ -56,6 +94,7 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         } as Notification;
       });
       
+      console.log('Setting notifications:', notificationData);
       setNotifications(notificationData);
     }, (error) => {
       console.error('Error loading notifications:', error);
