@@ -258,47 +258,6 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                           </div>
                         </div>
 
-                        {/* Preview */}
-                        {(title || message) && (
-                          <div className="space-y-2">
-                            <label className="text-sm font-medium text-foreground">
-                              Preview
-                            </label>
-                            <div className={`p-3 rounded-lg border-l-4 ${
-                              priority === 'high' 
-                                ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
-                                : priority === 'medium'
-                                ? 'border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950/20'
-                                : 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/20'
-                            }`}>
-                              <div className="flex items-start gap-3">
-                                <div className="mt-1">
-                                  {getTypeIcon(type)}
-                                </div>
-                                <div className="flex-1">
-                                  <h4 className="font-medium text-foreground text-sm">
-                                    {title || "Announcement Title"}
-                                  </h4>
-                                  <p className="text-xs text-muted-foreground mt-1">
-                                    {message || "Your announcement message will appear here..."}
-                                  </p>
-                                  <div className="flex items-center justify-between mt-2">
-                                    <span className="text-xs text-muted-foreground">Just now</span>
-                                    <span className={`text-xs px-2 py-1 rounded-full ${
-                                      priority === 'high' 
-                                        ? 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'
-                                        : priority === 'medium'
-                                        ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
-                                        : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-                                    }`}>
-                                      {priority}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
 
                         {/* Actions */}
                         <div className="flex gap-3 pt-4">
