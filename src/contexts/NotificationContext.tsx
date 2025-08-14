@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export interface Notification {
   id: string;
@@ -38,112 +40,127 @@ interface NotificationProviderProps {
 
 export const NotificationProvider = ({ children }: NotificationProviderProps) => {
   const { toast } = useToast();
-  
-  // Load notifications from localStorage on initial load
-  const loadNotifications = () => {
-    try {
-      const saved = localStorage.getItem('notifications');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Convert createdAt strings back to Date objects
-        return parsed.map((n: any) => ({
-          ...n,
-          createdAt: new Date(n.createdAt)
-        }));
-      }
-    } catch (error) {
-      console.error('Error loading notifications:', error);
-    }
-    
-    // Return default notifications if nothing saved
-    return [
-      {
-        id: '1',
-        title: "New Assignment Posted",
-        message: "Physics Chapter 12 - Electromagnetic Induction homework has been uploaded. Due date: Next Monday",
-        time: "2 hours ago",
-        type: "assignment",
-        read: false,
-        createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-        priority: 'high'
-      },
-      {
-        id: '2',
-        title: "Class Schedule Update", 
-        message: "Tomorrow's Chemistry class has been moved to 3:00 PM due to teacher unavailability",
-        time: "5 hours ago",
-        type: "important",
-        read: false,
-        createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
-        priority: 'high'
-      },
-      {
-        id: '3',
-        title: "New Study Material Available",
-        message: "Mathematics Chapter 8 notes and practice problems are now available in the study materials section",
-        time: "1 day ago", 
-        type: "info",
-        read: true,
-        createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
-        priority: 'medium'
-      }
-    ];
-  };
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const [notifications, setNotifications] = useState<Notification[]>(loadNotifications);
+  // Load notifications from Firebase on mount
+  useEffect(() => {
+    const q = query(collection(db, 'notifications'), orderBy('createdAt', 'desc'));
+    
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const notificationData = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate() || new Date(),
+        } as Notification;
+      });
+      
+      setNotifications(notificationData);
+    }, (error) => {
+      console.error('Error loading notifications:', error);
+      // Fallback to default notifications if Firebase fails
+      setNotifications([
+        {
+          id: '1',
+          title: "New Assignment Posted",
+          message: "Physics Chapter 12 - Electromagnetic Induction homework has been uploaded. Due date: Next Monday",
+          time: "2 hours ago",
+          type: "assignment",
+          read: false,
+          createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+          priority: 'high'
+        },
+        {
+          id: '2',
+          title: "Class Schedule Update", 
+          message: "Tomorrow's Chemistry class has been moved to 3:00 PM due to teacher unavailability",
+          time: "5 hours ago",
+          type: "important",
+          read: false,
+          createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
+          priority: 'high'
+        },
+        {
+          id: '3',
+          title: "New Study Material Available",
+          message: "Mathematics Chapter 8 notes and practice problems are now available in the study materials section",
+          time: "1 day ago", 
+          type: "info",
+          read: true,
+          createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+          priority: 'medium'
+        }
+      ]);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  // Save notifications to localStorage whenever they change
-  useEffect(() => {
+  const addNotification = async (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
     try {
-      localStorage.setItem('notifications', JSON.stringify(notifications));
+      const now = new Date();
+      const docRef = await addDoc(collection(db, 'notifications'), {
+        ...notificationData,
+        createdAt: now,
+        time: 'Just now'
+      });
+
+      // Show toast for high priority notifications
+      if (notificationData.priority === 'high') {
+        toast({
+          title: "🔔 " + notificationData.title,
+          description: notificationData.message,
+          duration: 5000,
+        });
+      }
     } catch (error) {
-      console.error('Error saving notifications:', error);
-    }
-  }, [notifications]);
-
-  const addNotification = (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
-    const now = new Date();
-    const newNotification: Notification = {
-      ...notificationData,
-      id: Date.now().toString(),
-      createdAt: now,
-      time: 'Just now'
-    };
-
-    setNotifications(prev => [newNotification, ...prev]);
-
-    // Show toast for high priority notifications
-    if (notificationData.priority === 'high') {
+      console.error('Error adding notification:', error);
       toast({
-        title: "🔔 " + notificationData.title,
-        description: notificationData.message,
-        duration: 5000,
+        title: "Error",
+        description: "Failed to add notification",
+        variant: "destructive",
       });
     }
   };
 
-  const markAsRead = (id: string) => {
-    setNotifications(prev =>
-      prev.map(notification =>
-        notification.id === id ? { ...notification, read: true } : notification
-      )
-    );
+  const markAsRead = async (id: string) => {
+    try {
+      await updateDoc(doc(db, 'notifications', id), { read: true });
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
   };
 
-  const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(notification => ({ ...notification, read: true }))
-    );
+  const markAllAsRead = async () => {
+    try {
+      const updatePromises = notifications
+        .filter(n => !n.read)
+        .map(n => updateDoc(doc(db, 'notifications', n.id), { read: true }));
+      
+      await Promise.all(updatePromises);
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
+    }
   };
 
-  const removeNotification = (id: string) => {
-    setNotifications(prev => prev.filter(notification => notification.id !== id));
+  const removeNotification = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, 'notifications', id));
+    } catch (error) {
+      console.error('Error removing notification:', error);
+    }
   };
 
-  const clearAllNotifications = () => {
-    setNotifications([]);
+  const clearAllNotifications = async () => {
+    try {
+      const deletePromises = notifications.map(n => deleteDoc(doc(db, 'notifications', n.id)));
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error('Error clearing all notifications:', error);
+    }
   };
 
   // Update time strings periodically

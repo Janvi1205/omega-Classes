@@ -320,13 +320,13 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                             </Button>
                           </div>
                         ) : (
-                          <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
                             {notifications.map((notification) => (
                               <motion.div
                                 key={notification.id}
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className={`p-4 rounded-lg border-l-4 ${
+                                className={`p-3 rounded-lg border-l-4 ${
                                   notification.priority === 'high' 
                                     ? 'border-l-red-500 bg-red-50 dark:bg-red-950/20'
                                     : notification.priority === 'medium'
@@ -335,26 +335,26 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                                 }`}
                               >
                                 <div className="flex items-start justify-between gap-3">
-                                  <div className="flex items-start gap-3 flex-1">
-                                    <div className="mt-1">
+                                  <div className="flex items-start gap-3 flex-1 min-w-0">
+                                    <div className="mt-1 flex-shrink-0">
                                       {getTypeIcon(notification.type)}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                      <div className="flex items-center gap-2 mb-1">
+                                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                                         <h4 className="font-medium text-foreground text-sm truncate">
                                           {notification.title}
                                         </h4>
                                         <Badge variant={
                                           notification.priority === 'high' ? 'destructive' :
                                           notification.priority === 'medium' ? 'default' : 'secondary'
-                                        } className="text-xs">
+                                        } className="text-xs flex-shrink-0">
                                           {notification.priority}
                                         </Badge>
                                       </div>
-                                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2 break-words">
                                         {notification.message}
                                       </p>
-                                      <div className="flex items-center gap-2">
+                                      <div className="flex items-center gap-2 flex-wrap">
                                         <span className="text-xs text-muted-foreground">
                                           {notification.time}
                                         </span>
@@ -362,7 +362,7 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                                           {notification.type}
                                         </Badge>
                                         {!notification.read && (
-                                          <div className="w-2 h-2 bg-primary rounded-full"></div>
+                                          <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
                                         )}
                                       </div>
                                     </div>
