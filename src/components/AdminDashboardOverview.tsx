@@ -36,6 +36,65 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
   const notesPercentage = materials.length ? (totalNotes / materials.length) * 100 : 0;
   const homeworkPercentage = materials.length ? (totalHomework / materials.length) * 100 : 0;
 
+  // Generate dynamic recent activity based on materials
+  const getRecentActivity = () => {
+    const activities = filteredMaterials
+      .filter(material => material.createdAt)
+      .sort((a, b) => {
+        const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+        const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+        return dateB - dateA;
+      })
+      .slice(0, 5) // Show only last 5 activities
+      .map(material => {
+        const createdDate = material.createdAt?.toDate ? material.createdAt.toDate() : new Date(material.createdAt);
+        const timeAgo = getTimeAgo(createdDate);
+        const actionType = material.type === 'Notes' ? 'uploaded' : 'created';
+        const color = material.type === 'Notes' ? 'bg-green-500' : 
+                     material.type === 'Homework' ? 'bg-blue-500' : 'bg-orange-500';
+        
+        return {
+          id: material.id,
+          title: `${material.subject} ${material.type.toLowerCase()} ${actionType}`,
+          subtitle: `${material.chapter} - Class ${material.className}`,
+          time: timeAgo,
+          color
+        };
+      });
+
+    // If no recent materials, show default activities
+    if (activities.length === 0) {
+      return [
+        {
+          id: '1',
+          title: 'No recent activity',
+          subtitle: 'Upload materials to see activity',
+          time: '',
+          color: 'bg-gray-400'
+        }
+      ];
+    }
+
+    return activities;
+  };
+
+  const getTimeAgo = (date: Date) => {
+    const now = new Date();
+    const diffInMs = now.getTime() - date.getTime();
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    const diffInDays = Math.floor(diffInHours / 24);
+    
+    if (diffInDays > 0) {
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+    } else if (diffInHours > 0) {
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    } else {
+      return 'Just now';
+    }
+  };
+
+  const recentActivity = getRecentActivity();
+
   const stats = [
     {
       title: "Total Materials",
@@ -212,27 +271,33 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <div className="text-sm">
-                  <p className="font-medium">Physics material uploaded</p>
-                  <p className="text-muted-foreground">2 hours ago</p>
+              {recentActivity.map((activity, index) => (
+                <motion.div
+                  key={activity.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 + index * 0.1 }}
+                  className="flex items-center gap-3 p-3 bg-white/60 rounded-lg hover:bg-white/80 transition-colors duration-200"
+                >
+                  <div className={`w-2 h-2 ${activity.color} rounded-full`}></div>
+                  <div className="text-sm flex-1">
+                    <p className="font-medium">{activity.title}</p>
+                    {activity.subtitle && (
+                      <p className="text-xs text-muted-foreground/80">{activity.subtitle}</p>
+                    )}
+                    {activity.time && (
+                      <p className="text-muted-foreground">{activity.time}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+              {recentActivity.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Award className="h-12 w-12 mx-auto mb-2 opacity-30" />
+                  <p>No recent activity</p>
+                  <p className="text-xs">Upload materials to see activity here</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <div className="text-sm">
-                  <p className="font-medium">Math assignment created</p>
-                  <p className="text-muted-foreground">5 hours ago</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <div className="text-sm">
-                  <p className="font-medium">Chemistry notes updated</p>
-                  <p className="text-muted-foreground">1 day ago</p>
-                </div>
-              </div>
+              )}
             </div>
           </CardContent>
         </Card>
