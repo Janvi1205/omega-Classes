@@ -101,12 +101,14 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
 
   const addNotification = async (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
     try {
+      console.log('Attempting to add notification to Firebase:', notificationData);
       const now = new Date();
       const docRef = await addDoc(collection(db, 'notifications'), {
         ...notificationData,
         createdAt: now,
         time: 'Just now'
       });
+      console.log('Notification added successfully with ID:', docRef.id);
 
       // Show toast for high priority notifications
       if (notificationData.priority === 'high') {
@@ -117,10 +119,22 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         });
       }
     } catch (error) {
-      console.error('Error adding notification:', error);
+      console.error('Error adding notification to Firebase:', error);
+      
+      // Fallback: add to local state if Firebase fails
+      const now = new Date();
+      const localNotification: Notification = {
+        ...notificationData,
+        id: Date.now().toString(),
+        createdAt: now,
+        time: 'Just now'
+      };
+      
+      setNotifications(prev => [localNotification, ...prev]);
+      
       toast({
-        title: "Error",
-        description: "Failed to add notification",
+        title: "⚠️ Notification Added Locally",
+        description: "Firebase connection failed, but notification was saved locally.",
         variant: "destructive",
       });
     }
