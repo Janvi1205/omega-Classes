@@ -6,15 +6,13 @@ import { ref, deleteObject } from "firebase/storage";
 import { useAuth } from "@/contexts/Authcontext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FileText, BookOpen, Download, Trash2, Upload, Calculator, Atom, Microscope, Zap, Filter } from "lucide-react";
+import { FileText, BookOpen, Download, Trash2, Upload, Filter, LogOut, GraduationCap, Megaphone } from "lucide-react";
 import AnnouncementModal from "@/components/AnnouncementModal";
-import { AdminSidebar } from "@/components/AdminSidebar";
 import { AdminDashboardOverview } from "@/components/AdminDashboardOverview";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 type Material = {
   id: string;
@@ -68,39 +66,6 @@ const AdminDashboard: React.FC = () => {
     ? materials.filter(m => m.className === selectedClass)
     : materials;
 
-  // Group filtered materials by subject
-  const groupedMaterials = filteredMaterials.reduce((acc, material) => {
-    const key = selectedClass === "all" 
-      ? `${material.className}-${material.subject}`
-      : material.subject;
-    if (!acc[key]) {
-      acc[key] = {
-        className: material.className,
-        subject: material.subject,
-        materials: []
-      };
-    }
-    acc[key].materials.push(material);
-    return acc;
-  }, {} as Record<string, { className: string; subject: string; materials: Material[] }>);
-
-  const getSubjectIcon = (subject: string) => {
-    switch (subject?.toLowerCase()) {
-      case 'mathematics':
-        return Calculator;
-      case 'physics':
-        return Zap;
-      case 'chemistry':
-        return Atom;
-      case 'biology':
-        return Microscope;
-      case 'science':
-        return Atom;
-      default:
-        return BookOpen;
-    }
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -113,241 +78,334 @@ const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-background">
-        <AdminSidebar onAnnouncementClick={() => setIsAnnouncementModalOpen(true)} />
-        
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Header */}
-          <header className="bg-card border-b px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <SidebarTrigger />
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-                  <p className="text-sm text-muted-foreground">
-                    Manage your educational content and resources
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <Button asChild variant="default" className="gap-2">
-                  <Link to="/admin/upload">
-                    <Upload size={16} />
-                    Upload Material
-                  </Link>
-                </Button>
-              </div>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card border-b px-6 py-4 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary text-primary-foreground p-3 rounded-xl shadow-lg">
+              <GraduationCap size={24} />
             </div>
-          </header>
-
-          {/* Content */}
-          <main className="flex-1 overflow-auto">
-            <div className="p-6 space-y-8">
-              {/* Enhanced Dashboard Overview */}
-              <section>
-                <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
-                  <p className="text-muted-foreground">
-                    Welcome back! Here's what's happening with your educational content.
-                  </p>
-                </div>
-                <AdminDashboardOverview 
-                  materials={materials} 
-                  selectedClass={selectedClass}
-                  onAnnouncementClick={() => setIsAnnouncementModalOpen(true)}
-                />
-              </section>
-
-              {/* Filters */}
-              {availableClasses.length > 0 && (
-                <section>
-                  <Card className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-0 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Filter size={20} />
-                        Class Management
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex items-center gap-4">
-                        <label className="text-sm font-medium text-foreground">
-                          Select Class to Filter:
-                        </label>
-                        <Select value={selectedClass} onValueChange={setSelectedClass}>
-                          <SelectTrigger className="w-64 bg-background">
-                            <SelectValue placeholder="All Classes" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-background border-border shadow-xl z-[9999]">
-                            <SelectItem value="all">All Classes</SelectItem>
-                            {availableClasses.map((className) => (
-                              <SelectItem key={className} value={className}>
-                                {className}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </section>
-              )}
-
-              {/* Materials by Subject */}
-              <section>
-                <div className="mb-6">
-                  <h2 className="text-xl font-bold text-foreground mb-2">
-                    Study Materials Management
-                    {selectedClass !== "all" && (
-                      <span className="text-base font-normal text-muted-foreground ml-2">
-                        for {selectedClass}
-                      </span>
-                    )}
-                  </h2>
-                  <p className="text-muted-foreground">Manage and organize educational content</p>
-                </div>
-              
-              <div className="space-y-6">
-                {Object.entries(groupedMaterials).map(([key, group], groupIndex) => {
-                  const SubjectIcon = getSubjectIcon(group.subject);
-                  
-                  return (
-                    <motion.div
-                      key={key}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: groupIndex * 0.1 }}
-                    >
-                      <Card className="overflow-hidden">
-                        <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b">
-                          <CardTitle className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-                                <SubjectIcon size={20} />
-                              </div>
-                              <div>
-                                <h3 className="text-xl font-bold text-foreground">{group.subject}</h3>
-                                <p className="text-muted-foreground text-sm">{group.className}</p>
-                              </div>
-                            </div>
-                            <div className="flex gap-2">
-                              <Badge variant="secondary">
-                                {group.materials.filter(m => m.type === 'Notes').length} Notes
-                              </Badge>
-                              <Badge variant="secondary">
-                                {group.materials.filter(m => m.type === 'Homework').length} Homework
-                              </Badge>
-                            </div>
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-0">
-                          <div className="divide-y divide-border">
-                            {group.materials.map((material, materialIndex) => (
-                              <motion.div
-                                key={material.id}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: materialIndex * 0.05 }}
-                                className="p-6 hover:bg-muted/50 transition-colors group"
-                              >
-                                <div className="flex items-center justify-between">
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-3 mb-2">
-                                      <div className={`w-3 h-3 rounded-full ${
-                                        material.type === 'Notes' ? 'bg-blue-500' : 'bg-orange-500'
-                                      }`}></div>
-                                      <h4 className="font-semibold text-foreground group-hover:text-foreground">
-                                        {material.fileName}
-                                      </h4>
-                                      <Badge variant={material.type === 'Notes' ? 'default' : 'secondary'}>
-                                        {material.type}
-                                      </Badge>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground group-hover:text-muted-foreground mb-2">
-                                      Chapter: {material.chapter}
-                                    </p>
-                                    {material.createdAt && (
-                                      <p className="text-xs text-muted-foreground group-hover:text-muted-foreground">
-                                        Uploaded: {new Date(material.createdAt.toDate()).toLocaleDateString()}
-                                      </p>
-                                    )}
-                                  </div>
-                                  <div className="flex gap-2">
-                                    <Button
-                                      variant="outline"
-                                      size="sm"
-                                      asChild
-                                      className="gap-2"
-                                    >
-                                      <a
-                                        href={material.downloadURL}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                      >
-                                        <Download size={14} />
-                                        View
-                                      </a>
-                                    </Button>
-                                    <Button
-                                      variant="destructive"
-                                      size="sm"
-                                      onClick={() => handleDelete(material)}
-                                      className="gap-2"
-                                    >
-                                      <Trash2 size={14} />
-                                      Delete
-                                    </Button>
-                                  </div>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {materials.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center py-16"
-                >
-                  <Card className="max-w-md mx-auto">
-                    <CardContent className="p-8">
-                      <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FileText size={24} className="text-muted-foreground" />
-                      </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2">No Materials Yet</h3>
-                      <p className="text-muted-foreground mb-6">
-                        Start by uploading your first study material or assignment.
-                      </p>
-                      <Button asChild className="gap-2">
-                        <Link to="/admin/upload">
-                          <Upload size={16} />
-                          Upload Material
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )}
-            </section>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+              <p className="text-sm text-muted-foreground">
+                Manage your educational content and resources
+              </p>
             </div>
-          </main>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <Button 
+              onClick={() => setIsAnnouncementModalOpen(true)}
+              variant="secondary" 
+              className="gap-2"
+            >
+              <Megaphone size={16} />
+              Post Announcement
+            </Button>
+            <Button asChild variant="default" className="gap-2">
+              <Link to="/admin/upload">
+                <Upload size={16} />
+                Upload Material
+              </Link>
+            </Button>
+            <Button variant="outline" onClick={logout} className="gap-2">
+              <LogOut size={16} />
+              Logout
+            </Button>
+          </div>
         </div>
+      </header>
 
-        {/* Announcement Modal */}
-        <AnnouncementModal 
-          isOpen={isAnnouncementModalOpen}
-          onClose={() => setIsAnnouncementModalOpen(false)}
-        />
-      </div>
-    </SidebarProvider>
+      {/* Content */}
+      <main className="flex-1 overflow-auto">
+        <div className="p-6 space-y-8">
+          {/* Enhanced Dashboard Overview */}
+          <section>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
+              <p className="text-muted-foreground">
+                Welcome back! Here's what's happening with your educational content.
+              </p>
+            </div>
+            <AdminDashboardOverview 
+              materials={materials} 
+              selectedClass={selectedClass}
+              onAnnouncementClick={() => setIsAnnouncementModalOpen(true)}
+            />
+          </section>
+
+          {/* Filters */}
+          {availableClasses.length > 0 && (
+            <section>
+              <Card className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Filter size={20} />
+                    Class Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-4">
+                    <label className="text-sm font-medium text-foreground">
+                      Select Class to Filter:
+                    </label>
+                    <Select value={selectedClass} onValueChange={setSelectedClass}>
+                      <SelectTrigger className="w-64 bg-background">
+                        <SelectValue placeholder="All Classes" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background border-border shadow-xl z-[9999]">
+                        <SelectItem value="all">All Classes</SelectItem>
+                        {availableClasses.map((className) => (
+                          <SelectItem key={className} value={className}>
+                            {className}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </CardContent>
+              </Card>
+            </section>
+          )}
+
+          {/* Materials by Type - Two Column Layout */}
+          <section>
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-foreground mb-2">
+                Study Materials Management
+                {selectedClass !== "all" && (
+                  <span className="text-base font-normal text-muted-foreground ml-2">
+                    for {selectedClass}
+                  </span>
+                )}
+              </h2>
+              <p className="text-muted-foreground">Manage and organize educational content by type</p>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Notes Column */}
+              <div>
+                <Card className="h-full">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/50 dark:to-blue-900/50">
+                    <CardTitle className="flex items-center gap-3">
+                      <div className="bg-blue-500 text-white p-2 rounded-lg">
+                        <BookOpen size={20} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-foreground">Study Notes</h3>
+                        <p className="text-muted-foreground text-sm">Learning materials and references</p>
+                      </div>
+                      <Badge variant="secondary" className="ml-auto">
+                        {filteredMaterials.filter(m => m.type === 'Notes').length} items
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                    <div className="divide-y divide-border max-h-96 overflow-y-auto">
+                      {filteredMaterials.filter(m => m.type === 'Notes').length === 0 ? (
+                        <div className="p-8 text-center">
+                          <div className="w-16 h-16 bg-blue-50 dark:bg-blue-950/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <BookOpen size={24} className="text-blue-500" />
+                          </div>
+                          <h3 className="font-semibold text-foreground mb-2">No Notes Yet</h3>
+                          <p className="text-muted-foreground text-sm">Upload study notes to get started</p>
+                        </div>
+                      ) : (
+                        filteredMaterials.filter(m => m.type === 'Notes').map((material) => (
+                          <motion.div
+                            key={material.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="p-4 hover:bg-muted/50 transition-colors group"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                                  <h4 className="font-semibold text-foreground text-sm truncate">{material.fileName}</h4>
+                                </div>
+                                <div className="space-y-1">
+                                  <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium">Subject:</span> {material.subject}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium">Chapter:</span> {material.chapter}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium">Class:</span> {material.className}
+                                  </p>
+                                  {material.createdAt && (
+                                    <p className="text-xs text-muted-foreground">
+                                      <span className="font-medium">Uploaded:</span> {new Date(material.createdAt.toDate()).toLocaleDateString()}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="flex gap-2 ml-4">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  asChild
+                                  className="gap-1"
+                                >
+                                  <a
+                                    href={material.downloadURL}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    <Download size={12} />
+                                    View
+                                  </a>
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => handleDelete(material)}
+                                  className="gap-1"
+                                >
+                                  <Trash2 size={12} />
+                                  Delete
+                                </Button>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Homework Column */}
+              <div>
+                <Card className="h-full">
+                  <CardHeader className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950/50 dark:to-orange-900/50">
+                    <CardTitle className="flex items-center gap-3">
+                      <div className="bg-orange-500 text-white p-2 rounded-lg">
+                        <FileText size={20} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-foreground">Assignments</h3>
+                        <p className="text-muted-foreground text-sm">Homework and practice tasks</p>
+                      </div>
+                      <Badge variant="secondary" className="ml-auto">
+                        {filteredMaterials.filter(m => m.type === 'Homework').length} items
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                    <div className="divide-y divide-border max-h-96 overflow-y-auto">
+                      {filteredMaterials.filter(m => m.type === 'Homework').length === 0 ? (
+                        <div className="p-8 text-center">
+                          <div className="w-16 h-16 bg-orange-50 dark:bg-orange-950/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <FileText size={24} className="text-orange-500" />
+                          </div>
+                          <h3 className="font-semibold text-foreground mb-2">No Assignments Yet</h3>
+                          <p className="text-muted-foreground text-sm">Upload homework assignments to get started</p>
+                        </div>
+                      ) : (
+                        filteredMaterials.filter(m => m.type === 'Homework').map((material) => (
+                          <motion.div
+                            key={material.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="p-4 hover:bg-muted/50 transition-colors group"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                                  <h4 className="font-semibold text-foreground text-sm truncate">{material.fileName}</h4>
+                                </div>
+                                <div className="space-y-1">
+                                  <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium">Subject:</span> {material.subject}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium">Chapter:</span> {material.chapter}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    <span className="font-medium">Class:</span> {material.className}
+                                  </p>
+                                  {material.createdAt && (
+                                    <p className="text-xs text-muted-foreground">
+                                      <span className="font-medium">Uploaded:</span> {new Date(material.createdAt.toDate()).toLocaleDateString()}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="flex gap-2 ml-4">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  asChild
+                                  className="gap-1"
+                                >
+                                  <a
+                                    href={material.downloadURL}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    <Download size={12} />
+                                    View
+                                  </a>
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => handleDelete(material)}
+                                  className="gap-1"
+                                >
+                                  <Trash2 size={12} />
+                                  Delete
+                                </Button>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </section>
+
+          {materials.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-16"
+            >
+              <Card className="max-w-md mx-auto">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FileText size={24} className="text-muted-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">No Materials Yet</h3>
+                  <p className="text-muted-foreground mb-6">
+                    Start by uploading your first study material or assignment.
+                  </p>
+                  <Button asChild className="gap-2">
+                    <Link to="/admin/upload">
+                      <Upload size={16} />
+                      Upload Material
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </div>
+      </main>
+
+      {/* Announcement Modal */}
+      <AnnouncementModal 
+        isOpen={isAnnouncementModalOpen}
+        onClose={() => setIsAnnouncementModalOpen(false)}
+      />
+    </div>
   );
 };
 
