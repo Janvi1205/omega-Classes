@@ -160,7 +160,7 @@ const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
                               </button>
                             </div>
                           </div>
-                          <p className="text-xs text-muted-foreground mb-2 line-clamp-3">
+                          <p className="text-xs text-muted-foreground mb-2 whitespace-pre-wrap break-words">
                             {notification.message}
                           </p>
                           <div className="flex items-center justify-between">

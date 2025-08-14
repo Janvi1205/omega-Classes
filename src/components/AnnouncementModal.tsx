@@ -351,7 +351,7 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
                                           {notification.priority}
                                         </Badge>
                                       </div>
-                                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2 break-words">
+                                      <p className="text-xs text-muted-foreground mb-2 whitespace-pre-wrap break-words">
                                         {notification.message}
                                       </p>
                                       <div className="flex items-center gap-2 flex-wrap">
