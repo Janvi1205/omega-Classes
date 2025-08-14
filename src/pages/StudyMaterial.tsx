@@ -146,20 +146,22 @@ const StudyMaterial: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 relative overflow-x-hidden">
-      {/* Enhanced floating animated shapes */}
-      <div className="floating-shape" style={{top: '10%', left: '5%', width: '180px', height: '180px', background: 'linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%)', animationDelay: '0s'}}></div>
-      <div className="floating-shape" style={{top: '60%', left: '80%', width: '120px', height: '120px', background: 'linear-gradient(135deg, #f472b6 0%, #a5b4fc 100%)', animationDelay: '4s'}}></div>
-      <div className="floating-shape" style={{top: '80%', left: '20%', width: '100px', height: '100px', background: 'linear-gradient(135deg, #38bdf8 0%, #a5b4fc 100%)', animationDelay: '8s'}}></div>
-      <div className="floating-shape" style={{top: '30%', left: '70%', width: '140px', height: '140px', background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 100%)', animationDelay: '2s'}}></div>
-      <div className="floating-shape" style={{top: '15%', left: '85%', width: '80px', height: '80px', background: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)', animationDelay: '6s'}}></div>
-      <div className="floating-shape" style={{top: '45%', left: '10%', width: '90px', height: '90px', background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)', animationDelay: '3s'}}></div>
-      <div className="floating-shape" style={{top: '75%', left: '60%', width: '110px', height: '110px', background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)', animationDelay: '5s'}}></div>
-      <div className="floating-shape" style={{top: '25%', left: '40%', width: '70px', height: '70px', background: 'linear-gradient(135deg, #f97316 0%, #eab308 100%)', animationDelay: '7s'}}></div>
-      <div className="floating-shape" style={{top: '5%', left: '50%', width: '60px', height: '60px', background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)', animationDelay: '1s'}}></div>
-      <div className="floating-shape" style={{top: '90%', left: '90%', width: '50px', height: '50px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', animationDelay: '9s'}}></div>
+    <div className="min-h-screen relative">
+      {/* Dynamic gradient background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5"></div>
       
-      <Navbar />
+      {/* Animated background patterns */}
+      <div className="fixed inset-0 opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-tl from-accent/10 to-primary/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-secondary/10 to-accent/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+      
+      {/* Mesh gradient overlay */}
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(var(--secondary)/0.08),transparent_50%),radial-gradient(circle_at_40%_40%,hsl(var(--accent)/0.05),transparent_50%)]"></div>
+      
+      <div className="relative z-10">
+        <Navbar />
 
       {/* Enhanced Hero Section */}
       <section className="pt-20 pb-16 hero-gradient relative overflow-hidden">
@@ -230,6 +232,8 @@ const StudyMaterial: React.FC = () => {
 
       {/* Enhanced Study Materials */}
       <section className="py-24 relative" ref={ref}>
+        {/* Section background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/5 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -521,6 +525,7 @@ const StudyMaterial: React.FC = () => {
       </section>
 
       <Footer />
+      </div>
     </div>
   );
 };
