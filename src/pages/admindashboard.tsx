@@ -250,9 +250,7 @@ const AdminDashboard: React.FC = () => {
                                   className="gap-1"
                                 >
                                   <a
-                                    href={material.downloadURL}
-                                    target="_blank"
-                                    rel="noreferrer"
+                                    href={`/download/${material.id}`}
                                   >
                                     <Download size={12} />
                                     View
@@ -343,9 +341,7 @@ const AdminDashboard: React.FC = () => {
                                   className="gap-1"
                                 >
                                   <a
-                                    href={material.downloadURL}
-                                    target="_blank"
-                                    rel="noreferrer"
+                                    href={`/download/${material.id}`}
                                   >
                                     <Download size={12} />
                                     View

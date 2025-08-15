@@ -444,9 +444,7 @@ const SubjectNotes: React.FC = () => {
                         {chapterMaterials.map((material, materialIndex) => (
                           <CarouselItem key={material.id} className="pl-2 md:pl-4">
                             <motion.a
-                              href={material.downloadURL}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              href={`/download/${material.id}`}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block group btn-enhanced"
@@ -486,9 +484,7 @@ const SubjectNotes: React.FC = () => {
                     {chapterMaterials.map((material, materialIndex) => (
                       <motion.a
                         key={material.id}
-                        href={material.downloadURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`/download/${material.id}`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block btn-enhanced"
@@ -649,9 +645,7 @@ const SubjectNotes: React.FC = () => {
                         {chapterMaterials.map((material, materialIndex) => (
                           <CarouselItem key={material.id} className="pl-2 md:pl-4">
                             <motion.a
-                              href={material.downloadURL}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              href={`/download/${material.id}`}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group btn-enhanced"
@@ -691,9 +685,7 @@ const SubjectNotes: React.FC = () => {
                     {chapterMaterials.map((material, materialIndex) => (
                       <motion.a
                         key={material.id}
-                        href={material.downloadURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`/download/${material.id}`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block btn-enhanced"

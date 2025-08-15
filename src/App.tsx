@@ -14,6 +14,8 @@ import Index from "./pages/Index";
 import StudyMaterial from "./pages/StudyMaterial";
 import SubjectNotes from "./pages/SubjectNotes";
 import NotFound from "./pages/NotFound";
+import FileDownload from "./pages/FileDownload";
+
 const queryClient = new QueryClient();
 // ... other imports
 
@@ -29,6 +31,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/study-material" element={<StudyMaterial />} />
               <Route path="/subject/:className/:subject" element={<SubjectNotes />} />
+              <Route path="/download/:materialId" element={<FileDownload />} />
 
               {/* Admin routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
