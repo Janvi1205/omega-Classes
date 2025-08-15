@@ -6,10 +6,10 @@ module.exports = {
     brevoApiKey: process.env.BREVO_API_KEY || "",
     
     // Teacher's email address where registration notifications will be sent
-    teacherEmail: process.env.TEACHER_EMAIL || "",
+    teacherEmail: process.env.TEACHER_EMAIL || "omegaproclasses@gmail.com",
     
     // Sender email address (should be verified in Brevo)
-    senderEmail: process.env.SENDER_EMAIL || "",
+    senderEmail: process.env.SENDER_EMAIL || "omegaproclasses@gmail.com",
     
     // Sender name
     senderName: "Omega Pro Classes"
