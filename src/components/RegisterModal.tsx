@@ -22,24 +22,42 @@ const RegisterModal = ({ isOpen, onClose, selectedBatch }: RegisterModalProps) =
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
     try {
-      // In a real app, you would send this to your backend
-      console.log('Form Data:', formData);
+      // Send form data to Firebase Function
+      const functionUrl = import.meta.env.VITE_FIREBASE_FUNCTIONS_URL || 
+        `https://asia-south1-${import.meta.env.VITE_FIREBASE_PROJECT_ID || 'flipcardapp-aebc3'}.cloudfunctions.net/sendStudentEmail`;
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await fetch(functionUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          isKVStudent: formData.isKVStudent,
+          preferredBatch: formData.preferredBatch,
+          selectedCourse: formData.selectedCourse
+        })
+      });
+
+      // Show success toast
       toast({
         title: "Registration Successful!",
         description: "We will contact you within 24 hours.",
         className: "bg-green-50 border-green-200",
       });
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -49,9 +67,12 @@ const RegisterModal = ({ isOpen, onClose, selectedBatch }: RegisterModalProps) =
         preferredBatch: 'Morning',
         selectedCourse: selectedBatch || ''
       });
-      
+
       onClose();
+
     } catch (error) {
+      console.error("Error sending student email:", error);
+
       toast({
         title: "Registration Failed",
         description: "Please try again later.",
@@ -60,13 +81,6 @@ const RegisterModal = ({ isOpen, onClose, selectedBatch }: RegisterModalProps) =
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
   };
 
   return (

@@ -45,7 +45,7 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
         const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
         return dateB - dateA;
       })
-      .slice(0, 5) // Show only last 5 activities
+      .slice(0, 4) // Show only last 4 activities
       .map(material => {
         const createdDate = material.createdAt?.toDate ? material.createdAt.toDate() : new Date(material.createdAt);
         const timeAgo = getTimeAgo(createdDate);
