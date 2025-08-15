@@ -1,7 +1,7 @@
 // src/pages/SubjectNotes.tsx
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { motion, useInView } from 'framer-motion';
 import { Download, FileText, BookOpen, ArrowLeft, Calculator, Atom, Microscope, Zap } from 'lucide-react';
@@ -12,6 +12,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 type Material = {
   id: string;
   className: string;
+  subject: string;
   chapter: string;
   type: string;
   fileName: string;
@@ -28,7 +29,7 @@ const SubjectNotes: React.FC = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
-    const load = async () => {
+    const fetchMaterials = async () => {
       setLoading(true);
       
       // Fix case sensitivity issues
@@ -49,51 +50,54 @@ const SubjectNotes: React.FC = () => {
       
       const properSubject = decodedSubject.charAt(0).toUpperCase() + decodedSubject.slice(1).toLowerCase();
       
-      console.log("SubjectNotes Debug:");
-      console.log("- URL className:", className);
-      console.log("- Processed className:", properClassName);
-      console.log("- URL subject:", subject);
-      console.log("- Processed subject:", properSubject);
-      
-      // First, let's get ALL materials to see what's actually in the database
-      const allMaterialsQuery = query(collection(db, "materials"));
-      const allSnap = await getDocs(allMaterialsQuery);
-      const allMaterials = allSnap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
-      
-      console.log("ALL MATERIALS IN DATABASE:", allMaterials);
-      console.log("Total materials count:", allMaterials.length);
-      
-      // Now try the specific query
-      const q = query(
-        collection(db, "materials"),
-        where("className", "==", properClassName),
-        where("subject", "==", properSubject)
-      );
-      
       try {
-        const snap = await getDocs(q);
-        const materialsData = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
-        
-        console.log("FILTERED Query results:", materialsData);
-        console.log("Number of filtered materials found:", materialsData.length);
-        
-        // Let's also try a looser search to see if there are case issues
-        console.log("Looking for materials with similar class/subject:");
-        const similarMaterials = allMaterials.filter(m => 
-          m.className?.toLowerCase().includes('class 7') || 
-          m.className?.toLowerCase().includes('class-7') ||
-          m.subject?.toLowerCase().includes('physics')
-        );
-        console.log("Similar materials found:", similarMaterials);
-        
-        setMaterials(materialsData);
+        // Get all materials from the database
+        const materialsRef = collection(db, "materials");
+        const q = query(materialsRef, orderBy("createdAt", "desc"));
+        const querySnapshot = await getDocs(q);
+        const allMaterials = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Material[];
+
+        // Filter materials based on URL parameters
+        const materialsData = allMaterials.filter(material => {
+          const materialClassName = material.className?.toLowerCase().replace(/\s+/g, '');
+          const materialSubject = material.subject?.toLowerCase().replace(/\s+/g, '');
+          const searchClassName = properClassName.toLowerCase().replace(/\s+/g, '');
+          const searchSubject = properSubject.toLowerCase().replace(/\s+/g, '');
+          
+          return materialClassName === searchClassName && materialSubject === searchSubject;
+        });
+
+        // If no exact match, try to find similar materials
+        if (materialsData.length === 0) {
+          const similarMaterials = allMaterials.filter(material => {
+            const materialClassName = material.className?.toLowerCase().replace(/\s+/g, '');
+            const materialSubject = material.subject?.toLowerCase().replace(/\s+/g, '');
+            const searchClassName = properClassName.toLowerCase().replace(/\s+/g, '');
+            const searchSubject = properSubject.toLowerCase().replace(/\s+/g, '');
+            
+            return materialClassName.includes(searchClassName) || 
+                   searchClassName.includes(materialClassName) ||
+                   materialSubject.includes(searchSubject) || 
+                   searchSubject.includes(materialSubject);
+          });
+          
+          setMaterials(similarMaterials);
+        } else {
+          setMaterials(materialsData);
+        }
       } catch (error) {
         console.error("Error fetching materials:", error);
+      } finally {
+        setLoading(false);
       }
-      
-      setLoading(false);
     };
-    load();
+
+    if (className && subject) {
+      fetchMaterials();
+    }
   }, [className, subject]);
 
   const getSubjectIcon = (subjectName: string) => {
@@ -147,30 +151,6 @@ const SubjectNotes: React.FC = () => {
     acc[chapter].push(material);
     return acc;
   }, {} as Record<string, Material[]>);
-
-  console.log("Materials from state:", materials);
-  console.log("Notes materials:", notesMaterials);
-  console.log("Homework materials:", homeworkMaterials);
-  console.log("Grouped notes:", groupedNotes);
-  console.log("Grouped homework:", groupedHomework);
-  console.log("Number of note chapters:", Object.keys(groupedNotes).length);
-  console.log("Number of homework chapters:", Object.keys(groupedHomework).length);
-  
-  // Debug: Show the actual material data
-  if (materials.length > 0) {
-    console.log("First material details:", materials[0]);
-    console.log("Chapter name:", materials[0].chapter);
-    console.log("File name:", materials[0].fileName);
-    console.log("Download URL:", materials[0].downloadURL);
-    console.log("Material type:", materials[0].type);
-  }
-  
-  console.log("isInView state:", isInView);
-  console.log("Should render notes:", Object.keys(groupedNotes).length > 0);
-  console.log("Should render homework:", Object.keys(groupedHomework).length > 0);
-
-  const IconComponent = getSubjectIcon(subject || '');
-  const subjectColor = getSubjectColor(subject || '');
 
   if (loading) {
     return (
@@ -278,8 +258,8 @@ const SubjectNotes: React.FC = () => {
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-white/20 rounded-3xl blur-xl"></div>
-                <div className={`relative ${subjectColor} text-white p-6 rounded-3xl shadow-2xl backdrop-blur-sm border border-white/20`}>
-                  <IconComponent size={48} />
+                <div className={`relative ${getSubjectColor(subject || '')} text-white p-6 rounded-3xl shadow-2xl backdrop-blur-sm border border-white/20`}>
+                  {React.createElement(getSubjectIcon(subject || ''), { size: 48 })}
                 </div>
               </div>
               
