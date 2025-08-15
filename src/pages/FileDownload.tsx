@@ -126,25 +126,55 @@ const FileDownload: React.FC = () => {
 
     setDownloading(true);
     try {
-      // Create a temporary anchor element to trigger download
-      const link = document.createElement('a');
-      link.href = material.downloadURL;
-      link.download = material.fileName || 'download';
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
+      // For better user experience, we'll use a combination of approaches
+      const fileName = material.fileName || 'download';
+      const fileExtension = fileName.split('.').pop()?.toLowerCase();
       
-      // Append to body, click, and remove
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // For certain file types, we can use the download attribute directly
+      if (['pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(fileExtension || '')) {
+        // Use fetch to get the file and create a blob URL
+        const response = await fetch(material.downloadURL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch file');
+        }
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+        }, 1000);
+      } else {
+        // For other file types, use the direct download approach
+        const link = document.createElement('a');
+        link.href = material.downloadURL;
+        link.download = fileName;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
       
-      // Show success message
+      // Show success feedback
       setTimeout(() => {
         navigate(-1); // Go back to previous page
       }, 2000);
     } catch (err) {
       console.error("Download error:", err);
-      setError("Failed to download file");
+      setError("Failed to download file. Please try again.");
     } finally {
       setDownloading(false);
     }
@@ -156,8 +186,75 @@ const FileDownload: React.FC = () => {
       return;
     }
 
-    // Open in new tab for viewing
-    window.open(material.downloadURL, '_blank', 'noopener,noreferrer');
+    const fileName = material.fileName || '';
+    const fileExtension = fileName.split('.').pop()?.toLowerCase();
+    
+    // For PDFs, create a better viewing experience
+    if (fileExtension === 'pdf') {
+      const newWindow = window.open('', '_blank');
+      if (newWindow) {
+        newWindow.document.write(`
+          <html>
+            <head>
+              <title>${fileName}</title>
+              <style>
+                body { 
+                  margin: 0; 
+                  padding: 0; 
+                  height: 100vh; 
+                  background: #f5f5f5;
+                  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                }
+                .header {
+                  background: #fff;
+                  padding: 1rem;
+                  border-bottom: 1px solid #e0e0e0;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                }
+                .title {
+                  font-size: 1.1rem;
+                  font-weight: 600;
+                  color: #333;
+                }
+                .close-btn {
+                  background: #f44336;
+                  color: white;
+                  border: none;
+                  padding: 0.5rem 1rem;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-size: 0.9rem;
+                }
+                .close-btn:hover {
+                  background: #d32f2f;
+                }
+                iframe { 
+                  width: 100%; 
+                  height: calc(100vh - 70px); 
+                  border: none; 
+                }
+              </style>
+            </head>
+            <body>
+              <div class="header">
+                <div class="title">${fileName}</div>
+                <button class="close-btn" onclick="window.close()">Close</button>
+              </div>
+              <iframe src="${material.downloadURL}" type="application/pdf"></iframe>
+            </body>
+          </html>
+        `);
+        newWindow.document.close();
+      } else {
+        // Fallback to direct URL if popup is blocked
+        window.open(material.downloadURL, '_blank', 'noopener,noreferrer');
+      }
+    } else {
+      // For other file types, open directly
+      window.open(material.downloadURL, '_blank', 'noopener,noreferrer');
+    }
   };
 
   if (loading) {
