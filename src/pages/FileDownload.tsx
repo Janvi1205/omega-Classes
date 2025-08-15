@@ -126,36 +126,16 @@ const FileDownload: React.FC = () => {
 
     setDownloading(true);
     try {
-      // For better user experience, we'll use a combination of approaches
       const fileName = material.fileName || 'download';
-      const fileExtension = fileName.split('.').pop()?.toLowerCase();
       
-      // For certain file types, we can use the download attribute directly
-      if (['pdf', 'txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(fileExtension || '')) {
-        // Use fetch to get the file and create a blob URL
-        const response = await fetch(material.downloadURL);
-        if (!response.ok) {
-          throw new Error('Failed to fetch file');
-        }
-        
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-        link.style.display = 'none';
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Clean up
-        setTimeout(() => {
-          window.URL.revokeObjectURL(url);
-        }, 1000);
-      } else {
-        // For other file types, use the direct download approach
+      console.log("Attempting download:", {
+        fileName,
+        downloadURL: material.downloadURL,
+        materialId: material.id
+      });
+      
+      // Method 1: Try direct download with download attribute
+      try {
         const link = document.createElement('a');
         link.href = material.downloadURL;
         link.download = fileName;
@@ -166,15 +146,38 @@ const FileDownload: React.FC = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        
+        console.log("Download initiated successfully");
+        
+        // Show success feedback
+        setTimeout(() => {
+          navigate(-1); // Go back to previous page
+        }, 2000);
+        return;
+      } catch (directError) {
+        console.warn("Direct download failed, trying alternative method:", directError);
       }
       
-      // Show success feedback
-      setTimeout(() => {
-        navigate(-1); // Go back to previous page
-      }, 2000);
+      // Method 2: Fallback - open in new tab for manual download
+      const newWindow = window.open(material.downloadURL, '_blank');
+      if (newWindow) {
+        console.log("Opened file in new tab for manual download");
+        setError("File opened in new tab. Please save it manually.");
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
+      } else {
+        throw new Error("Failed to open file in new tab");
+      }
+      
     } catch (err) {
       console.error("Download error:", err);
-      setError("Failed to download file. Please try again.");
+      console.error("Error details:", {
+        message: err.message,
+        stack: err.stack,
+        material: material
+      });
+      setError("Failed to download file. Please try again or contact support.");
     } finally {
       setDownloading(false);
     }
