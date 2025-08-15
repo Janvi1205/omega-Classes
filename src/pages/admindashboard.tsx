@@ -31,7 +31,7 @@ const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
-  const { logout } = useAuth();
+  const { adminLogout } = useAuth();
 
   const load = async () => {
     setLoading(true);
@@ -109,7 +109,7 @@ const AdminDashboard: React.FC = () => {
                 Upload Material
               </Link>
             </Button>
-            <Button variant="outline" onClick={logout} className="gap-2">
+            <Button variant="outline" onClick={adminLogout} className="gap-2">
               <LogOut size={16} />
               Logout
             </Button>

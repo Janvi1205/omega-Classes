@@ -7,19 +7,19 @@ const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
-  const { login } = useAuth();
+  const { adminLogin } = useAuth();
   const navigate = useNavigate();
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr("");
-    console.log("Attempting login with:", email);
+    console.log("Attempting admin login with:", email);
     try {
-      await login(email, password);
-      console.log("Login successful, navigating to admin");
+      await adminLogin(email, password);
+      console.log("Admin login successful, navigating to admin");
       navigate("/admin");
     } catch (error: any) {
-      console.error("Login error:", error);
+      console.error("Admin login error:", error);
       let errorMessage = "Failed to login";
       
       // Handle specific Firebase auth errors
