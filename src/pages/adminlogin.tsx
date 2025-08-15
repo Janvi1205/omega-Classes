@@ -20,34 +20,8 @@ const AdminLogin: React.FC = () => {
       navigate("/admin");
     } catch (error: any) {
       console.error("Admin login error:", error);
-      let errorMessage = "Failed to login";
-      
-      // Handle specific Firebase auth errors
-      if (error.code) {
-        switch (error.code) {
-          case 'auth/user-not-found':
-            errorMessage = "No account found with this email address";
-            break;
-          case 'auth/wrong-password':
-            errorMessage = "Incorrect password";
-            break;
-          case 'auth/invalid-email':
-            errorMessage = "Invalid email address";
-            break;
-          case 'auth/too-many-requests':
-            errorMessage = "Too many failed attempts. Please try again later";
-            break;
-          case 'auth/user-disabled':
-            errorMessage = "This account has been disabled";
-            break;
-          default:
-            errorMessage = error.message || "Authentication failed";
-        }
-      } else {
-        errorMessage = error.message || "Failed to login";
-      }
-      
-      setErr(errorMessage);
+      // Show generic error message for security
+      setErr("Invalid input");
     }
   };
 

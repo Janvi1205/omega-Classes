@@ -19,7 +19,7 @@ const FileDownload: React.FC = () => {
   useEffect(() => {
     const fetchMaterial = async () => {
       if (!materialId) {
-        setError("Invalid material ID");
+        setError("Invalid input");
         setLoading(false);
         return;
       }
@@ -29,11 +29,11 @@ const FileDownload: React.FC = () => {
         if (materialDoc.exists()) {
           setMaterial({ id: materialDoc.id, ...materialDoc.data() });
         } else {
-          setError("Material not found");
+          setError("Invalid input");
         }
       } catch (err) {
         console.error("Error fetching material:", err);
-        setError("Failed to load material");
+        setError("Invalid input");
       } finally {
         setLoading(false);
       }
@@ -120,7 +120,7 @@ const FileDownload: React.FC = () => {
 
   const handleDownload = async () => {
     if (!material?.downloadURL) {
-      setError("Download URL not available");
+      setError("Invalid input");
       return;
     }
 
@@ -134,50 +134,28 @@ const FileDownload: React.FC = () => {
         materialId: material.id
       });
       
-      // Method 1: Try direct download with download attribute
-      try {
-        const link = document.createElement('a');
-        link.href = material.downloadURL;
-        link.download = fileName;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.style.display = 'none';
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        console.log("Download initiated successfully");
-        
-        // Show success feedback
-        setTimeout(() => {
-          navigate(-1); // Go back to previous page
-        }, 2000);
-        return;
-      } catch (directError) {
-        console.warn("Direct download failed, trying alternative method:", directError);
-      }
+      // Simple and reliable download approach
+      const link = document.createElement('a');
+      link.href = material.downloadURL;
+      link.download = fileName;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.style.display = 'none';
       
-      // Method 2: Fallback - open in new tab for manual download
-      const newWindow = window.open(material.downloadURL, '_blank');
-      if (newWindow) {
-        console.log("Opened file in new tab for manual download");
-        setError("File opened in new tab. Please save it manually.");
-        setTimeout(() => {
-          navigate(-1);
-        }, 3000);
-      } else {
-        throw new Error("Failed to open file in new tab");
-      }
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log("Download initiated successfully");
+      
+      // Show success feedback
+      setTimeout(() => {
+        navigate(-1); // Go back to previous page
+      }, 2000);
       
     } catch (err) {
       console.error("Download error:", err);
-      console.error("Error details:", {
-        message: err.message,
-        stack: err.stack,
-        material: material
-      });
-      setError("Failed to download file. Please try again or contact support.");
+      setError("Invalid input");
     } finally {
       setDownloading(false);
     }
@@ -185,7 +163,7 @@ const FileDownload: React.FC = () => {
 
   const handleView = () => {
     if (!material?.downloadURL) {
-      setError("View URL not available");
+      setError("Invalid input");
       return;
     }
 
