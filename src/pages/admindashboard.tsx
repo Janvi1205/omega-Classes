@@ -246,15 +246,21 @@ const AdminDashboard: React.FC = () => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  asChild
+                                  onClick={() => {
+                                    const link = document.createElement('a');
+                                    link.href = material.downloadURL;
+                                    link.download = material.fileName;
+                                    link.target = '_blank';
+                                    link.rel = 'noopener noreferrer';
+                                    link.style.display = 'none';
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                  }}
                                   className="gap-1"
                                 >
-                                  <a
-                                    href={`/download/${material.id}`}
-                                  >
-                                    <Download size={12} />
-                                    View
-                                  </a>
+                                  <Download size={12} />
+                                  Download
                                 </Button>
                                 <Button
                                   variant="destructive"
@@ -337,15 +343,21 @@ const AdminDashboard: React.FC = () => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  asChild
+                                  onClick={() => {
+                                    const link = document.createElement('a');
+                                    link.href = material.downloadURL;
+                                    link.download = material.fileName;
+                                    link.target = '_blank';
+                                    link.rel = 'noopener noreferrer';
+                                    link.style.display = 'none';
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                  }}
                                   className="gap-1"
                                 >
-                                  <a
-                                    href={`/download/${material.id}`}
-                                  >
-                                    <Download size={12} />
-                                    View
-                                  </a>
+                                  <Download size={12} />
+                                  Download
                                 </Button>
                                 <Button
                                   variant="destructive"
