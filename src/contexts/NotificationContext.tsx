@@ -1,7 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 
 export interface Notification {
   id: string;
@@ -42,70 +40,42 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   const { toast } = useToast();
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  // Load notifications from Firebase on mount
+  // Load default notifications on mount
   useEffect(() => {
-    const q = query(collection(db, 'notifications'), orderBy('createdAt', 'desc'));
-    
-    const unsubscribe = onSnapshot(q, async (snapshot) => {
-      console.log('Firebase snapshot received, docs count:', snapshot.docs.length);
-      
-      if (snapshot.docs.length === 0) {
-        console.log('No notifications in Firebase, adding default ones...');
-        // Add default notifications if collection is empty
-        const defaultNotifications = [
-          {
-            title: "Welcome to the Notification System",
-            message: "This is your first notification! Admin can now post announcements that will appear here.",
-            type: "info",
-            priority: "medium",
-            read: false
-          },
-          {
-            title: "Test Announcement",
-            message: "This is a test announcement to verify the system is working properly.",
-            type: "important",
-            priority: "high", 
-            read: false
-          }
-        ];
-        
-        try {
-          for (const notif of defaultNotifications) {
-            await addDoc(collection(db, 'notifications'), {
-              ...notif,
-              createdAt: new Date(),
-              time: 'Just now'
-            });
-          }
-          console.log('Default notifications added to Firebase');
-        } catch (error) {
-          console.error('Error adding default notifications:', error);
-        }
-        return;
+    const defaultNotifications: Notification[] = [
+      {
+        id: '1',
+        title: "Welcome to Omega Pro Classes",
+        message: "Welcome to our educational platform! Here you'll find study materials, assignments, and important updates.",
+        type: "info",
+        priority: "medium",
+        read: false,
+        createdAt: new Date(),
+        time: 'Just now'
+      },
+      {
+        id: '2',
+        title: "Study Materials Available",
+        message: "Check out our comprehensive study materials for all classes and subjects. New content is added regularly!",
+        type: "important",
+        priority: "high",
+        read: false,
+        createdAt: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
+        time: '30 minutes ago'
+      },
+      {
+        id: '3',
+        title: "Assignment Updates",
+        message: "New homework assignments have been uploaded for various subjects. Please check your class materials.",
+        type: "assignment",
+        priority: "medium",
+        read: false,
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
+        time: '2 hours ago'
       }
-      
-      const notificationData = snapshot.docs.map(doc => {
-        const data = doc.data();
-        console.log('Processing notification:', data);
-        return {
-          id: doc.id,
-          ...data,
-          createdAt: data.createdAt?.toDate() || new Date(),
-        } as Notification;
-      });
-      
-      console.log('Setting notifications:', notificationData);
-      setNotifications(notificationData);
-    }, (error) => {
-      console.error('Error loading notifications:', error);
-      toast({
-        title: "Connection Error",
-        description: "Unable to load notifications from Firebase",
-        variant: "destructive",
-      });
-    });
-
-    return () => unsubscribe();
+    ];
+    
+    setNotifications(defaultNotifications);
   }, []);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -113,13 +83,14 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   const addNotification = async (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
     try {
       const now = new Date();
-      const docRef = await addDoc(collection(db, 'notifications'), {
+      const newNotification: Notification = {
+        id: Date.now().toString(),
         ...notificationData,
         createdAt: now,
         time: 'Just now'
-      });
+      };
 
-      console.log('Notification added successfully with ID:', docRef.id);
+      setNotifications(prev => [newNotification, ...prev]);
 
       // Show toast for high priority notifications
       if (notificationData.priority === 'high') {
@@ -130,50 +101,35 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         });
       }
     } catch (error) {
-      console.error('Error adding notification to Firebase:', error);
+      console.error('Error adding notification:', error);
       toast({
         title: "Error",
-        description: "Failed to add notification to Firebase",
+        description: "Failed to add notification",
         variant: "destructive",
       });
     }
   };
 
   const markAsRead = async (id: string) => {
-    try {
-      await updateDoc(doc(db, 'notifications', id), { read: true });
-    } catch (error) {
-      console.error('Error marking notification as read:', error);
-    }
+    setNotifications(prev =>
+      prev.map(notification =>
+        notification.id === id ? { ...notification, read: true } : notification
+      )
+    );
   };
 
   const markAllAsRead = async () => {
-    try {
-      const updatePromises = notifications
-        .filter(n => !n.read)
-        .map(n => updateDoc(doc(db, 'notifications', n.id), { read: true }));
-      
-      await Promise.all(updatePromises);
-    } catch (error) {
-      console.error('Error marking all notifications as read:', error);
-    }
+    setNotifications(prev =>
+      prev.map(notification => ({ ...notification, read: true }))
+    );
   };
 
   const removeNotification = async (id: string) => {
-    try {
-      await deleteDoc(doc(db, 'notifications', id));
-    } catch (error) {
-      console.error('Error removing notification:', error);
-    }
+    setNotifications(prev => prev.filter(notification => notification.id !== id));
   };
 
   const clearAllNotifications = async () => {
-    try {
-      const deletePromises = notifications.map(n => deleteDoc(doc(db, 'notifications', n.id)));
-      await Promise.all(deletePromises);
-    } catch (error) {
-      console.error('Error clearing all notifications:', error);
-    }
+    setNotifications([]);
   };
 
   // Update time strings periodically
