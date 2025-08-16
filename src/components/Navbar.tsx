@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, Menu, X } from 'lucide-react';
+import { Bell, Menu, X, BookOpen } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NotificationPanel from './NotificationPanel';
 import { useNotifications } from '@/contexts/NotificationContext';
@@ -64,15 +64,10 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-2 sm:gap-3"
             >
-              <img 
-                src="/lovable-uploads/015a5adc-4651-42f3-b1d0-de3d52e59fe2.png" 
-                alt="Omega Pro Classes" 
-                className="w-8 h-8 sm:w-10 sm:h-10"
-              />
-              <span className="text-lg sm:text-xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                <span className="hidden sm:inline">Omega Pro Classes</span>
-                <span className="sm:hidden">Omega Pro</span>
-              </span>
+              <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
+                <BookOpen className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-foreground">Omega Pro Classes</span>
             </motion.div>
           </Link>
 

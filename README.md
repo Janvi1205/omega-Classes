@@ -1,73 +1,74 @@
-# Welcome to your Lovable project
+# Omega Pro Classes - Study Materials Platform
 
-## Project info
+A comprehensive study materials platform built with React, TypeScript, and Firebase.
 
-**URL**: https://lovable.dev/projects/4d4553f3-7e5b-4c91-8633-8b56a338c593
+## Features
 
-## How can I edit this code?
+- **Study Materials**: Access to comprehensive study materials for all classes
+- **Admin Dashboard**: Teacher portal for uploading and managing content
+- **User Authentication**: Secure login system for teachers
+- **Real-time Notifications**: Dynamic notification system
+- **Responsive Design**: Mobile-friendly interface
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript + Vite
+- **Styling**: Tailwind CSS + Shadcn/ui
+- **Backend**: Firebase (Authentication, Firestore, Storage)
+- **Animations**: Framer Motion
+- **Deployment**: Vercel
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4d4553f3-7e5b-4c91-8633-8b56a338c593) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd omega-spark-learn
+   ```
 
-**Use your preferred IDE**
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. **Set up Firebase**
+   - Create a Firebase project
+   - Add your Firebase config to `src/lib/firebase.ts`
+   - Set up Firestore and Storage rules
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
 
-Follow these steps:
+5. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Project Structure
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/     # Reusable UI components
+├── pages/         # Page components
+├── contexts/      # React contexts
+├── hooks/         # Custom hooks
+├── lib/           # Utility libraries
+└── assets/        # Static assets
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The project is configured for deployment on Vercel with automatic builds and deployments.
 
-**Use GitHub Codespaces**
+## Contributing
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## What technologies are used for this project?
+## License
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/4d4553f3-7e5b-4c91-8633-8b56a338c593) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is proprietary to Omega Pro Classes.
