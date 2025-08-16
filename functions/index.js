@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const { onRequest } = require("firebase-functions/v2/https");
 const { setGlobalOptions } = require("firebase-functions/v2");
 const logger = require("firebase-functions/logger");
-const Brevo = require("sib-api-v3-sdk");
+const nodemailer = require("nodemailer");
 require('dotenv').config();
 
 // Load configuration
@@ -14,12 +14,16 @@ admin.initializeApp();
 // Optional: global options
 setGlobalOptions({ region: "asia-south1" });
 
-// Brevo setup
-const defaultClient = Brevo.ApiClient.instance;
-const apiKey = defaultClient.authentications["api-key"];
-apiKey.apiKey = config.email.brevoApiKey;
-
-const emailApi = new Brevo.TransactionalEmailsApi();
+// Configure nodemailer transporter
+const transporter = nodemailer.createTransporter({
+  host: config.email.smtpHost,
+  port: config.email.smtpPort,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: config.email.senderEmail,
+    pass: config.email.appPassword
+  }
+});
 
 // HTTP function to send student registration email to teacher
 exports.sendStudentEmail = onRequest(async (req, res) => {
@@ -180,18 +184,15 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
     `;
 
     // Create email object
-    const sendSmtpEmail = {
-      sender: { 
-        name: config.email.senderName, 
-        email: config.email.senderEmail
-      },
-      to: [{ email: teacherEmail }],
+    const mailOptions = {
+      from: `"${config.email.senderName}" <${config.email.senderEmail}>`,
+      to: teacherEmail,
       subject: `New Student Registration: ${studentData.name} - ${studentData.selectedCourse || 'General'}`,
-      htmlContent: emailHtml
+      html: emailHtml
     };
 
     // Send email
-    const response = await emailApi.sendTransacEmail(sendSmtpEmail);
+    const response = await transporter.sendMail(mailOptions);
     
     logger.info("Student registration email sent successfully:", {
       studentName: studentData.name,
