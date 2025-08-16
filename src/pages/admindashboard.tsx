@@ -33,7 +33,7 @@ const AdminDashboard: React.FC = () => {
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
   const { adminLogout } = useAuth();
-  const { addNotification, notifications } = useNotifications();
+  const { notifications } = useNotifications();
 
   const load = async () => {
     setLoading(true);
@@ -97,21 +97,6 @@ const AdminDashboard: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-3">
-            <Button 
-              onClick={() => {
-                addNotification({
-                  title: "Test Notification",
-                  message: "This is a test notification from admin dashboard",
-                  type: "info",
-                  priority: "medium",
-                  read: false,
-                });
-              }}
-              variant="outline" 
-              className="gap-2"
-            >
-              Test Notification
-            </Button>
             <Button 
               onClick={() => setIsAnnouncementModalOpen(true)}
               variant="secondary" 
