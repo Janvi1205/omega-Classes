@@ -15,13 +15,16 @@ admin.initializeApp();
 setGlobalOptions({ region: "asia-south1" });
 
 // Configure nodemailer transporter
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: config.email.smtpHost,
   port: config.email.smtpPort,
   secure: false, // true for 465, false for other ports
   auth: {
     user: config.email.senderEmail,
     pass: config.email.appPassword
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
@@ -41,11 +44,26 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
   try {
     const studentData = req.body;
     
+    // Log configuration for debugging
+    logger.info("Email configuration:", {
+      senderEmail: config.email.senderEmail,
+      teacherEmail: config.email.teacherEmail,
+      hasAppPassword: !!config.email.appPassword
+    });
+    
     // Validate required fields
     if (!studentData.name || !studentData.email || !studentData.phone) {
       logger.error("Missing required fields:", studentData);
       return res.status(400).json({ 
         error: "Missing required fields: name, email, and phone are required" 
+      });
+    }
+
+    // Validate email configuration
+    if (!config.email.appPassword) {
+      logger.error("Email app password is not configured");
+      return res.status(500).json({ 
+        error: "Email configuration is missing" 
       });
     }
 
