@@ -144,7 +144,7 @@ export function AdminDashboardOverview({ materials, selectedClass, onAnnouncemen
       description: "Add new study resources",
       icon: BookOpen,
       color: "bg-gradient-to-r from-green-500 to-green-600",
-      href: "/admin/upload"
+              href: "/omegaproclassesadminrohansir/upload"
     }
   ];
 

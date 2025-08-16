@@ -24,13 +24,13 @@ import { cn } from "@/lib/utils";
 const menuItems = [
   { 
     title: "Dashboard", 
-    url: "/admin", 
+            url: "/omegaproclassesadminrohansir", 
     icon: LayoutDashboard,
     description: "Overview and statistics"
   },
   { 
     title: "Upload Material", 
-    url: "/admin/upload", 
+            url: "/omegaproclassesadminrohansir/upload", 
     icon: Upload,
     description: "Add new study materials"
   },

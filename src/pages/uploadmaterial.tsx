@@ -81,7 +81,7 @@ const UploadMaterial: React.FC = () => {
         setLoading(false);
         setProgress(null);
         alert("Uploaded successfully");
-        navigate("/admin");
+        navigate("/omegaproclassesadminrohansir");
       }
     );
   };
@@ -177,7 +177,7 @@ const UploadMaterial: React.FC = () => {
               <button 
                 type="button" 
                 className="btn-ghost px-8" 
-                onClick={()=>navigate("/admin")}
+                onClick={()=>navigate("/omegaproclassesadminrohansir")}
               >
                 Cancel
               </button>

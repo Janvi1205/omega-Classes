@@ -104,7 +104,7 @@ const AdminDashboard: React.FC = () => {
               Post Announcement
             </Button>
             <Button asChild variant="default" className="gap-2">
-              <Link to="/admin/upload">
+              <Link to="/omegaproclassesadminrohansir/upload">
                 <Upload size={16} />
                 Upload Material
               </Link>
@@ -398,7 +398,7 @@ const AdminDashboard: React.FC = () => {
                     Start by uploading your first study material or assignment.
                   </p>
                   <Button asChild className="gap-2">
-                    <Link to="/admin/upload">
+                    <Link to="/omegaproclassesadminrohansir/upload">
                       <Upload size={16} />
                       Upload Material
                     </Link>

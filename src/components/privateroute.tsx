@@ -18,7 +18,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   }
   
   if (!isAdminAuthenticated) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/omegaproclassesadminrohansir/login" replace />;
   }
   
   return <>{children}</>;

@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [userRole, setUserRole] = useState<UserRole>(null);
   const [loading, setLoading] = useState(true);
   
-  // Admin authentication state (non-persistent)
+  // Admin authentication state (persistent with localStorage)
   const [adminUser, setAdminUser] = useState<User | null>(null);
   const [adminUserRole, setAdminUserRole] = useState<UserRole>(null);
   
@@ -77,27 +77,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsub();
   }, []);
 
-  // Clear admin authentication on page refresh or navigation
+  // Load admin authentication from localStorage on component mount
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      setAdminUser(null);
-      setAdminUserRole(null);
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        setAdminUser(null);
-        setAdminUserRole(null);
+    const savedAdminData = localStorage.getItem('adminAuth');
+    if (savedAdminData) {
+      try {
+        const { adminUser: savedUser, adminUserRole: savedRole, timestamp } = JSON.parse(savedAdminData);
+        const now = Date.now();
+        const sessionDuration = 30 * 60 * 1000; // 30 minutes
+        
+        // Check if session is still valid
+        if (now - timestamp < sessionDuration) {
+          setAdminUser(savedUser);
+          setAdminUserRole(savedRole);
+          // Restart session timeout
+          resetSessionTimeout();
+        } else {
+          // Session expired, clear localStorage
+          localStorage.removeItem('adminAuth');
+        }
+      } catch (error) {
+        console.error('Error loading admin auth from localStorage:', error);
+        localStorage.removeItem('adminAuth');
       }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
+    }
   }, []);
 
   // Session timeout management
@@ -125,8 +128,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log("Admin session expired due to inactivity");
         setAdminUser(null);
         setAdminUserRole(null);
+        localStorage.removeItem('adminAuth');
         // Redirect to login page
-        window.location.href = '/admin/login';
+        window.location.href = '/omegaproclassesadminrohansir/login';
       }, SESSION_TIMEOUT);
     }
   };
@@ -193,6 +197,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.log("Found teacher document for admin login:", teacherDoc.data());
           setAdminUser(result.user);
           setAdminUserRole('teacher');
+          
+          // Save admin authentication to localStorage
+          const adminAuthData = {
+            adminUser: result.user,
+            adminUserRole: 'teacher',
+            timestamp: Date.now()
+          };
+          localStorage.setItem('adminAuth', JSON.stringify(adminAuthData));
+          
           resetSessionTimeout(); // Start session timeout
         } else {
           // Check users collection as fallback
@@ -200,6 +213,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (userDoc.exists() && userDoc.data()?.role === 'teacher') {
             setAdminUser(result.user);
             setAdminUserRole('teacher');
+            
+            // Save admin authentication to localStorage
+            const adminAuthData = {
+              adminUser: result.user,
+              adminUserRole: 'teacher',
+              timestamp: Date.now()
+            };
+            localStorage.setItem('adminAuth', JSON.stringify(adminAuthData));
+            
             resetSessionTimeout(); // Start session timeout
           } else {
             throw new Error("Access denied. Only teachers can access admin area.");
@@ -215,7 +237,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Admin logout (clears admin state only)
+  // Admin logout (clears admin state and localStorage)
   const adminLogout = () => {
     if (sessionTimeoutRef.current) {
       clearTimeout(sessionTimeoutRef.current);
@@ -225,6 +247,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setAdminUser(null);
     setAdminUserRole(null);
+    localStorage.removeItem('adminAuth');
   };
 
   const isTeacher = userRole === 'teacher';

@@ -32,9 +32,9 @@ const App = () => (
               <Route path="/subject/:className/:subject" element={<SubjectNotes />} />
 
               {/* Admin routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
-              <Route path="/admin/upload" element={<PrivateRoute><UploadMaterial /></PrivateRoute>} />
+              <Route path="/omegaproclassesadminrohansir/login" element={<AdminLogin />} />
+              <Route path="/omegaproclassesadminrohansir" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+              <Route path="/omegaproclassesadminrohansir/upload" element={<PrivateRoute><UploadMaterial /></PrivateRoute>} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

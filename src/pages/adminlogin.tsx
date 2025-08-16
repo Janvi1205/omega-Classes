@@ -17,7 +17,7 @@ const AdminLogin: React.FC = () => {
     try {
       await adminLogin(email, password);
       console.log("Admin login successful, navigating to admin");
-      navigate("/admin");
+              navigate("/omegaproclassesadminrohansir");
     } catch (error: any) {
       console.error("Admin login error:", error);
       // Show generic error message for security
