@@ -1,5 +1,5 @@
 // src/pages/SubjectNotes.tsx
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -20,12 +20,42 @@ type Material = {
   createdAt?: any;
 };
 
-const SubjectNotes: React.FC = () => {
+const SubjectNotes: React.FC = React.memo(() => {
   const { className, subject } = useParams();
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // Memoize the download handler to prevent unnecessary re-renders
+  const handleDownload = useCallback((material: Material) => {
+    try {
+      const link = document.createElement('a');
+      link.href = material.downloadURL;
+      link.download = material.fileName;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Download error:', error);
+    }
+  }, []);
+
+  // Memoize materials by type to prevent recalculation
+  const materialsByType = useMemo(() => {
+    const grouped = materials.reduce((acc, material) => {
+      const type = material.type || 'other';
+      if (!acc[type]) {
+        acc[type] = [];
+      }
+      acc[type].push(material);
+      return acc;
+    }, {} as Record<string, Material[]>);
+    
+    return grouped;
+  }, [materials]);
 
   useEffect(() => {
     const load = async () => {
@@ -96,7 +126,7 @@ const SubjectNotes: React.FC = () => {
     load();
   }, [className, subject]);
 
-  const getSubjectIcon = (subjectName: string) => {
+  const getSubjectIcon = useCallback((subjectName: string) => {
     switch (subjectName?.toLowerCase()) {
       case 'mathematics':
         return Calculator;
@@ -109,9 +139,9 @@ const SubjectNotes: React.FC = () => {
       default:
         return BookOpen;
     }
-  };
+  }, []);
 
-  const getSubjectColor = (subjectName: string) => {
+  const getSubjectColor = useCallback((subjectName: string) => {
     switch (subjectName?.toLowerCase()) {
       case 'mathematics':
         return 'bg-blue-500';
@@ -124,7 +154,7 @@ const SubjectNotes: React.FC = () => {
       default:
         return 'bg-primary';
     }
-  };
+  }, []);
 
   // Group materials by type (Notes vs Homework) and then by chapter
   const notesMaterials = materials.filter(material => material.type === 'Notes');
@@ -445,41 +475,7 @@ const SubjectNotes: React.FC = () => {
                           <CarouselItem key={material.id} className="pl-2 md:pl-4">
                             <motion.button
                               type="button"
-                              onClick={async (e) => {
-                                e.preventDefault();
-                                try {
-                                  let downloadUrl = '';
-                                  
-                                  // If downloadURL is present, use it directly
-                                  if (material.downloadURL) {
-                                    downloadUrl = material.downloadURL;
-                                  } else if (material.storagePath) {
-                                    // If only gs:// path is present, use Firebase Storage API
-                                    const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
-                                    const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
-                                    const fileRef = ref(storage, material.storagePath);
-                                    downloadUrl = await getDownloadURL(fileRef);
-                                  } else {
-                                    alert("No download URL or storage path available for this file.");
-                                    return;
-                                  }
-                                  
-                                  // Create a direct download link instead of fetching
-                                  const a = document.createElement('a');
-                                  a.href = downloadUrl;
-                                  a.download = material.fileName || 'file';
-                                  a.target = '_blank'; // Open in new tab to avoid CORS issues
-                                  a.rel = 'noopener noreferrer';
-                                  document.body.appendChild(a);
-                                  a.click();
-                                  setTimeout(() => {
-                                    document.body.removeChild(a);
-                                  }, 100);
-                                } catch (err) {
-                                  alert("Failed to download file. Please try again later.");
-                                  console.error("Download error:", err);
-                                }
-                              }}
+                              onClick={() => handleDownload(material)}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block group btn-enhanced"
@@ -520,41 +516,7 @@ const SubjectNotes: React.FC = () => {
                       <motion.button
                         key={material.id}
                         type="button"
-                        onClick={async (e) => {
-                          e.preventDefault();
-                          try {
-                            let downloadUrl = '';
-                            
-                            // If downloadURL is present, use it directly
-                            if (material.downloadURL) {
-                              downloadUrl = material.downloadURL;
-                            } else if (material.storagePath) {
-                              // If only gs:// path is present, use Firebase Storage API
-                              const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
-                              const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
-                              const fileRef = ref(storage, material.storagePath);
-                              downloadUrl = await getDownloadURL(fileRef);
-                            } else {
-                              alert("No download URL or storage path available for this file.");
-                              return;
-                            }
-                            
-                            // Create a direct download link instead of fetching
-                            const a = document.createElement('a');
-                            a.href = downloadUrl;
-                            a.download = material.fileName || 'file';
-                            a.target = '_blank'; // Open in new tab to avoid CORS issues
-                            a.rel = 'noopener noreferrer';
-                            document.body.appendChild(a);
-                            a.click();
-                            setTimeout(() => {
-                              document.body.removeChild(a);
-                            }, 100);
-                          } catch (err) {
-                            alert("Failed to download file. Please try again later.");
-                            console.error("Download error:", err);
-                          }
-                        }}
+                        onClick={() => handleDownload(material)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block btn-enhanced"
@@ -716,41 +678,7 @@ const SubjectNotes: React.FC = () => {
                           <CarouselItem key={material.id} className="pl-2 md:pl-4">
                             <motion.button
                               type="button"
-                              onClick={async (e) => {
-                                e.preventDefault();
-                                try {
-                                  let downloadUrl = '';
-                                  
-                                  // If downloadURL is present, use it directly
-                                  if (material.downloadURL) {
-                                    downloadUrl = material.downloadURL;
-                                  } else if (material.storagePath) {
-                                    // If only gs:// path is present, use Firebase Storage API
-                                    const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
-                                    const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
-                                    const fileRef = ref(storage, material.storagePath);
-                                    downloadUrl = await getDownloadURL(fileRef);
-                                  } else {
-                                    alert("No download URL or storage path available for this file.");
-                                    return;
-                                  }
-                                  
-                                  // Create a direct download link instead of fetching
-                                  const a = document.createElement('a');
-                                  a.href = downloadUrl;
-                                  a.download = material.fileName || 'file';
-                                  a.target = '_blank'; // Open in new tab to avoid CORS issues
-                                  a.rel = 'noopener noreferrer';
-                                  document.body.appendChild(a);
-                                  a.click();
-                                  setTimeout(() => {
-                                    document.body.removeChild(a);
-                                  }, 100);
-                                } catch (err) {
-                                  alert("Failed to download file. Please try again later.");
-                                  console.error("Download error:", err);
-                                }
-                              }}
+                              onClick={() => handleDownload(material)}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group btn-enhanced"
@@ -791,41 +719,7 @@ const SubjectNotes: React.FC = () => {
                       <motion.button
                         key={material.id}
                         type="button"
-                        onClick={async (e) => {
-                          e.preventDefault();
-                          try {
-                            let downloadUrl = '';
-                            
-                            // If downloadURL is present, use it directly
-                            if (material.downloadURL) {
-                              downloadUrl = material.downloadURL;
-                            } else if (material.storagePath) {
-                              // If only gs:// path is present, use Firebase Storage API
-                              const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
-                              const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
-                              const fileRef = ref(storage, material.storagePath);
-                              downloadUrl = await getDownloadURL(fileRef);
-                            } else {
-                              alert("No download URL or storage path available for this file.");
-                              return;
-                            }
-                            
-                            // Create a direct download link instead of fetching
-                            const a = document.createElement('a');
-                            a.href = downloadUrl;
-                            a.download = material.fileName || 'file';
-                            a.target = '_blank'; // Open in new tab to avoid CORS issues
-                            a.rel = 'noopener noreferrer';
-                            document.body.appendChild(a);
-                            a.click();
-                            setTimeout(() => {
-                              document.body.removeChild(a);
-                            }, 100);
-                          } catch (err) {
-                            alert("Failed to download file. Please try again later.");
-                            console.error("Download error:", err);
-                          }
-                        }}
+                        onClick={() => handleDownload(material)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block btn-enhanced"
@@ -872,6 +766,6 @@ const SubjectNotes: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default SubjectNotes;

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { 
   collection, 
@@ -53,6 +53,12 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
   const { toast } = useToast();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Memoize unread count to prevent unnecessary re-renders
+  const unreadCount = useMemo(() => 
+    notifications.filter(n => !n.read).length, 
+    [notifications]
+  );
 
   // Load notifications from Firestore on mount
   useEffect(() => {
@@ -132,9 +138,8 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
     };
   }, []);
 
-  const unreadCount = notifications.filter(n => !n.read).length;
-
-  const addNotification = async (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
+  // Memoize callback functions to prevent unnecessary re-renders
+  const addNotification = useCallback(async (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
     try {
       console.log('NotificationContext: Adding notification to Firestore:', notificationData);
       
@@ -168,9 +173,9 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         variant: "destructive",
       });
     }
-  };
+  }, [toast]);
 
-  const markAsRead = async (id: string) => {
+  const markAsRead = useCallback(async (id: string) => {
     try {
       console.log('NotificationContext: Marking notification as read:', id);
       const notificationRef = doc(db, 'notifications', id);
@@ -178,9 +183,9 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
     } catch (error) {
       console.error('Error marking notification as read:', error);
     }
-  };
+  }, []);
 
-  const markAllAsRead = async () => {
+  const markAllAsRead = useCallback(async () => {
     try {
       console.log('NotificationContext: Marking all notifications as read');
       const batch = notifications.map(async (notification) => {
@@ -193,9 +198,9 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
     } catch (error) {
       console.error('Error marking all notifications as read:', error);
     }
-  };
+  }, [notifications]);
 
-  const removeNotification = async (id: string) => {
+  const removeNotification = useCallback(async (id: string) => {
     try {
       console.log('NotificationContext: Removing notification:', id);
       const notificationRef = doc(db, 'notifications', id);
@@ -208,9 +213,9 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         variant: "destructive",
       });
     }
-  };
+  }, [toast]);
 
-  const clearAllNotifications = async () => {
+  const clearAllNotifications = useCallback(async () => {
     try {
       console.log('NotificationContext: Clearing all notifications');
       const batch = notifications.map(async (notification) => {
@@ -226,9 +231,9 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         variant: "destructive",
       });
     }
-  };
+  }, [notifications, toast]);
 
-  // Update time strings periodically
+  // Update time strings periodically with debouncing
   useEffect(() => {
     const updateTimeStrings = () => {
       setNotifications(prev =>
@@ -243,18 +248,27 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
     return () => clearInterval(interval);
   }, []);
 
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    notifications,
+    unreadCount,
+    addNotification,
+    markAsRead,
+    markAllAsRead,
+    removeNotification,
+    clearAllNotifications,
+  }), [
+    notifications,
+    unreadCount,
+    addNotification,
+    markAsRead,
+    markAllAsRead,
+    removeNotification,
+    clearAllNotifications,
+  ]);
+
   return (
-    <NotificationContext.Provider
-      value={{
-        notifications,
-        unreadCount,
-        addNotification,
-        markAsRead,
-        markAllAsRead,
-        removeNotification,
-        clearAllNotifications,
-      }}
-    >
+    <NotificationContext.Provider value={contextValue}>
       {children}
     </NotificationContext.Provider>
   );
