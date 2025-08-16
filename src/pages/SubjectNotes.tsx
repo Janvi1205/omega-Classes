@@ -448,45 +448,35 @@ const SubjectNotes: React.FC = () => {
                               onClick={async (e) => {
                                 e.preventDefault();
                                 try {
+                                  let downloadUrl = '';
+                                  
                                   // If downloadURL is present, use it directly
                                   if (material.downloadURL) {
-                                    const response = await fetch(material.downloadURL);
-                                    const blob = await response.blob();
-                                    const url = window.URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = material.fileName || 'file';
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    setTimeout(() => {
-                                      window.URL.revokeObjectURL(url);
-                                      document.body.removeChild(a);
-                                    }, 100);
+                                    downloadUrl = material.downloadURL;
                                   } else if (material.storagePath) {
                                     // If only gs:// path is present, use Firebase Storage API
-                                    // Import getStorage and getDownloadURL dynamically to avoid SSR issues
                                     const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
                                     const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
                                     const fileRef = ref(storage, material.storagePath);
-                                    const url = await getDownloadURL(fileRef);
-                                    const response = await fetch(url);
-                                    const blob = await response.blob();
-                                    const downloadUrl = window.URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = downloadUrl;
-                                    a.download = material.fileName || 'file';
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    setTimeout(() => {
-                                      window.URL.revokeObjectURL(downloadUrl);
-                                      document.body.removeChild(a);
-                                    }, 100);
+                                    downloadUrl = await getDownloadURL(fileRef);
                                   } else {
                                     alert("No download URL or storage path available for this file.");
+                                    return;
                                   }
+                                  
+                                  // Create a direct download link instead of fetching
+                                  const a = document.createElement('a');
+                                  a.href = downloadUrl;
+                                  a.download = material.fileName || 'file';
+                                  a.target = '_blank'; // Open in new tab to avoid CORS issues
+                                  a.rel = 'noopener noreferrer';
+                                  document.body.appendChild(a);
+                                  a.click();
+                                  setTimeout(() => {
+                                    document.body.removeChild(a);
+                                  }, 100);
                                 } catch (err) {
                                   alert("Failed to download file. Please try again later.");
-                                  // Optionally log error
                                   console.error("Download error:", err);
                                 }
                               }}
@@ -533,41 +523,33 @@ const SubjectNotes: React.FC = () => {
                         onClick={async (e) => {
                           e.preventDefault();
                           try {
+                            let downloadUrl = '';
+                            
                             // If downloadURL is present, use it directly
                             if (material.downloadURL) {
-                              const response = await fetch(material.downloadURL);
-                              const blob = await response.blob();
-                              const url = window.URL.createObjectURL(blob);
-                              const a = document.createElement('a');
-                              a.href = url;
-                              a.download = material.fileName || 'file';
-                              document.body.appendChild(a);
-                              a.click();
-                              setTimeout(() => {
-                                window.URL.revokeObjectURL(url);
-                                document.body.removeChild(a);
-                              }, 100);
+                              downloadUrl = material.downloadURL;
                             } else if (material.storagePath) {
                               // If only gs:// path is present, use Firebase Storage API
                               const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
                               const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
                               const fileRef = ref(storage, material.storagePath);
-                              const url = await getDownloadURL(fileRef);
-                              const response = await fetch(url);
-                              const blob = await response.blob();
-                              const downloadUrl = window.URL.createObjectURL(blob);
-                              const a = document.createElement('a');
-                              a.href = downloadUrl;
-                              a.download = material.fileName || 'file';
-                              document.body.appendChild(a);
-                              a.click();
-                              setTimeout(() => {
-                                window.URL.revokeObjectURL(downloadUrl);
-                                document.body.removeChild(a);
-                              }, 100);
+                              downloadUrl = await getDownloadURL(fileRef);
                             } else {
                               alert("No download URL or storage path available for this file.");
+                              return;
                             }
+                            
+                            // Create a direct download link instead of fetching
+                            const a = document.createElement('a');
+                            a.href = downloadUrl;
+                            a.download = material.fileName || 'file';
+                            a.target = '_blank'; // Open in new tab to avoid CORS issues
+                            a.rel = 'noopener noreferrer';
+                            document.body.appendChild(a);
+                            a.click();
+                            setTimeout(() => {
+                              document.body.removeChild(a);
+                            }, 100);
                           } catch (err) {
                             alert("Failed to download file. Please try again later.");
                             console.error("Download error:", err);
@@ -737,41 +719,33 @@ const SubjectNotes: React.FC = () => {
                               onClick={async (e) => {
                                 e.preventDefault();
                                 try {
+                                  let downloadUrl = '';
+                                  
                                   // If downloadURL is present, use it directly
                                   if (material.downloadURL) {
-                                    const response = await fetch(material.downloadURL);
-                                    const blob = await response.blob();
-                                    const url = window.URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = material.fileName || 'file';
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    setTimeout(() => {
-                                      window.URL.revokeObjectURL(url);
-                                      document.body.removeChild(a);
-                                    }, 100);
+                                    downloadUrl = material.downloadURL;
                                   } else if (material.storagePath) {
                                     // If only gs:// path is present, use Firebase Storage API
                                     const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
                                     const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
                                     const fileRef = ref(storage, material.storagePath);
-                                    const url = await getDownloadURL(fileRef);
-                                    const response = await fetch(url);
-                                    const blob = await response.blob();
-                                    const downloadUrl = window.URL.createObjectURL(blob);
-                                    const a = document.createElement('a');
-                                    a.href = downloadUrl;
-                                    a.download = material.fileName || 'file';
-                                    document.body.appendChild(a);
-                                    a.click();
-                                    setTimeout(() => {
-                                      window.URL.revokeObjectURL(downloadUrl);
-                                      document.body.removeChild(a);
-                                    }, 100);
+                                    downloadUrl = await getDownloadURL(fileRef);
                                   } else {
                                     alert("No download URL or storage path available for this file.");
+                                    return;
                                   }
+                                  
+                                  // Create a direct download link instead of fetching
+                                  const a = document.createElement('a');
+                                  a.href = downloadUrl;
+                                  a.download = material.fileName || 'file';
+                                  a.target = '_blank'; // Open in new tab to avoid CORS issues
+                                  a.rel = 'noopener noreferrer';
+                                  document.body.appendChild(a);
+                                  a.click();
+                                  setTimeout(() => {
+                                    document.body.removeChild(a);
+                                  }, 100);
                                 } catch (err) {
                                   alert("Failed to download file. Please try again later.");
                                   console.error("Download error:", err);
@@ -820,41 +794,33 @@ const SubjectNotes: React.FC = () => {
                         onClick={async (e) => {
                           e.preventDefault();
                           try {
+                            let downloadUrl = '';
+                            
                             // If downloadURL is present, use it directly
                             if (material.downloadURL) {
-                              const response = await fetch(material.downloadURL);
-                              const blob = await response.blob();
-                              const url = window.URL.createObjectURL(blob);
-                              const a = document.createElement('a');
-                              a.href = url;
-                              a.download = material.fileName || 'file';
-                              document.body.appendChild(a);
-                              a.click();
-                              setTimeout(() => {
-                                window.URL.revokeObjectURL(url);
-                                document.body.removeChild(a);
-                              }, 100);
+                              downloadUrl = material.downloadURL;
                             } else if (material.storagePath) {
                               // If only gs:// path is present, use Firebase Storage API
                               const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
                               const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
                               const fileRef = ref(storage, material.storagePath);
-                              const url = await getDownloadURL(fileRef);
-                              const response = await fetch(url);
-                              const blob = await response.blob();
-                              const downloadUrl = window.URL.createObjectURL(blob);
-                              const a = document.createElement('a');
-                              a.href = downloadUrl;
-                              a.download = material.fileName || 'file';
-                              document.body.appendChild(a);
-                              a.click();
-                              setTimeout(() => {
-                                window.URL.revokeObjectURL(downloadUrl);
-                                document.body.removeChild(a);
-                              }, 100);
+                              downloadUrl = await getDownloadURL(fileRef);
                             } else {
                               alert("No download URL or storage path available for this file.");
+                              return;
                             }
+                            
+                            // Create a direct download link instead of fetching
+                            const a = document.createElement('a');
+                            a.href = downloadUrl;
+                            a.download = material.fileName || 'file';
+                            a.target = '_blank'; // Open in new tab to avoid CORS issues
+                            a.rel = 'noopener noreferrer';
+                            document.body.appendChild(a);
+                            a.click();
+                            setTimeout(() => {
+                              document.body.removeChild(a);
+                            }, 100);
                           } catch (err) {
                             alert("Failed to download file. Please try again later.");
                             console.error("Download error:", err);
