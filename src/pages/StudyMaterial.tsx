@@ -147,98 +147,76 @@ const StudyMaterial: React.FC = () => {
 
   return (
     <div className="min-h-screen relative">
-      {/* Dynamic gradient background */}
+      {/* Minimal background for better performance */}
       <div className="fixed inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5"></div>
-      
-      {/* Animated background patterns */}
-      <div className="fixed inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-tl from-accent/10 to-primary/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-secondary/10 to-accent/5 rounded-full blur-3xl animate-pulse delay-500"></div>
-      </div>
-      
-      {/* Mesh gradient overlay */}
-      <div className="fixed inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.1),transparent_50%),radial-gradient(circle_at_80%_80%,hsl(var(--secondary)/0.08),transparent_50%),radial-gradient(circle_at_40%_40%,hsl(var(--accent)/0.05),transparent_50%)]"></div>
       
       <div className="relative z-10">
         <Navbar />
 
-      {/* Enhanced Hero Section */}
+      {/* Optimized Hero Section - minimal animations */}
       <section className="pt-20 pb-16 hero-gradient relative overflow-hidden">
-        {/* Enhanced background decorative elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-xl animate-pulse md:opacity-100 opacity-30"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-accent/10 rounded-full blur-2xl animate-pulse md:opacity-100 opacity-30" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-full blur-3xl animate-pulse md:opacity-100 opacity-20" style={{animationDelay: '2s'}}></div>
-        </div>
-        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4 }}
             className="text-center text-primary-foreground"
           >
             <motion.button
               onClick={handleBackToHome}
-              whileHover={{ x: -4, scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground mb-8 transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/15 hover:shadow-lg hover:shadow-white/10 btn-glow"
+              whileHover={{ x: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center gap-3 text-primary-foreground/80 hover:text-primary-foreground mb-8 transition-all duration-150 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 hover:bg-white/15 hover:shadow-lg hover:shadow-white/10"
             >
               <ArrowLeft size={20} />
               Back to Home
             </motion.button>
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
               className="mb-6"
             >
               <div className="relative inline-block">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-xl animate-pulse"></div>
                 <div className="relative p-6 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20 mb-6 shadow-2xl">
                   <div className="relative">
                     <BookOpen size={48} className="text-white relative z-10" />
-                    <Sparkles size={24} className="text-yellow-300 absolute -top-2 -right-2 animate-bounce" />
+                    <Sparkles size={24} className="text-yellow-300 absolute -top-2 -right-2" />
                   </div>
                 </div>
               </div>
             </motion.div>
             
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent leading-tight text-glow"
+              transition={{ duration: 0.4, delay: 0.15 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent leading-tight"
             >
               Study Materials
             </motion.h1>
             
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
               className="text-xl sm:text-2xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed mb-8"
             >
               Access comprehensive study materials for all classes to enhance your learning journey
             </motion.p>
-
-
-            
           </motion.div>
         </div>
       </section>
 
-      {/* Enhanced Study Materials */}
+      {/* Optimized Study Materials - minimal animations */}
       <section className="py-24 relative" ref={ref}>
-        {/* Section background */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/5 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.4 }}
             className="text-center mb-16"
           >
             <div className="inline-block p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl mb-6 shadow-lg">
@@ -253,31 +231,24 @@ const StudyMaterial: React.FC = () => {
           </motion.div>
 
           <div className="space-y-16">
-            {/* Enhanced School Classes Section */}
+            {/* Optimized School Classes Section */}
             {classes.map((className, classIndex) => {
               const subjects = getSubjectsForClass(className);
               return (
                 <motion.div
                   key={className}
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: classIndex * 0.1 }}
+                  transition={{ duration: 0.3, delay: classIndex * 0.03 }}
                   className="relative group"
                 >
-                  {/* Enhanced glass morphism card */}
-                  <div className="relative bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl transition-all duration-500 overflow-hidden">
-                    {/* Enhanced decorative gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Enhanced floating elements */}
-                    <div className="absolute top-6 right-6 w-20 h-20 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl opacity-50 animate-pulse"></div>
-                    <div className="absolute bottom-6 left-6 w-16 h-16 bg-gradient-to-tr from-accent/10 to-transparent rounded-full blur-lg animate-pulse" style={{animationDelay: '1s'}}></div>
+                  <div className="relative bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl transition-all duration-200 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                     
                     <div className="relative z-10">
                       <div className="flex items-center gap-4 mb-8">
                         <div className="relative">
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-lg opacity-50"></div>
-                          <div className="relative bg-gradient-to-r from-primary to-secondary text-primary-foreground p-4 rounded-2xl shadow-lg">
+                          <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground p-4 rounded-2xl shadow-lg">
                             <BookOpen size={28} />
                           </div>
                         </div>
@@ -297,13 +268,13 @@ const StudyMaterial: React.FC = () => {
                           return (
                             <motion.div
                               key={subject.name}
-                              initial={{ opacity: 0, scale: 0.9 }}
+                              initial={{ opacity: 0, scale: 0.98 }}
                               animate={isInView ? { opacity: 1, scale: 1 } : {}}
                               transition={{
-                                duration: 0.4,
-                                delay: classIndex * 0.1 + index * 0.05,
+                                duration: 0.25,
+                                delay: classIndex * 0.03 + index * 0.01,
                               }}
-                              whileHover={{ scale: 1.05, y: -8 }}
+                              whileHover={{ scale: 1.01, y: -2 }}
                               whileTap={{ scale: 0.98 }}
                               className="group/card relative"
                             >
@@ -311,9 +282,8 @@ const StudyMaterial: React.FC = () => {
                                 to={`/subject/${className.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
                                 className="block"
                               >
-                                <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-300 overflow-hidden enhanced-card">
-                                  {/* Enhanced subject-specific hover gradient overlay */}
-                                  <div className={`absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
+                                <div className="relative bg-background/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-border/50 hover:border-primary/30 transition-all duration-150 overflow-hidden">
+                                  <div className={`absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-150 ${
                                     subject.name === 'Mathematics' ? 'bg-gradient-to-br from-blue-500/10 via-transparent to-blue-600/10' :
                                     subject.name === 'Science' ? 'bg-gradient-to-br from-green-500/10 via-transparent to-green-600/10' :
                                     subject.name === 'Physics' ? 'bg-gradient-to-br from-purple-500/10 via-transparent to-purple-600/10' :
@@ -322,22 +292,12 @@ const StudyMaterial: React.FC = () => {
                                     'bg-gradient-to-br from-primary/10 via-transparent to-secondary/10'
                                   }`}></div>
                                   
-                                  {/* Enhanced subject-specific floating icon background */}
-                                  <div className={`absolute -top-4 -right-4 w-16 h-16 rounded-full blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
-                                    subject.name === 'Mathematics' ? 'bg-gradient-to-br from-blue-500/20 to-blue-600/20' :
-                                    subject.name === 'Science' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
-                                    subject.name === 'Physics' ? 'bg-gradient-to-br from-purple-500/20 to-purple-600/20' :
-                                    subject.name === 'Chemistry' ? 'bg-gradient-to-br from-green-500/20 to-green-600/20' :
-                                    subject.name === 'Biology' ? 'bg-gradient-to-br from-orange-500/20 to-orange-600/20' :
-                                    'bg-gradient-to-br from-primary/20 to-secondary/20'
-                                  }`}></div>
-                                  
                                   <div className="relative z-10 flex flex-col items-center text-center">
-                                    <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-6 transition-transform duration-300 relative overflow-hidden`}>
-                                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                    <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-2 transition-transform duration-150 relative overflow-hidden`}>
+                                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-150"></div>
                                       <IconComponent size={28} className="relative z-10" />
                                     </div>
-                                    <h4 className={`font-bold text-foreground mb-2 text-lg transition-colors duration-300 ${
+                                    <h4 className={`font-bold text-foreground mb-2 text-lg transition-colors duration-150 ${
                                       subject.name === 'Mathematics' ? 'group-hover/card:text-blue-600' :
                                       subject.name === 'Science' ? 'group-hover/card:text-green-600' :
                                       subject.name === 'Physics' ? 'group-hover/card:text-purple-600' :
@@ -348,7 +308,7 @@ const StudyMaterial: React.FC = () => {
                                       {subject.name}
                                     </h4>
 
-                                    <div className={`w-8 h-1 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 ${
+                                    <div className={`w-8 h-1 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-150 ${
                                       subject.name === 'Mathematics' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
                                       subject.name === 'Science' ? 'bg-gradient-to-r from-green-500 to-green-600' :
                                       subject.name === 'Physics' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
@@ -369,18 +329,18 @@ const StudyMaterial: React.FC = () => {
               );
             })}
 
-            {/* Enhanced Competitive Exams Section */}
+            {/* Optimized Competitive Exams Section */}
             <div className="space-y-8">
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.6 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
                 className="text-center"
               >
                 <div className="inline-block p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-2xl mb-4 shadow-lg">
                   <div className="relative">
                     <Target size={28} className="text-amber-500 relative z-10" />
-                    <Star size={16} className="text-yellow-400 absolute -top-1 -right-1 animate-pulse" />
+                    <Star size={16} className="text-yellow-400 absolute -top-1 -right-1" />
                   </div>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
@@ -396,28 +356,21 @@ const StudyMaterial: React.FC = () => {
                 return (
                   <motion.div
                     key={exam.name}
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: (classes.length + examIndex) * 0.1 }}
+                    transition={{ duration: 0.3, delay: (classes.length + examIndex) * 0.03 }}
                     className="relative group"
                   >
-                    {/* Enhanced special competitive exam styling */}
-                    <div className="relative bg-gradient-to-br from-amber-500/5 via-card/50 to-orange-500/5 backdrop-blur-xl border-2 border-amber-500/20 rounded-3xl p-8 shadow-2xl transition-all duration-500 overflow-hidden">
-                      {/* Enhanced premium badge */}
+                    <div className="relative bg-gradient-to-br from-amber-500/5 via-card/50 to-orange-500/5 backdrop-blur-xl border-2 border-amber-500/20 rounded-3xl p-8 shadow-2xl transition-all duration-200 overflow-hidden">
                       <div className="absolute top-6 right-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg flex items-center gap-2">
                         <Star size={12} />
                         {exam.badge}
                       </div>
                       
-                      {/* Enhanced decorative elements */}
-                      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-2xl animate-pulse"></div>
-                      <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-orange-500/10 to-transparent rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
-                      
                       <div className="relative z-10">
                         <div className="flex items-start gap-4 mb-8">
                           <div className="relative">
-                            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur-lg opacity-50"></div>
-                            <div className="relative bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-xl">
+                            <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-4 rounded-2xl shadow-xl">
                               <ExamIcon size={32} />
                             </div>
                           </div>
@@ -435,13 +388,13 @@ const StudyMaterial: React.FC = () => {
                             return (
                               <motion.div
                                 key={subject.name}
-                                initial={{ opacity: 0, scale: 0.9 }}
+                                initial={{ opacity: 0, scale: 0.98 }}
                                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                                 transition={{
-                                  duration: 0.4,
-                                  delay: (classes.length + examIndex) * 0.1 + index * 0.05,
+                                  duration: 0.25,
+                                  delay: (classes.length + examIndex) * 0.03 + index * 0.01,
                                 }}
-                                whileHover={{ scale: 1.05, y: -8 }}
+                                whileHover={{ scale: 1.01, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                                 className="group/card relative"
                               >
@@ -449,19 +402,18 @@ const StudyMaterial: React.FC = () => {
                                   to={`/subject/${exam.name.toLowerCase().replace(" ", "-")}/${subject.name.toLowerCase()}`}
                                   className="block"
                                 >
-                                  <div className="relative bg-background/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300 overflow-hidden">
-                                    {/* Enhanced hover effects */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                  <div className="relative bg-background/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-amber-500/20 hover:border-amber-500/40 transition-all duration-150 overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-orange-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-150"></div>
                                     
                                     <div className="relative z-10 flex flex-col items-center text-center">
-                                      <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-12 group-hover/card:scale-110 transition-all duration-300`}>
+                                      <div className={`${subject.color} text-white p-4 rounded-2xl mb-4 shadow-lg transform group-hover/card:rotate-3 group-hover/card:scale-102 transition-all duration-150`}>
                                         <IconComponent size={28} />
                                       </div>
-                                      <h4 className="font-bold text-foreground mb-2 text-lg group-hover/card:text-amber-600 transition-colors duration-300">
+                                      <h4 className="font-bold text-foreground mb-2 text-lg group-hover/card:text-amber-600 transition-colors duration-150">
                                         {subject.name}
                                       </h4>
 
-                                      <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                      <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-150"></div>
                                     </div>
                                   </div>
                                 </Link>
@@ -477,19 +429,14 @@ const StudyMaterial: React.FC = () => {
             </div>
           </div>
 
-          {/* Enhanced Additional Resources */}
+          {/* Optimized Additional Resources */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
             className="mt-20"
           >
             <div className="relative bg-gradient-to-br from-primary/5 via-card/50 to-secondary/5 backdrop-blur-xl border border-border/50 rounded-3xl p-12 text-center overflow-hidden">
-              {/* Enhanced decorative elements */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl animate-pulse"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-secondary/10 to-transparent rounded-full blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
-              
               <div className="relative z-10">
                 <div className="inline-block p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl mb-6 shadow-lg">
                   <BookOpen size={40} className="text-primary" />
@@ -503,17 +450,17 @@ const StudyMaterial: React.FC = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.button 
                     onClick={handleContactRedirect} 
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
-                    className="btn-primary px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-primary/25 btn-glow"
+                    className="btn-primary px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-primary/25"
                   >
                     Contact Us
                   </motion.button>
                   <motion.button 
                     onClick={handleBackToHome} 
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
-                    className="btn-secondary px-8 py-4 text-lg font-semibold btn-glow"
+                    className="btn-secondary px-8 py-4 text-lg font-semibold"
                   >
                     Back to Home
                   </motion.button>
