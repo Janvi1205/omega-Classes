@@ -527,9 +527,52 @@ const SubjectNotes: React.FC = () => {
                 ) : (
                   <div className="space-y-2">
                     {chapterMaterials.map((material, materialIndex) => (
-                      <motion.a
+                      <motion.button
                         key={material.id}
-                        href={`/download/${material.id}`}
+                        type="button"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          try {
+                            // If downloadURL is present, use it directly
+                            if (material.downloadURL) {
+                              const response = await fetch(material.downloadURL);
+                              const blob = await response.blob();
+                              const url = window.URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = url;
+                              a.download = material.fileName || 'file';
+                              document.body.appendChild(a);
+                              a.click();
+                              setTimeout(() => {
+                                window.URL.revokeObjectURL(url);
+                                document.body.removeChild(a);
+                              }, 100);
+                            } else if (material.storagePath) {
+                              // If only gs:// path is present, use Firebase Storage API
+                              const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
+                              const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
+                              const fileRef = ref(storage, material.storagePath);
+                              const url = await getDownloadURL(fileRef);
+                              const response = await fetch(url);
+                              const blob = await response.blob();
+                              const downloadUrl = window.URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = downloadUrl;
+                              a.download = material.fileName || 'file';
+                              document.body.appendChild(a);
+                              a.click();
+                              setTimeout(() => {
+                                window.URL.revokeObjectURL(downloadUrl);
+                                document.body.removeChild(a);
+                              }, 100);
+                            } else {
+                              alert("No download URL or storage path available for this file.");
+                            }
+                          } catch (err) {
+                            alert("Failed to download file. Please try again later.");
+                            console.error("Download error:", err);
+                          }
+                        }}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full btn-primary py-2 sm:py-3 px-3 sm:px-4 rounded-lg font-medium flex items-center justify-between gap-1.5 sm:gap-2 transition-all duration-300 block btn-enhanced"
@@ -541,7 +584,7 @@ const SubjectNotes: React.FC = () => {
                         <span className="text-xs bg-primary-foreground/20 px-1.5 sm:px-2 py-1 rounded-md font-medium flex-shrink-0">
                           Notes
                         </span>
-                      </motion.a>
+                      </motion.button>
                     ))}
                   </div>
                 )}
@@ -689,8 +732,51 @@ const SubjectNotes: React.FC = () => {
                       <CarouselContent className="-ml-2 md:-ml-4">
                         {chapterMaterials.map((material, materialIndex) => (
                           <CarouselItem key={material.id} className="pl-2 md:pl-4">
-                            <motion.a
-                              href={`/download/${material.id}`}
+                            <motion.button
+                              type="button"
+                              onClick={async (e) => {
+                                e.preventDefault();
+                                try {
+                                  // If downloadURL is present, use it directly
+                                  if (material.downloadURL) {
+                                    const response = await fetch(material.downloadURL);
+                                    const blob = await response.blob();
+                                    const url = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = material.fileName || 'file';
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    setTimeout(() => {
+                                      window.URL.revokeObjectURL(url);
+                                      document.body.removeChild(a);
+                                    }, 100);
+                                  } else if (material.storagePath) {
+                                    // If only gs:// path is present, use Firebase Storage API
+                                    const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
+                                    const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
+                                    const fileRef = ref(storage, material.storagePath);
+                                    const url = await getDownloadURL(fileRef);
+                                    const response = await fetch(url);
+                                    const blob = await response.blob();
+                                    const downloadUrl = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = downloadUrl;
+                                    a.download = material.fileName || 'file';
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    setTimeout(() => {
+                                      window.URL.revokeObjectURL(downloadUrl);
+                                      document.body.removeChild(a);
+                                    }, 100);
+                                  } else {
+                                    alert("No download URL or storage path available for this file.");
+                                  }
+                                } catch (err) {
+                                  alert("Failed to download file. Please try again later.");
+                                  console.error("Download error:", err);
+                                }
+                              }}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block group btn-enhanced"
@@ -702,7 +788,7 @@ const SubjectNotes: React.FC = () => {
                               <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium flex-shrink-0">
                                 Homework
                               </span>
-                            </motion.a>
+                            </motion.button>
                           </CarouselItem>
                         ))}
                       </CarouselContent>
@@ -728,9 +814,52 @@ const SubjectNotes: React.FC = () => {
                 ) : (
                   <div className="space-y-2">
                     {chapterMaterials.map((material, materialIndex) => (
-                      <motion.a
+                      <motion.button
                         key={material.id}
-                        href={`/download/${material.id}`}
+                        type="button"
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          try {
+                            // If downloadURL is present, use it directly
+                            if (material.downloadURL) {
+                              const response = await fetch(material.downloadURL);
+                              const blob = await response.blob();
+                              const url = window.URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = url;
+                              a.download = material.fileName || 'file';
+                              document.body.appendChild(a);
+                              a.click();
+                              setTimeout(() => {
+                                window.URL.revokeObjectURL(url);
+                                document.body.removeChild(a);
+                              }, 100);
+                            } else if (material.storagePath) {
+                              // If only gs:// path is present, use Firebase Storage API
+                              const { getStorage, ref, getDownloadURL } = await import("firebase/storage");
+                              const storage = getStorage(undefined, "gs://flipcardapp-aebc3.firebasestorage.app");
+                              const fileRef = ref(storage, material.storagePath);
+                              const url = await getDownloadURL(fileRef);
+                              const response = await fetch(url);
+                              const blob = await response.blob();
+                              const downloadUrl = window.URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = downloadUrl;
+                              a.download = material.fileName || 'file';
+                              document.body.appendChild(a);
+                              a.click();
+                              setTimeout(() => {
+                                window.URL.revokeObjectURL(downloadUrl);
+                                document.body.removeChild(a);
+                              }, 100);
+                            } else {
+                              alert("No download URL or storage path available for this file.");
+                            }
+                          } catch (err) {
+                            alert("Failed to download file. Please try again later.");
+                            console.error("Download error:", err);
+                          }
+                        }}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-full btn-secondary py-3 px-4 rounded-lg font-medium flex items-center justify-between gap-2 transition-all duration-300 block btn-enhanced"
@@ -742,7 +871,7 @@ const SubjectNotes: React.FC = () => {
                         <span className="text-xs bg-secondary-foreground/20 px-2 py-1 rounded-md font-medium">
                           Homework
                         </span>
-                      </motion.a>
+                      </motion.button>
                     ))}
                   </div>
                 )}
