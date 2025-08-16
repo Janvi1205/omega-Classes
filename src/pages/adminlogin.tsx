@@ -13,10 +13,13 @@ const AdminLogin: React.FC = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr("");
+    console.log("Attempting admin login with:", email);
     try {
       await adminLogin(email, password);
+      console.log("Admin login successful, navigating to admin");
       navigate("/admin");
     } catch (error: any) {
+      console.error("Admin login error:", error);
       // Show generic error message for security
       setErr("Invalid input");
     }

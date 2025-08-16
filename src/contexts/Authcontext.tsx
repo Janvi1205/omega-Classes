@@ -49,19 +49,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (u) {
         // Check user role from Firestore - check teachers collection first
         try {
+          console.log("Checking user role for UID:", u.uid);
           const teacherDoc = await getDoc(doc(db, "teachers", u.uid));
           if (teacherDoc.exists()) {
+            console.log("Found teacher document:", teacherDoc.data());
             setUserRole('teacher');
           } else {
             // Fallback to users collection
             const userDoc = await getDoc(doc(db, "users", u.uid));
             if (userDoc.exists()) {
+              console.log("Found user document:", userDoc.data());
               setUserRole(userDoc.data()?.role || 'student');
             } else {
+              console.log("No document found, defaulting to student");
               setUserRole('student');
             }
           }
         } catch (error) {
+          console.error("Error fetching user role:", error);
           setUserRole('student');
         }
       } else {
@@ -117,6 +122,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // Set session timeout
       sessionTimeoutRef.current = setTimeout(() => {
+        console.log("Admin session expired due to inactivity");
         setAdminUser(null);
         setAdminUserRole(null);
         // Redirect to login page
@@ -158,9 +164,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
+    console.log("AuthContext: Attempting Firebase login");
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log("AuthContext: Firebase login successful", result.user.uid);
     } catch (error) {
+      console.error("AuthContext: Firebase login failed", error);
       throw error;
     }
   };
@@ -172,13 +181,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Admin-specific login (doesn't persist)
   const adminLogin = async (email: string, password: string) => {
+    console.log("AuthContext: Attempting admin login");
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log("AuthContext: Admin login successful", result.user.uid);
       
       // Check if user is a teacher
       try {
         const teacherDoc = await getDoc(doc(db, "teachers", result.user.uid));
         if (teacherDoc.exists()) {
+          console.log("Found teacher document for admin login:", teacherDoc.data());
           setAdminUser(result.user);
           setAdminUserRole('teacher');
           resetSessionTimeout(); // Start session timeout
@@ -194,9 +206,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }
       } catch (error) {
+        console.error("Error checking admin role:", error);
         throw new Error("Access denied. Only teachers can access admin area.");
       }
     } catch (error) {
+      console.error("AuthContext: Admin login failed", error);
       throw error;
     }
   };
