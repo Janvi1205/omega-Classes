@@ -35,10 +35,9 @@ const RegisterModal = ({ isOpen, onClose, selectedBatch }: RegisterModalProps) =
 
     try {
       // Send form data to Firebase Function
-      const functionUrl = import.meta.env.VITE_FIREBASE_FUNCTIONS_URL || 
-        `https://asia-south1-${import.meta.env.VITE_FIREBASE_PROJECT_ID || 'flipcardapp-aebc3'}.cloudfunctions.net/sendStudentEmail`;
+      const functionUrl = 'https://asia-south1-flipcardapp-aebc3.cloudfunctions.net/sendStudentEmail';
       
-      await fetch(functionUrl, {
+      const response = await fetch(functionUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
