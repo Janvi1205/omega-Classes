@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const { onRequest } = require("firebase-functions/v2/https");
 const { setGlobalOptions } = require("firebase-functions/v2");
 const logger = require("firebase-functions/logger");
-const nodemailer = require("nodemailer");
+const Brevo = require("sib-api-v3-sdk");
 require('dotenv').config();
 
 // Load configuration
@@ -14,19 +14,12 @@ admin.initializeApp();
 // Optional: global options
 setGlobalOptions({ region: "asia-south1" });
 
-// Configure nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: config.email.smtpHost,
-  port: config.email.smtpPort,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: config.email.senderEmail,
-    pass: config.email.appPassword
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
+// Brevo setup
+const defaultClient = Brevo.ApiClient.instance;
+const apiKey = defaultClient.authentications["api-key"];
+apiKey.apiKey = config.email.brevoApiKey;
+
+const emailApi = new Brevo.TransactionalEmailsApi();
 
 // HTTP function to send student registration email to teacher
 exports.sendStudentEmail = onRequest(async (req, res) => {
@@ -44,26 +37,11 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
   try {
     const studentData = req.body;
     
-    // Log configuration for debugging
-    logger.info("Email configuration:", {
-      senderEmail: config.email.senderEmail,
-      teacherEmail: config.email.teacherEmail,
-      hasAppPassword: !!config.email.appPassword
-    });
-    
     // Validate required fields
     if (!studentData.name || !studentData.email || !studentData.phone) {
       logger.error("Missing required fields:", studentData);
       return res.status(400).json({ 
         error: "Missing required fields: name, email, and phone are required" 
-      });
-    }
-
-    // Validate email configuration
-    if (!config.email.appPassword) {
-      logger.error("Email app password is not configured");
-      return res.status(500).json({ 
-        error: "Email configuration is missing" 
       });
     }
 
@@ -202,15 +180,18 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
     `;
 
     // Create email object
-    const mailOptions = {
-      from: `"${config.email.senderName}" <${config.email.senderEmail}>`,
-      to: teacherEmail,
+    const sendSmtpEmail = {
+      sender: { 
+        name: config.email.senderName, 
+        email: config.email.senderEmail
+      },
+      to: [{ email: teacherEmail }],
       subject: `New Student Registration: ${studentData.name} - ${studentData.selectedCourse || 'General'}`,
-      html: emailHtml
+      htmlContent: emailHtml
     };
 
     // Send email
-    const response = await transporter.sendMail(mailOptions);
+    const response = await emailApi.sendTransacEmail(sendSmtpEmail);
     
     logger.info("Student registration email sent successfully:", {
       studentName: studentData.name,

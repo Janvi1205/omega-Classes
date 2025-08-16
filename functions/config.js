@@ -2,18 +2,14 @@
 module.exports = {
   // Email Configuration
   email: {
-    // Gmail SMTP settings
-    smtpHost: "smtp.gmail.com",
-    smtpPort: 587,
-    
-    // Your Gmail address
-    senderEmail: process.env.SENDER_EMAIL || "omegaproclasses@gmail.com",
-    
-    // App password (set via environment variable)
-    appPassword: process.env.EMAIL_APP_PASSWORD,
+    // Brevo API Key (Sendinblue)
+    brevoApiKey: process.env.BREVO_API_KEY || "xsmtpsib-21182f1c2c60985a451d9d2a06f40effb920ce7d93541a7039cae9d1962e565b-DVkOz9sGbIfcx5KL",
     
     // Teacher's email address where registration notifications will be sent
     teacherEmail: process.env.TEACHER_EMAIL || "omegaproclasses@gmail.com",
+    
+    // Sender email address (should be verified in Brevo)
+    senderEmail: process.env.SENDER_EMAIL || "omegaproclasses@gmail.com",
     
     // Sender name
     senderName: "Omega Pro Classes"
