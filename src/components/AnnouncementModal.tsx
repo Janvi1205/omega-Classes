@@ -42,6 +42,8 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
     setIsSubmitting(true);
 
     try {
+      console.log('Adding notification:', { title, message, type, priority });
+      
       // Add the notification using the context
       addNotification({
         title,
@@ -50,6 +52,8 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({ isOpen, onClose }
         priority,
         read: false,
       });
+
+      console.log('Notification added successfully');
 
       toast({
         title: "✅ Announcement Posted",

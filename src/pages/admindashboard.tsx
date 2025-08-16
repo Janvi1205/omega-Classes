@@ -4,6 +4,7 @@ import { collection, getDocs, query, orderBy, doc, deleteDoc } from "firebase/fi
 import { db, storage } from "@/lib/firebase";
 import { ref, deleteObject } from "firebase/storage";
 import { useAuth } from "@/contexts/Authcontext";
+import { useNotifications } from "@/contexts/NotificationContext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FileText, BookOpen, Download, Trash2, Upload, Filter, LogOut, GraduationCap, Megaphone } from "lucide-react";
@@ -32,6 +33,7 @@ const AdminDashboard: React.FC = () => {
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
   const { adminLogout } = useAuth();
+  const { addNotification, notifications } = useNotifications();
 
   const load = async () => {
     setLoading(true);
@@ -95,6 +97,21 @@ const AdminDashboard: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-3">
+            <Button 
+              onClick={() => {
+                addNotification({
+                  title: "Test Notification",
+                  message: "This is a test notification from admin dashboard",
+                  type: "info",
+                  priority: "medium",
+                  read: false,
+                });
+              }}
+              variant="outline" 
+              className="gap-2"
+            >
+              Test Notification
+            </Button>
             <Button 
               onClick={() => setIsAnnouncementModalOpen(true)}
               variant="secondary" 

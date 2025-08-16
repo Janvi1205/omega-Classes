@@ -82,6 +82,8 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
 
   const addNotification = async (notificationData: Omit<Notification, 'id' | 'createdAt' | 'time'>) => {
     try {
+      console.log('NotificationContext: Adding notification:', notificationData);
+      
       const now = new Date();
       const newNotification: Notification = {
         id: Date.now().toString(),
@@ -90,7 +92,13 @@ export const NotificationProvider = ({ children }: NotificationProviderProps) =>
         time: 'Just now'
       };
 
-      setNotifications(prev => [newNotification, ...prev]);
+      console.log('NotificationContext: Created notification object:', newNotification);
+      
+      setNotifications(prev => {
+        const updated = [newNotification, ...prev];
+        console.log('NotificationContext: Updated notifications array:', updated);
+        return updated;
+      });
 
       // Show toast for high priority notifications
       if (notificationData.priority === 'high') {
