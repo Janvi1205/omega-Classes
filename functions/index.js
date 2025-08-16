@@ -37,11 +37,26 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
   try {
     const studentData = req.body;
     
+    // Log the configuration for debugging
+    logger.info("Email configuration:", {
+      brevoApiKey: config.email.brevoApiKey ? "Set" : "Missing",
+      teacherEmail: config.email.teacherEmail,
+      senderEmail: config.email.senderEmail
+    });
+    
     // Validate required fields
     if (!studentData.name || !studentData.email || !studentData.phone) {
       logger.error("Missing required fields:", studentData);
       return res.status(400).json({ 
         error: "Missing required fields: name, email, and phone are required" 
+      });
+    }
+
+    // Check if email configuration is available
+    if (!config.email.brevoApiKey) {
+      logger.error("Brevo API key is missing");
+      return res.status(500).json({ 
+        error: "Email configuration is missing" 
       });
     }
 
