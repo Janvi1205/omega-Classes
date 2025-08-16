@@ -82,16 +82,6 @@ const YouTube = () => {
                     allowFullScreen
                     className="w-full h-full"
                   />
-
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="bg-white/20 backdrop-blur-sm rounded-full p-4"
-                    >
-                      <Play className="text-white" size={32} />
-                    </motion.div>
-                  </div>
                 </div>
 
                 {/* Video Info */}
@@ -125,24 +115,22 @@ const YouTube = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-12"
+          className="text-center mt-12 justify-center flex flex-col items-center"
         >
           <p className="text-gray-900 dark:text-blue-200 mb-6">
             Want to access more educational content and live classes?
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex w-[50%] flex-col gap-4 justify-center">
             <motion.a
               href="https://youtube.com/@omegaproclasses?si=lFpCZHz2x9VBtJp9"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary inline-flex items-center gap-2 flex-col p-5 "
+              className="btn-primary inline-flex items-center gap-2  p-5 w-full text-center justify-center"
             >
               <span className="text-center">
-                Subscribe our channel
-                <br />
-                for class 7th to 10th
+                Subscribe our channel for class 7th to 10th
                
               </span>
                <ExternalLink size={16} />
@@ -154,12 +142,10 @@ const YouTube = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn-primary inline-flex items-center gap-2 flex-col p-5"
+              className="btn-primary inline-flex items-center gap-2 p-5 justify-center"
             >
               <span className="text-center">
-                Subscribe our channel
-                <br />
-                for class 11 and 12
+                Subscribe our channel for class 11 and 12
               </span>
               <ExternalLink size={16} />
             </motion.a>

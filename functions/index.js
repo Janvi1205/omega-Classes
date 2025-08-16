@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const { onRequest } = require("firebase-functions/v2/https");
 const { setGlobalOptions } = require("firebase-functions/v2");
 const logger = require("firebase-functions/logger");
-const Brevo = require("sib-api-v3-sdk");
+const nodemailer = require("nodemailer");
 require('dotenv').config();
 
 // Load configuration
@@ -14,12 +14,8 @@ admin.initializeApp();
 // Optional: global options
 setGlobalOptions({ region: "asia-south1" });
 
-// Brevo setup
-const defaultClient = Brevo.ApiClient.instance;
-const apiKey = defaultClient.authentications["api-key"];
-apiKey.apiKey = config.email.brevoApiKey;
-
-const emailApi = new Brevo.TransactionalEmailsApi();
+// Create Gmail transporter
+const transporter = nodemailer.createTransport(config.email.smtp);
 
 // HTTP function to send student registration email to teacher
 exports.sendStudentEmail = onRequest(async (req, res) => {
@@ -39,7 +35,7 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
     
     // Log the configuration for debugging
     logger.info("Email configuration:", {
-      brevoApiKey: config.email.brevoApiKey ? "Set" : "Missing",
+      gmailUser: config.email.smtp.auth.user,
       teacherEmail: config.email.teacherEmail,
       senderEmail: config.email.senderEmail
     });
@@ -53,8 +49,8 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
     }
 
     // Check if email configuration is available
-    if (!config.email.brevoApiKey) {
-      logger.error("Brevo API key is missing");
+    if (!config.email.smtp.auth.pass) {
+      logger.error("Gmail app password is missing");
       return res.status(500).json({ 
         error: "Email configuration is missing" 
       });
@@ -195,24 +191,21 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
     `;
 
     // Create email object
-    const sendSmtpEmail = {
-      sender: { 
-        name: config.email.senderName, 
-        email: config.email.senderEmail
-      },
-      to: [{ email: teacherEmail }],
+    const mailOptions = {
+      from: `"${config.email.senderName}" <${config.email.senderEmail}>`,
+      to: teacherEmail,
       subject: `New Student Registration: ${studentData.name} - ${studentData.selectedCourse || 'General'}`,
-      htmlContent: emailHtml
+      html: emailHtml
     };
 
     // Send email
-    const response = await emailApi.sendTransacEmail(sendSmtpEmail);
+    const info = await transporter.sendMail(mailOptions);
     
     logger.info("Student registration email sent successfully:", {
       studentName: studentData.name,
       studentEmail: studentData.email,
       teacherEmail: teacherEmail,
-      messageId: response.messageId
+      messageId: info.messageId
     });
 
     // Store registration data in Firestore for record keeping
@@ -222,7 +215,7 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
         ...studentData,
         registrationTime: admin.firestore.FieldValue.serverTimestamp(),
         emailSent: true,
-        emailMessageId: response.messageId
+        emailMessageId: info.messageId
       });
       logger.info("Student registration stored in Firestore");
     } catch (firestoreError) {
@@ -232,7 +225,7 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
     res.status(200).json({ 
       success: true, 
       message: "Registration email sent successfully",
-      messageId: response.messageId
+      messageId: info.messageId
     });
 
   } catch (error) {
@@ -258,4 +251,156 @@ exports.sendStudentEmail = onRequest(async (req, res) => {
   }
 });
 
+// Test function to send a test email
+exports.sendTestEmail = onRequest(async (req, res) => {
+  // Enable CORS
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
 
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(204).send('');
+    return;
+  }
+
+  try {
+    // Check if email configuration is available
+    if (!config.email.smtp.auth.pass) {
+      logger.error("Gmail app password is missing");
+      return res.status(500).json({ 
+        error: "Email configuration is missing. Please set GMAIL_APP_PASSWORD in .env file" 
+      });
+    }
+
+    // Create test email template
+    const testEmailHtml = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Test Email - ${config.app.name}</title>
+        <style>
+          body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+          }
+          .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            padding: 30px; 
+            text-align: center; 
+            border-radius: 10px 10px 0 0;
+          }
+          .content { 
+            background: #f9f9f9; 
+            padding: 30px; 
+            border-radius: 0 0 10px 10px;
+          }
+          .test-info { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+          }
+          .timestamp { 
+            text-align: center; 
+            color: #666; 
+            font-size: 14px; 
+            margin-top: 20px;
+          }
+          .footer { 
+            text-align: center; 
+            margin-top: 30px; 
+            padding: 20px; 
+            color: #666; 
+            font-size: 12px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>🧪 Test Email</h1>
+          <p>${config.app.name}</p>
+        </div>
+        
+        <div class="content">
+          <p>Hello!</p>
+          
+          <p>This is a test email to verify that the Gmail SMTP configuration is working correctly.</p>
+          
+          <div class="test-info">
+            <h3>✅ Email Configuration Test</h3>
+            <p><strong>Status:</strong> Successfully sent via Gmail SMTP</p>
+            <p><strong>Sender:</strong> ${config.email.senderEmail}</p>
+            <p><strong>Recipient:</strong> janviyadav120505@gmail.com</p>
+            <p><strong>Method:</strong> Nodemailer with Gmail SMTP</p>
+          </div>
+          
+          <p>If you received this email, it means:</p>
+          <ul>
+            <li>✅ Gmail app password is correctly configured</li>
+            <li>✅ SMTP settings are working</li>
+            <li>✅ Email function is deployed successfully</li>
+            <li>✅ Student registration emails will work properly</li>
+          </ul>
+          
+          <div class="timestamp">
+            <strong>Test Time:</strong> ${new Date().toLocaleString('en-IN', { 
+              timeZone: config.app.timezone,
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric', 
+              hour: '2-digit', 
+              minute: '2-digit',
+              second: '2-digit'
+            })}
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p>This is a test email from ${config.app.name}</p>
+          <p>Gmail SMTP Configuration Test</p>
+        </div>
+      </body>
+      </html>
+    `;
+
+    // Create email object
+    const mailOptions = {
+      from: `"${config.email.senderName}" <${config.email.senderEmail}>`,
+      to: "janviyadav120505@gmail.com",
+      subject: `Test Email - Gmail SMTP Configuration - ${config.app.name}`,
+      html: testEmailHtml
+    };
+
+    // Send email
+    const info = await transporter.sendMail(mailOptions);
+    
+    logger.info("Test email sent successfully:", {
+      recipient: "janviyadav120505@gmail.com",
+      messageId: info.messageId
+    });
+
+    res.status(200).json({ 
+      success: true, 
+      message: "Test email sent successfully to janviyadav120505@gmail.com",
+      messageId: info.messageId
+    });
+
+  } catch (error) {
+    logger.error("Error sending test email:", error);
+    
+    res.status(500).json({ 
+      success: false, 
+      error: "Failed to send test email. Please check your Gmail app password configuration.",
+      details: error.message
+    });
+  }
+});

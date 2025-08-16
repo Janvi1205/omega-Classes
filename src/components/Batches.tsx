@@ -84,9 +84,9 @@ const Batches = ({ onRegisterClick }: BatchesProps) => {
                 <motion.div
                   initial={{ opacity: 0, y: 100 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02, y: -5 }}
-                  className="card-gradient rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full"
+                  className="card-gradient z-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden group h-full"
                 >
                   {/* Background decoration */}
                   <div className={`absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 bg-gradient-to-br ${batch.color} opacity-20 rounded-full blur-2xl sm:blur-3xl group-hover:opacity-40 transition-all duration-500`} />
