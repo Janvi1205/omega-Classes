@@ -3,7 +3,7 @@ module.exports = {
   // Email Configuration
   email: {
     // Brevo API Key (Sendinblue)
-    brevoApiKey: process.env.BREVO_API_KEY || "xsmtpsib-21182f1c2c60985a451d9d2a06f40effb920ce7d93541a7039cae9d1962e565b-DVkOz9sGbIfcx5KL",
+    brevoApiKey: process.env.BREVO_API_KEY || "xsmtpsib-a4bfb117fa7f242fc91fd1c0e465cc548a0cf5a706c2163eb990a6507c286c17-Q7GY5R4FcVJzHWhx",
     
     // Teacher's email address where registration notifications will be sent
     teacherEmail: process.env.TEACHER_EMAIL || "janviyadav120505@gmail.com",
