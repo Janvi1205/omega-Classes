@@ -1,49 +1,83 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Play, ExternalLink } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ExternalLink } from 'lucide-react';
+
+type Video = {
+  id: string;
+  title: string;
+  embedId: string;
+  description?: string;
+};
+
+const CHANNEL_ID = 'UCqbPP0gfUPtMGMx_Xj9RlUA'; // Omega Pro Classes
+
+// Optional server endpoint to bypass CORS entirely (recommended in prod)
+const FEED_ENDPOINT = import.meta.env.VITE_YOUTUBE_FEED_URL as string | undefined;
+// Public CORS-friendly proxy for read-only fetching (fallback for dev)
+const PROXY_PREFIX = 'https://r.jina.ai/http://';
 
 const YouTube = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const videos = [
-    {
-      id: '4',
-      title: 'Some Natural Phenomena',
-      thumbnail: 'https://img.youtube.com/vi/ZNcyyDYPX3s/maxresdefault.jpg',
-      embedId: 'ZNcyyDYPX3s',
-      description: 'By Rohan Sir'
-    },
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-    {
-      id: '1',
-      title: 'Life Process- Class 10th',
-      thumbnail: 'https://img.youtube.com/vi/i6zTmrUeRas/maxresdefault.jpg',
-      embedId: 'i6zTmrUeRas',
-      description: 'By A.M. Jha Sir'
-    },
-
-
-    {
-      id: '2',
-      title: 'Electronic Configuratoin- Class 11th',
-      thumbnail: 'https://img.youtube.com/vi/mzKkWSn2UpU/maxresdefault.jpg',
-      embedId: 'Z4Nl97ibTvs',
-      description: 'By A.M Jha Sir'
-    },
-
-
-
-    {
-      id: '3',
-      title: 'Scaler Vector Tensor- Class 11th',
-      thumbnail: 'https://img.youtube.com/vi/BNLr7shM9Dg/maxresdefault.jpg',
-      embedId: 'J8z_euwH_Lw',
-      description: 'By Chandra Shekhar Sir'
-    },
-
-  ];
+  useEffect(() => {
+    const controller = new AbortController();
+    async function loadFeed() {
+      try {
+        // Prefer backend endpoint if provided; otherwise use proxy
+        const url = FEED_ENDPOINT
+          ? `${FEED_ENDPOINT}?channel_id=${CHANNEL_ID}&max=4`
+          : `${PROXY_PREFIX}www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
+        const res = await fetch(url, { signal: controller.signal });
+        if (!res.ok) throw new Error(`Feed request failed: ${res.status}`);
+        let latest: Video[] = [];
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          latest = (data.videos || []).slice(0, 4);
+        } else {
+          const text = await res.text();
+          const parser = new DOMParser();
+          const xml = parser.parseFromString(text, 'application/xml');
+          const entries = Array.from(xml.getElementsByTagName('entry'));
+          latest = entries.slice(0, 4).map((entry, idx) => {
+            const title = entry.getElementsByTagName('title')[0]?.textContent || 'Untitled';
+            const videoId = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015', 'videoId')[0]?.textContent
+              || entry.getElementsByTagName('yt:videoId')[0]?.textContent
+              || '';
+            return {
+              id: videoId || String(idx),
+              title,
+              embedId: videoId,
+              description: 'Latest from our YouTube channel'
+            } as Video;
+          }).filter(v => v.embedId);
+        }
+        if (latest.length === 0) throw new Error('No videos found in feed');
+        setVideos(latest);
+        setError(null);
+      } catch (e: any) {
+        console.error('Failed to load YouTube feed', e);
+        setError('Unable to load latest videos right now. Showing recent samples.');
+        // Fallback to a small static list (existing examples)
+        setVideos([
+          { id: 'ZNcyyDYPX3s', title: 'Some Natural Phenomena', embedId: 'ZNcyyDYPX3s', description: 'By Rohan Sir' },
+          { id: 'i6zTmrUeRas', title: 'Life Process- Class 10th', embedId: 'i6zTmrUeRas', description: 'By A.M. Jha Sir' },
+          { id: 'Z4Nl97ibTvs', title: 'Electronic Configuration- Class 11th', embedId: 'Z4Nl97ibTvs', description: 'By A.M Jha Sir' },
+          { id: 'J8z_euwH_Lw', title: 'Scalar Vector Tensor- Class 11th', embedId: 'J8z_euwH_Lw', description: 'By Chandra Shekhar Sir' }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadFeed();
+    return () => controller.abort();
+  }, []);
 
   return (
     <section className="py-20 bg-background" ref={ref}>
@@ -60,6 +94,12 @@ const YouTube = () => {
           <p className="text-xl text-gray-900 dark:text-blue-200 max-w-3xl mx-auto">
             Watch our expert teachers explain complex concepts in simple, easy-to-understand ways
           </p>
+          {loading && (
+            <p className="text-sm text-muted-foreground mt-2">Loading latest videos…</p>
+          )}
+          {error && (
+            <p className="text-sm text-red-500 mt-2">{error}</p>
+          )}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
@@ -75,11 +115,12 @@ const YouTube = () => {
                 {/* Video Thumbnail */}
                 <div className="relative aspect-video bg-gray-200 overflow-hidden">
                   <iframe
-                    src={`https://www.youtube.com/embed/${video.embedId}`}
+                    src={`https://www.youtube-nocookie.com/embed/${video.embedId}?rel=0&modestbranding=1&playsinline=1`}
                     title={video.title}
                     frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
                     className="w-full h-full"
                   />
                 </div>
@@ -89,9 +130,11 @@ const YouTube = () => {
                   <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                     {video.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">
-                    {video.description}
-                  </p>
+                  {video.description && (
+                    <p className="text-muted-foreground mb-4">
+                      {video.description}
+                    </p>
+                  )}
 
                   <div className="flex items-center justify-between">
                     <a
@@ -131,10 +174,8 @@ const YouTube = () => {
             >
               <span className="text-center">
                 Subscribe our channel for class 7th to 10th
-               
               </span>
-               <ExternalLink size={16} />
-              
+              <ExternalLink size={16} />
             </motion.a>
             <motion.a
               href="https://youtube.com/@omegaproclasses1112?si=G-tY5W8cZkLNCC7f"

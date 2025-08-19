@@ -17,6 +17,109 @@ setGlobalOptions({ region: "asia-south1" });
 // Create Gmail transporter
 const transporter = nodemailer.createTransport(config.email.smtp);
 
+// Simple YouTube RSS/HTML proxy to return latest long-form videos
+exports.youtubeLatest = onRequest(async (req, res) => {
+  try {
+    // CORS
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.status(204).send('');
+      return;
+    }
+
+    const channelId = req.query.channel_id || req.query.channelId;
+    const max = Math.min(parseInt(req.query.max || '4', 10) || 4, 12);
+    const minSeconds = parseInt(req.query.min_seconds || '120', 10) || 120; // default 2 minutes
+    if (!channelId) {
+      return res.status(400).json({ error: 'channel_id query param is required' });
+    }
+
+    function uploadsPlaylistId(cid) {
+      // UCxxxxxxxx -> UUxxxxxxxx (uploads playlist)
+      if (!cid || cid.length < 2) return undefined;
+      return 'UU' + cid.substring(2);
+    }
+
+    function parseDurationText(t) {
+      if (!t) return undefined;
+      const parts = String(t).trim().split(':').map(n => parseInt(n, 10));
+      if (parts.some(isNaN)) return undefined;
+      if (parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+      if (parts.length === 2) return parts[0]*60 + parts[1];
+      return parts[0];
+    }
+
+    async function fetchFromVideosTab(cid) {
+      const url = `https://www.youtube.com/channel/${cid}/videos`;
+      const resp = await fetch(url, { redirect: 'follow' });
+      if (!resp.ok) throw new Error('videos tab fetch failed');
+      const html = await resp.text();
+      const m = html.match(/var ytInitialData = (\{[\s\S]*?\});/);
+      if (!m) throw new Error('ytInitialData not found');
+      const data = JSON.parse(m[1]);
+      const tabs = data.contents?.twoColumnBrowseResultsRenderer?.tabs || [];
+      const videosTab = tabs.find(t => t.tabRenderer?.title === 'Videos')?.tabRenderer;
+      const grid = videosTab?.content?.richGridRenderer || videosTab?.content?.sectionListRenderer?.contents?.[0]?.itemSectionRenderer?.contents?.[0]?.gridRenderer;
+      const items = (grid?.contents || grid?.items || []).map(x => x?.richItemRenderer?.content?.videoRenderer || x?.gridVideoRenderer).filter(Boolean);
+      const vids = [];
+      for (const it of items) {
+        const vid = it.videoId;
+        const title = it.title?.runs?.[0]?.text || it.title?.simpleText || 'Untitled';
+        const timeText = it.lengthText?.simpleText || it.thumbnailOverlays?.find(o => o.thumbnailOverlayTimeStatusRenderer)?.thumbnailOverlayTimeStatusRenderer?.text?.simpleText;
+        const dur = parseDurationText(timeText);
+        // Accept only if duration parsed and >= minSeconds
+        if (vid && typeof dur === 'number' && dur >= minSeconds) {
+          vids.push({ id: vid, title, embedId: vid, duration: dur });
+        }
+        if (vids.length >= max) break;
+      }
+      return vids;
+    }
+
+    // First try the Videos tab (which excludes Shorts by UI), then fall back to uploads playlist RSS
+    let videos = [];
+    try {
+      videos = await fetchFromVideosTab(channelId);
+    } catch (e) {
+      logger.warn('videos tab parse failed, falling back to RSS', e?.message || e);
+    }
+
+    if (videos.length < max) {
+      const playlistId = uploadsPlaylistId(channelId);
+      const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
+      const resp = await fetch(rssUrl, { redirect: 'follow' });
+      if (resp.ok) {
+        const xml = await resp.text();
+        const entryRegex = /<entry[\s\S]*?<\/entry>/g;
+        const titleRegex = /<title>([^<]+)<\/title>/;
+        const videoIdRegex = /<yt:videoId>([^<]+)<\/yt:videoId>/;
+        const timeRegex = /<media:group>[\s\S]*?<yt:duration[^>]*seconds=\"(\d+)\"/;
+        let match;
+        while ((match = entryRegex.exec(xml)) !== null && videos.length < max) {
+          const block = match[0];
+          const title = (titleRegex.exec(block) || [])[1] || 'Untitled';
+          const vid = (videoIdRegex.exec(block) || [])[1] || '';
+          const d = (timeRegex.exec(block) || [])[1];
+          const dur = d ? parseInt(d, 10) : undefined;
+          if (vid && typeof dur === 'number' && dur >= minSeconds) {
+            // ensure not duplicated
+            if (!videos.find(v => v.id === vid)) videos.push({ id: vid, title, embedId: vid, duration: dur });
+          }
+        }
+      }
+    }
+
+    const limited = videos.slice(0, max).map(v => ({ id: v.id, title: v.title, embedId: v.id }));
+    return res.status(200).json({ channelId, count: limited.length, videos: limited });
+  } catch (e) {
+    logger.error('youtubeLatest error', e);
+    return res.status(500).json({ error: 'Internal error' });
+  }
+});
+
 // HTTP function to send student registration email to teacher
 exports.sendStudentEmail = onRequest(async (req, res) => {
   // Enable CORS
