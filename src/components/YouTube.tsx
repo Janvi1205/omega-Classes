@@ -10,7 +10,7 @@ type Video = {
   description?: string;
 };
 
-const CHANNEL_ID = 'UCqbPP0gfUPtMGMx_Xj9RlUA'; // Omega Pro Classes
+const CHANNEL_ID = 'UCOdQfV5_So-fyYFqcLAIm7Q'; // Omega Pro Classes 1112
 
 // Optional server endpoint to bypass CORS entirely (recommended in prod)
 const FEED_ENDPOINT = import.meta.env.VITE_YOUTUBE_FEED_URL as string | undefined;
